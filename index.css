@@ -1,0 +1,46 @@
+/* HEADER */
+header {
+  padding: 2% 1%;
+  display: flex;
+  align-items: center;
+  height: 20px;
+  font-size: 25px;
+}
+
+.header_nav {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header_nav ul {
+  width: 35%;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.header_nav a {
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+}
+
+.button_cadlog {
+  background: #E9501B;
+  border: none;
+  padding: 10px 40px;
+  border-radius: 16px;
+  color: #fff !important;
+}
+
+/* BANNER */
+.banner {
+  background: url(assets/Bannerinicio.png) center/cover no-repeat;
+  height: 1200px;
+  width: 110%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+}
