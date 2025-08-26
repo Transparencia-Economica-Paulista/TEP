@@ -1,4 +1,6 @@
-/* HEADER */
+
+/*#region HEADER*/
+
 header {
   padding: 2% 1%;
   display: flex;
@@ -34,8 +36,11 @@ header {
   border-radius: 16px;
   color: #fff !important;
 }
+/*#endregion*/
 
-/* BANNER */
+
+/*#region SEÇÃO_BANNER*/
+
 .banner {
   background: url(assets/BannerInicio.png) center/cover no-repeat;
   height: 800px;
@@ -46,3 +51,69 @@ header {
   text-align: center;
 
 }
+/*#endregion*/
+
+
+section {
+  height: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.centraliza_titulo{
+  display: flex;
+  width: 100%;
+  /* align-items: center; */
+  justify-content: center;
+
+}
+
+
+/*#region SEÇÃO_NOSSO_PRODUTO*/
+
+#nosso_produto{
+  height: 600px;
+
+}
+
+#nosso_produto .quadros{
+  display: flex;  
+  height: 80%;
+  width: 80%;
+  background-color: #E9501B;
+  align-items: center;
+  justify-content: space-around; 
+}
+
+#nosso_produto .quadros .quadro{
+  height: 80%;
+  width: 30%;
+  
+  background-color: blue;
+
+}
+
+/*#endregion*/
+
+
+/*#region SEÇÃO_SOBRE_NÓS*/
+
+#separa_texto{
+
+  display: flex;
+  height: auto;
+  background-color: aquamarine;
+  height: 80%;
+  width: 80%;
+}
+
+.traco{
+  height: 80%;
+  width: 5px;
+
+
+}
+
+/*#endregion*/
