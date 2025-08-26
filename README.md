@@ -31,13 +31,17 @@ Os dados utilizados neste projeto são públicos, provenientes da base de dados 
 
 
 ## 🤝 Autores 
-
--   **[Grupo 6]** - Euclides Miguel Rufato da Rocha
+  
+Euclides Miguel Rufato da Rocha,
 
 Felipe Marcos Bastos Pena,
+
 Gustavo de Oliveira Pereira,
+
 João Victor Dorl Rossi,
+
 Lays Abreu Coqueiro,
- Maria Eduarda de Paula.
+
+Maria Eduarda de Paula.
 
 Este projeto foi desenvolvido como parte de um trabalho acadêmico.
