@@ -1,6 +1,9 @@
 
-/*#region HEADER*/
+:root {
+  --var-corcard: #030028;
+}
 
+/*#region HEADER*/
 header {
   padding: 2% 1%;
   display: flex;
@@ -65,7 +68,7 @@ section {
 .centraliza_titulo{
   display: flex;
   width: 100%;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
 
 }
@@ -84,7 +87,8 @@ section {
   grid-template-rows: 10% 3fr 10%;
   height: 80%;
   width: 90%;
-  background-color: #E9501B;
+  color: white ;
+  /* background-color: #E9501B; */
   /* align-items: center; */
   /* justify-content: space-around;  */
 }
@@ -94,7 +98,7 @@ section {
   /* width: 30%; */ 
   grid-area:  2 / 2 /3/ 2  ;
 
-  background-color: blue;
+  background-color: var(--var-corcard);
 
 }
 #nosso_produto .quadros #quadro2{
@@ -102,14 +106,14 @@ section {
   /* width: 30%; */ 
   grid-area:  2 / 4 /3/ 5  ;
 
-  background-color: blue;
+  background-color: var(--var-corcard);
 
 }
 #nosso_produto .quadros #quadro3{
   height: 100%;
   /* width: 30%; */ 
   grid-area:  2/7/2/6  ;
-  background-color: blue;
+  background-color: var(--var-corcard);
 
 }
 
@@ -155,16 +159,86 @@ section {
 
   display: flex;
   height: auto;
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
   height: 80%;
-  width: 80%;
+  width: 90%;
+  
+  align-items: center;
+}
+.separacao{
+  /* background-color: #E9501B; */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.separacao span{
+  padding: 2%;
+}
+.linha{
+  width: 1%;
+  height: 100%;
+  background-color: black;
 }
 
-.traco{
-  height: 80%;
-  width: 5px;
 
+
+/*#endregion*/
+
+/*#region SEÇÃO_NOSSOS_OBJETIVOS*/
+
+#nossos_objetivos .quadros{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 90%;
+  width: 100%;
+  background-color: #E9501B;
 
 }
+
+
+#nossos_objetivos .quadros .quadro{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20%;
+  background-color: #030028;
+  color: #fff;
+  font-size: 1rem;
+  padding: 1rem; 
+}
+
+
+#nossos_objetivos .quadros .titulo{
+  font-size: 2rem;
+}
+
+
+#nossos_objetivos .quadros .imagem{
+  display: flex;
+  /* width: 90%; */
+  height: 50%;
+  background-color: aliceblue;
+}
+
+
+#nossos_objetivos .quadros img{
+  width: 100%;
+  height: 100%;
+  background-color: aliceblue;
+}
+
+#nossos_objetivos .quadros .texto{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+
 
 /*#endregion*/
