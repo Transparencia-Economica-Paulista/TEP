@@ -102,7 +102,7 @@ section {
 
 #nosso_produto .quadros{
   display: grid;
-  grid-template-columns: repeat(21, 21fr) ;
+  grid-template-columns: repeat(24, 24fr) ;
   grid-template-rows: repeat(10, 10%);
   height: 100%;
   width: 90%;
@@ -123,7 +123,7 @@ section {
 #nosso_produto .quadros #quadro2{
   /* height: 100%; */
   /* width: 30%; */ 
-  grid-area:  2 / 9 /9/ 14;
+  grid-area:  2 / 8 /9/ 13;
 
   background-color: var(--var-corcard);
 
@@ -131,11 +131,18 @@ section {
 #nosso_produto .quadros #quadro3{
   /* height: 100%; */
   /* width: 30%; */ 
-  grid-area:  2/16/9/21;
+  grid-area:  2/14/9/19;
   background-color: var(--var-corcard);
 
 }
 
+#nosso_produto .quadros #quadro4{
+  /* height: 100%; */
+  /* width: 30%; */ 
+  grid-area:  2/20/9/25;
+  background-color: var(--var-corcard);
+
+}
 
 #nosso_produto .quadro{
   display: flex;
@@ -468,6 +475,8 @@ section {
   align-items: center;
   justify-content: center;
   font-size: 2rem;
+
+  gap: 5%;
 }
 
 #adquira_nosso_produto button{
