@@ -1,6 +1,8 @@
 
 :root {
-  --var-corcard: #030028;
+  /* Mudar o nome para o nome da cor para reutilizarmos  */
+  --var-azul-escuro: #030028;
+  --var-roxo-medio: #2727A3;
 }
 @font-face {
   font-family: "Inter";
@@ -16,6 +18,17 @@
 
 *{
   margin: 0;
+}
+h2 {
+  font-family: 'Dune';
+  color: var(--var-roxo-medio); 
+  font-size: 3rem;
+  align-self: center;
+  justify-self: center;  
+}
+
+span{
+  font-family: "Inter";
 }
 
 /*#region HEADER*/
@@ -60,15 +73,21 @@ header {
 /*#region SEÇÃO_BANNER*/
 
 .banner {
-  background: url(assets/BannerInicio.png) center/cover no-repeat;
+  /* background: url(assets/institucional/BannerInicio.png) center/cover no-repeat; */
   height: 800px;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   text-align: center;
+  /* background-color: #030028; */
 
 }
+.banner img{
+  width: 100%;
+
+}
+
 /*#endregion*/
 
 
@@ -78,17 +97,23 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-bottom: 1px solid;
 }
 
 .centraliza_titulo{
   display: flex;
   width: 100%;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  font-size: 1.5rem;
+  /* font-size: 1.5rem; */
   margin: 20px;
   font-family: "Dune";
   color: #2727A3;
+  /* background-color: yellowgreen; */
+
+}
+#nosso_produto{
+  padding-top: 2rem;
 
 }
 
@@ -117,22 +142,22 @@ section {
   /* width: 30%; */ 
   grid-area:  2 /2 / 9 / 7;
 
-  background-color: var(--var-corcard);
-
+  background-color: var(--var-azul-escuro);
+  
 }
 #nosso_produto .quadros #quadro2{
   /* height: 100%; */
   /* width: 30%; */ 
   grid-area:  2 / 8 /9/ 13;
 
-  background-color: var(--var-corcard);
+  background-color: var(--var-azul-escuro);
 
 }
 #nosso_produto .quadros #quadro3{
   /* height: 100%; */
   /* width: 30%; */ 
   grid-area:  2/14/9/19;
-  background-color: var(--var-corcard);
+  background-color: var(--var-azul-escuro);
 
 }
 
@@ -140,7 +165,7 @@ section {
   /* height: 100%; */
   /* width: 30%; */ 
   grid-area:  2/20/9/25;
-  background-color: var(--var-corcard);
+  background-color: var(--var-azul-escuro);
 
 }
 
@@ -160,7 +185,7 @@ section {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 70%;
+  /* height: 70%; */
 }
 #nosso_produto .quadro img{
   width: 90%;
@@ -261,6 +286,7 @@ section {
     width: 340px;
     height: 350px;
     border-radius: 10px;
+    /* background-color: #E9501B; */
 
 }
 
@@ -338,7 +364,7 @@ section {
 }
     
 #maria {
-    background-image: url('../assets/samuel.jpg');
+    background-image: url('../assets/');
     
 }
 
@@ -372,7 +398,7 @@ section {
  font-size: 1.2rem;
 }
 #nossos_objetivos .quadros .quadro{
-  /* background-color: var(--var-corcard); */
+  /* background-color: var(--var-azul-escuro); */
   color: black;
 }
 
@@ -382,7 +408,7 @@ section {
   /* width: 30%; */ 
   grid-area:  2 /2 / 10 / 7;
 
-  /* background-color: var(--var-corcard); */
+  /* background-color: var(--var-azul-escuro); */
 
 }
 #nossos_objetivos .quadros #quadro2{
@@ -390,14 +416,14 @@ section {
   /* width: 30%; */ 
   grid-area:  2 / 9 /10/ 14;
 
-  /* background-color: var(--var-corcard); */
+  /* background-color: var(--var-azul-escuro); */
 
 }
 #nossos_objetivos .quadros #quadro3{
   /* height: 100%; */
   /* width: 30%; */ 
   grid-area:  2/16/10/21;
-  /* background-color: var(--var-corcard); */
+  /* background-color: var(--var-azul-escuro); */
 
 }
 
