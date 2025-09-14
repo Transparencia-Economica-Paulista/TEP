@@ -283,8 +283,8 @@ section {
 
 .container {
     position: relative;
-    width: 340px;
-    height: 350px;
+    width: 300px;
+    height: 310px;
     border-radius: 10px;
     /* background-color: #E9501B; */
 
@@ -326,6 +326,8 @@ section {
     background-color: #1c66a6;
     transform: rotateY(180deg);
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
     justify-content: center;
     align-items: center;
     font-weight: bold;
@@ -339,32 +341,32 @@ section {
 }
 
 #gustavo {
-    background-image: url('../assets/');
+    background-image: url('../assets/institucional/gustavo.png') ;
     
 }
     
 #felipe {
-    background-image: url('../assets/');
+    background-image: url('../assets/institucional/felipe.png');
     
 }
     
 #euclides {
-    background-image: url('../assets/');
+    background-image: url('../assets/institucional/euclides.png');
     
 }
     
 #joao {
-    background-image: url('../assets/');
+    background-image: url('../assets/institucional/dorl.png');
     
 }
     
 #lays {
-    background-image: url('../assets/');
+    background-image: url('../assets/institucional/lays.png');
     
 }
     
 #maria {
-    background-image: url('../assets/');
+    background-image: url('../assets/institucional/maria_eduarda.png');
     
 }
 
@@ -474,6 +476,12 @@ section {
   font-family:"Inter" ;
 
 }
+
+#adquira_nosso_produto .clique_aqui h2{
+  font-family: "Inter";
+  color: black;
+
+}
 #adquira_nosso_produto .separacao{
 
   /* background-color: #E9501B; */
@@ -544,7 +552,10 @@ footer .alinhar{
   height: 90%;
   /* background-color: #E9501B; */
   align-items: center;
-  justify-content: space-around;
+  gap: 30%;
+  padding-left: 6%;
+  /* justify-content: space-around; */
+  /* padding: 50px 50px 50px 10px; */
 }
 
 footer .alinha_footer{
