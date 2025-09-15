@@ -33,7 +33,7 @@ span{
 
 /*#region HEADER*/
 header {
-  padding: 2% 1%;
+  padding: 2% 1% ; 
   display: flex;
   align-items: center;
   height: 20px;
