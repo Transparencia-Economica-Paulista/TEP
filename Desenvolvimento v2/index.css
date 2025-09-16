@@ -135,6 +135,7 @@ section {
   height: 100%;
   width: 90%;
   color: white ;
+  font-size: 30px;
   /* background-color: #E9501B; */
   /* align-items: center; */
   /* justify-content: space-around;  */
@@ -538,7 +539,7 @@ footer {
 }
 
 #titulo-footer img {
-  height: 50px;
+  height: 90px;
   width: auto;
 }
 
@@ -546,7 +547,7 @@ footer {
   font-size: 1.5rem;
   letter-spacing: 7px;
   margin: 0;
-  color: #E9501B;
+  color: #fff;
 }
 
 footer .alinhar {
