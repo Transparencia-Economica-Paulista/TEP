@@ -1,89 +1,52 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AquaTech | Login</title>
-
-    <script src="./js/sessao.js"></script>
-
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEP - Login</title>
+  <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/login.css">
 </head>
-
 <body>
+  <!-- header -->
+  <header>
+    <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
+    <nav>
+      <a href="index.html#inicio">Início</a>
+      <a href="index.html#sobre_nos">Sobre nós</a>
+      <a href="cadastro.html">Cadastro</a>
+      <a class="btn-login" href="login.html">Login</a>
+    </nav>
+  </header>
 
-    <!--Header-->
-
-    <div class="header">
-        <div class="container">
-            <h1 class="titulo">AquaTech</h1>
-            <ul class="navbar">
-                <li>
-                    <a href="index.html">Inicial</a>
-                </li>
-                <li>
-                    <a href="simulador.html">Simulador</a>
-                </li>
-                <li>|</li>
-                <li class="agora">
-                    <a href="#">Login</a>
-                </li>
-                <li>
-                    <a href="cadastro.html">Cadastro</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-
-    <div class="login">
-        <div class="alerta_erro">
-            <div class="card_erro" id="cardErro">
-                <span id="mensagem_erro"></span>
-            </div>
-        </div>
-        <div class="container">
-            <div class="card card-login">
-                <h2>Olá de volta!</h2>
-                <div class="formulario">
-                    <div class="campo">
-                        <span>E-mail:</span>
-                        <input id="email_input" type="text" placeholder="Login">
-                    </div>
-                    <div class="campo">
-                        <span>Senha:</span>
-                        <input id="senha_input" type="password" placeholder="******">
-                    </div>
-                    <button class="botao" onclick="entrar()">Entrar</button>
-                </div>
-
-                <div id="div_aguardar" class="loading-div">
-                    <img src="./assets/circle-loading.gif" id="loading-gif">
-                </div>
-
-                <div id="div_erros_login"></div>
-            </div>
-        </div>
-    </div>
-
-    <!--footer inicio-->
-    <div class="footer">
-        <div class="container">
-            <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023</h4>
-            <span class="version">v1.0.0</span>
-        </div>
-    </div>
-    <!--footer fim-->
-
+  <!-- Container -->
+  <main class="container-login">
+    <!-- Login -->
+    <section class="login-section">
+      <h2>Olá de volta!</h2>
+      <p>Faça login para acessar sua conta</p>
+      <form class="login-form" id="formLogin" onsubmit="return entrar()">
+        <label for="email_input">E-mail</label>
+        <input id="email_input" type="email" name="email" placeholder="E-mail" required>
+        <label for="senha_input">Senha</label>
+        <input id="senha_input" type="password" name="senha" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+      </form>
+      <div id="cardErro" style="display:none;color:#e9501b;margin-top:10px;"></div>
+    </section>
+    <!-- Informações -->
+    <section class="info-section">
+      <p class="info-text">
+        Informações <b>confiáveis</b> e <b>dinâmicas</b><br>
+        sobre seu município em <b>um só lugar</b>
+      </p>
+      <div class="parte-azul">
+        <img src="assets/institucional/imagemCadastro.png" alt="Ícone">
+      </div>
+    </section>
+  </main>
 </body>
-
 </html>
-
 <script>
 
 
