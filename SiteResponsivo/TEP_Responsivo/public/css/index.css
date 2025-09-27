@@ -1,0 +1,467 @@
+:root {
+  --azul-escuro: #030028;
+  --roxo-medio: #2727A3;
+  --laranja: #E9501B;
+  --branco: #fff;
+  --preto: #000;
+  --cinza: #6d6d73;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url(../assets/fonts/Barlow-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Dune";
+  src: url(../assets/fonts/Dune_Rise.ttf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h2 {
+  font-family: 'Dune';
+  color: var(--roxo-medio);
+  font-size: 3rem;
+  text-align: center;
+}
+
+span {
+  font-family: 'Inter';
+}
+
+/* header */
+header {
+  height: 70px; /* altura fixa e mais fina */
+  padding: 0 20px; /* apenas espaço lateral */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-family: 'Inter';
+  background-color: var(--branco);
+  position: sticky; /* mantém no topo */
+  top: 0;
+  z-index: 10;
+}
+
+.header_nav {
+  margin-left: auto;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header_nav ul {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.header_nav a {
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--preto);
+}
+
+.button_cadlog {
+  background: var(--laranja);
+  border: none;
+  padding: 10px 40px;
+  border-radius: 16px;
+  color: var(--branco) !important;
+  cursor: pointer;
+}
+
+/* banner */
+ .banner_inicio {
+  width: 100%;
+  height: auto; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.banner_inicio img {
+  width: 100%;
+  height: auto;
+  object-fit: cover; 
+  display: block;
+}
+
+section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid;
+}
+
+.centraliza_titulo {
+  margin: 20px;
+  font-family: "Dune";
+  color: var(--roxo-medio);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* nosso produto */
+#nosso_produto {
+  margin-top: 90px;
+  padding-top: 2rem;
+  height: 650px;
+  display: flex;
+  flex-direction: column;
+}
+
+#nosso_produto .quadros {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
+#nosso_produto .quadro {
+  flex: 1 1 220px; 
+  max-width: 280px;
+  background-color: var(--azul-escuro);
+  border-radius: 15px;
+  color: var(--branco);
+  text-align: center;
+  padding: 20px;
+}
+
+
+#nosso_produto .quadro img {
+  width: 90%;
+  height: auto;
+  max-height: 200px;
+  margin-bottom: 15px;
+}
+
+#nosso_produto .quadro .texto {
+  font-size: large;
+  padding: 5%;
+}
+
+/* sobre nos */
+#sobre_nos {
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+  font-family: "Inter";
+  padding: 40px 20px;
+  margin-bottom: 60px;
+}
+
+#sobre_nos h2 {
+  color: var(--branco);
+  font-family: "Dune";
+}
+
+#separa_texto {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.separacao {
+  flex: 1;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.linha {
+  width: 2px;
+  background-color: var(--branco);
+}
+
+/* equipe */
+
+.fotos_equipe{
+    display: block;
+    align-items: center;
+    width: 90%;
+    height: auto;
+    margin-top: 5%;
+    
+}
+
+.cards_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+
+.container {
+    width: 250px;
+    height: 280px;
+    border-radius: 15px;
+    perspective: 1000px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.rotate {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.container:hover .rotate {
+    transform: rotateY(180deg);
+}
+
+
+.frente, .verso {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    box-shadow: 3px 3px 10px rgb(0, 0, 0);
+    backface-visibility: hidden;
+    top: 0;
+    left: 0;
+}
+
+.frente {
+    background-color: rgb(0, 34, 255);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.verso {
+    background-color: #E9501B;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+}
+
+.nome {
+    font-size: 25px;
+}
+
+
+#gustavo {
+    background-image: url('../assets/integrantes/gustavo.png') ;
+    
+}
+    
+#felipe {
+    background-image: url('../assets/integrantes/felipe.png');
+    
+}
+    
+#euclides {
+    background-image: url('../assets/integrantes/euclides.png');
+    
+}
+    
+#joao {
+    background-image: url('../assets/integrantes/dorl.png');
+    
+}
+    
+#lays {
+    background-image: url('../assets/integrantes/lays.png');
+    
+}
+    
+#maria {
+    background-image: url('../assets/integrantes/maria_eduarda.png');
+    
+}
+/* objetivos */
+#nossos_objetivos {
+  font-family: "Inter";
+  font-size: 1.2rem;
+}
+
+#nossos_objetivos h2 {
+  margin-top: 40px;
+}
+
+#nossos_objetivos .quadros {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+#nossos_objetivos .quadro {
+  text-align: center;
+  max-width: 300px;
+}
+
+#nossos_objetivos img {
+  max-width: 200px;
+  margin: 20px auto;
+}
+
+/* adquira nosso produto */
+#adquira_nosso_produto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Inter";
+  font-size: 1.5rem;
+  padding: 40px 20px;
+}
+
+#adquira_nosso_produto .separacao {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: center;
+}
+
+#adquira_nosso_produto img {
+  width: 80%;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#adquira_nosso_produto .clique_aqui {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+#adquira_nosso_produto .clique_aqui h3{
+  font-family: "Inter";
+}
+
+#adquira_nosso_produto button {
+  width: 60%;
+  height: 4rem;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--laranja);
+  color: var(--branco);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* footer */
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+  padding: 40px 20px;
+  gap: 20px;
+  font-family: "Inter";
+}
+
+#titulo-footer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#titulo-footer img {
+  height: 90px;
+}
+
+#titulo-footer h3 {
+  font-size: 1.5rem;
+  letter-spacing: 7px;
+}
+
+footer .alinhar {
+  display: flex;
+  gap: 150px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+footer a {
+  text-decoration: none;
+  color: var(--branco);
+}
+
+footer .alinha_footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* responsividade */
+@media (max-width: 1024px) {
+  #nosso_produto {
+    height: auto;
+  }
+  #nosso_produto .quadros {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #nossos_objetivos .quadros {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 900px) {
+    .row {
+        flex-direction: column;
+        align-items: center;
+    }
+    .container {
+        width: 90vw;
+        max-width: 300px;
+        height: 230px;
+    }
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    height: 70px;
+    gap: 10px;
+  }
+  .header_nav ul {
+    flex-direction: row;
+    gap: 15px;
+  }
+  #separa_texto {
+    flex-direction: column;
+  }
+  #adquira_nosso_produto .separacao {
+    flex-direction: column;
+  }
+}

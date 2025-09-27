@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro - Mitep</title>
+  <link rel="stylesheet" href="css/cadastro.css">
+</head>
+<body onload="listar()">
+  <!-- Header -->
+  <header>
+    <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
+    <nav>
+      <a href="index.html#inicio">Início</a>
+      <a href="index.html#sobre_nos">Sobre nós</a>
+      <a href="cadastr.html">Cadastro</a>
+      <a class="btn-login" href="log.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- Container -->
+  <main class="container">
+    <!-- Formulário -->
+    <section class="form-section">
+      <h2>Crie sua conta</h2>
+      <p>Cadastre-se e tenha acesso à nossa plataforma</p>
+      <form id="formCadastro">
+  <label for="nome_input">Nome</label>
+  <input type="text" id="nome_input" name="nome" placeholder="Nome" required>
+  <label for="email_input">Email</label>
+  <input type="email" id="email_input" name="email" placeholder="Email" required>
+  <label for="senha_input">Senha</label>
+  <input type="password" id="senha_input" name="senha" placeholder="Senha" required>
+  <label for="confirmacao_senha_input">Confirme sua senha</label>
+  <input type="password" id="confirmacao_senha_input" name="confirmacao_senha" placeholder="Confirme sua senha" required>
+  <label for="cnpj_input">CNPJ</label>
+  <input type="text" id="cnpj_input" name="cnpj" placeholder="CNPJ" required>
+  <label for="municipio_input">Município</label>
+  <input type="text" id="municipio_input" name="municipio" placeholder="Município" required>
+  <button type="submit">Registrar</button>
+</form>
+    </section>
+
+    <!-- Informações -->
+    <section class="info-section">
+      <p class="info-text">
+        Informações <b>confiáveis</b> e <b>dinâmicas</b><br>
+        sobre seu município em <b>um só lugar</b>
+      </p>
+      <div class="parte-azul">
+        <img src="assets/institucional/imagemCadastro.png" alt="Ícone">
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
+<script>
+ 
+  let listaEmpresasCadastradas = [];
+
+  function cadastrar() {
+   
+    var nomeVar = nome_input.value;
+    var emailVar = email_input.value;
+    var senhaVar = senha_input.value;
+    var confirmacaoSenhaVar = confirmacao_senha_input.value;
+    var codigoVar = codigo_input.value;
+    var idEmpresaVincular
+
+    
+    if (
+      nomeVar == "" ||
+      emailVar == "" ||
+      senhaVar == "" ||
+      confirmacaoSenhaVar == "" ||
+      codigoVar == ""
+    ) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "(Mensagem de erro para todos os campos em branco)";
+
+      finalizarAguardar();
+      return false;
+    } else {
+      setInterval(sumirMensagem, 5000);
+    }
+
+    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
+        idEmpresaVincular = listaEmpresasCadastradas[i].id
+        console.log("Código de ativação válido.");
+        break;
+      } else {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+        finalizarAguardar();
+      }
+    }
+
+  
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nomeServer: nomeVar,
+        emailServer: emailVar,
+        senhaServer: senhaVar,
+        idEmpresaVincularServer: idEmpresaVincular
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          cardErro.style.display = "block";
+
+          mensagem_erro.innerHTML =
+            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000");
+
+          limparFormulario();
+          finalizarAguardar();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        finalizarAguardar();
+      });
+
+    return false;
+  }
+
+  // Listando empresas cadastradas 
+  function listar() {
+    fetch("/empresas/listar", {
+      method: "GET",
+    })
+      .then(function (resposta) {
+        resposta.json().then((empresas) => {
+          empresas.forEach((empresa) => {
+            listaEmpresasCadastradas.push(empresa);
+
+            console.log("listaEmpresasCadastradas")
+            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
+          });
+        });
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+  function sumirMensagem() {
+    cardErro.style.display = "none";
+  }
+</script>
