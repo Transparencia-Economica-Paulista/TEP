@@ -1,127 +1,137 @@
 :root {
+  --cor-fundo: #f4f4f4;
+  --cor-primaria: #e9501b;
+  --cor-primaria-hover: #c53d15;
+  --cor-secundaria: #030028;
+  --cor-branca: #fff;
+  --cor-cinza: #6d6d73;
+  --cor-texto: #222;
   --azul-escuro: #030028;
-  --roxo-medio: #2727A3;
-  --laranja: #E9501B;
   --branco: #fff;
-  --preto: #000;
-  --cinza: #6d6d73;
+  --laranja: #e9501b;
+  --borda-radius: 10px;
+  --fonte-padrao: 'Inter', Arial, sans-serif;
 }
 
 @font-face {
   font-family: "Inter";
   src: url(../assets/fonts/Barlow-Regular.ttf);
 }
-
 @font-face {
   font-family: "Dune";
   src: url(../assets/fonts/Dune_Rise.ttf);
 }
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-h2 {
-  font-family: 'Dune';
-  color: var(--roxo-medio);
-  font-size: 3rem;
-  text-align: center;
+body {
+  font-family: var(--fonte-padrao);
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
 }
 
-span {
-  font-family: 'Inter';
-}
-
-/* header */
 header {
-  height: 70px; /* altura fixa e mais fina */
-  padding: 0 20px; /* apenas espaço lateral */
+  background: var(--cor-branca);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 1.1rem;
-  font-family: 'Inter';
-  background-color: var(--branco);
-  position: sticky; /* mantém no topo */
-  top: 0;
-  z-index: 10;
+  padding: 16px 40px 16px 24px;
+  border-bottom: 1px solid #eee;
+  font-family: "Inter";
 }
-
-.header_nav {
-  margin-left: auto;
-  width: 100%;
+header img {
+  height: 48px;
+}
+nav {
   display: flex;
-  justify-content: flex-end;
+  gap: 32px;
+  align-items: center;
 }
-
-.header_nav ul {
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
-  list-style: none;
-}
-
-.header_nav a {
+nav a {
   text-decoration: none;
+  color: #222;
   font-weight: bold;
-  color: var(--preto);
+  font-size: 1.08rem;
+  padding: 4px 0;
+  transition: color 0.2s;
 }
-
-.button_cadlog {
-  background: var(--laranja);
+nav a:hover {
+  color: var(--cor-primaria);
+}
+.button-login {
+  background: var(--cor-primaria);
+  color: var(--cor-branca);
   border: none;
-  padding: 10px 40px;
-  border-radius: 16px;
-  color: var(--branco) !important;
+  border-radius: 10px;
+  padding: 8px 22px;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
+  margin-left: 18px;
+  transition: background 0.2s;
+}
+.button-login:hover {
+  background: var(--cor-primaria-hover);
 }
 
-/* banner */
- .banner_inicio {
+/* Banner */
+.banner_inicio {
   width: 100%;
-  height: auto; 
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   overflow: hidden;
 }
-
 .banner_inicio img {
   width: 100%;
   height: auto;
-  object-fit: cover; 
+  object-fit: cover;
   display: block;
 }
 
+/* Títulos */
+
+.centraliza_titulo h2,
+#adquira_nosso_produto .centraliza_titulo h2,
+#nossos_objetivos .centraliza_titulo h2 {
+  font-family: 'Dune', Arial, sans-serif;
+  color: #2727a3;
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin: 30px 0 20px 0;
+}
+/* Título da seção SOBRE NÓS */
+#sobre_nos .centraliza_titulo h2 {
+  font-family: 'Dune', Arial, sans-serif;
+  color: #fff;
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin: 30px 0 20px 0;
+}
+/* Seções */
 section {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid #eee;
+  background: var(--cor-branca);
 }
 
-.centraliza_titulo {
-  margin: 20px;
-  font-family: "Dune";
-  color: var(--roxo-medio);
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-/* nosso produto */
+/* Nosso Produto */
 #nosso_produto {
-  margin-top: 90px;
+  margin-top: 40px;
   padding-top: 2rem;
-  height: 650px;
-  display: flex;
-  flex-direction: column;
+  background: var(--cor-branca);
 }
-
 #nosso_produto .quadros {
   display: flex;
   gap: 20px;
@@ -130,186 +140,140 @@ section {
   width: 90%;
   margin: 0 auto;
 }
-
 #nosso_produto .quadro {
-  flex: 1 1 220px; 
+  flex: 1 1 220px;
   max-width: 280px;
   background-color: var(--azul-escuro);
   border-radius: 15px;
   color: var(--branco);
   text-align: center;
   padding: 20px;
+  margin-bottom: 20px;
 }
-
-
 #nosso_produto .quadro img {
   width: 90%;
   height: auto;
   max-height: 200px;
   margin-bottom: 15px;
 }
-
 #nosso_produto .quadro .texto {
   font-size: large;
   padding: 5%;
 }
 
-/* sobre nos */
+/* Sobre Nós */
 #sobre_nos {
   background-color: var(--azul-escuro);
   color: var(--branco);
   font-family: "Inter";
   padding: 40px 20px;
-  margin-bottom: 60px;
+  margin-bottom: 0;
+  border-bottom: none;
 }
-
 #sobre_nos h2 {
   color: var(--branco);
   font-family: "Dune";
 }
-
 #separa_texto {
   display: flex;
   gap: 20px;
   margin-top: 20px;
 }
-
 .separacao {
   flex: 1;
   font-size: 1.2rem;
   line-height: 1.6;
+  color: var(--branco);
 }
-
 .linha {
   width: 2px;
   background-color: var(--branco);
 }
 
-/* equipe */
-
-.fotos_equipe{
-    display: block;
-    align-items: center;
-    width: 90%;
-    height: auto;
-    margin-top: 5%;
-    
+/* Equipe */
+.fotos_equipe {
+  width: 90%;
+  margin-top: 5%;
 }
-
 .cards_container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
 }
-
 .row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-    margin-bottom: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 50px;
 }
-
-
 .container {
-    width: 250px;
-    height: 280px;
-    border-radius: 15px;
-    perspective: 1000px;
-    margin-bottom: 20px;
-    position: relative;
+  width: 250px;
+  height: 280px;
+  border-radius: 15px;
+  perspective: 1000px;
+  margin-bottom: 20px;
+  position: relative;
 }
-
 .rotate {
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
 }
-
 .container:hover .rotate {
-    transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
-
-
 .frente, .verso {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
-    box-shadow: 3px 3px 10px rgb(0, 0, 0);
-    backface-visibility: hidden;
-    top: 0;
-    left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  box-shadow: 3px 3px 10px rgb(0, 0, 0);
+  backface-visibility: hidden;
+  top: 0;
+  left: 0;
 }
-
 .frente {
-    background-color: rgb(0, 34, 255);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  background-color: rgb(0, 34, 255);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
-
-
 .verso {
-    background-color: #E9501B;
-    transform: rotateY(180deg);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    color: white;
+  background-color: #E9501B;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: white;
 }
-
 .nome {
-    font-size: 25px;
+  font-size: 25px;
 }
 
+#gustavo { background-image: url('../assets/integrantes/gustavo.png'); }
+#felipe { background-image: url('../assets/integrantes/felipe.png'); }
+#euclides { background-image: url('../assets/integrantes/euclides.png'); }
+#joao { background-image: url('../assets/integrantes/dorl.png'); }
+#lays { background-image: url('../assets/integrantes/lays.png'); }
+#maria { background-image: url('../assets/integrantes/maria_eduarda.png'); }
 
-#gustavo {
-    background-image: url('../assets/integrantes/gustavo.png') ;
-    
-}
-    
-#felipe {
-    background-image: url('../assets/integrantes/felipe.png');
-    
-}
-    
-#euclides {
-    background-image: url('../assets/integrantes/euclides.png');
-    
-}
-    
-#joao {
-    background-image: url('../assets/integrantes/dorl.png');
-    
-}
-    
-#lays {
-    background-image: url('../assets/integrantes/lays.png');
-    
-}
-    
-#maria {
-    background-image: url('../assets/integrantes/maria_eduarda.png');
-    
-}
-/* objetivos */
+/* Nossos Objetivos */
 #nossos_objetivos {
   font-family: "Inter";
   font-size: 1.2rem;
+  background: var(--cor-branca);
 }
-
 #nossos_objetivos h2 {
   margin-top: 40px;
 }
-
 #nossos_objetivos .quadros {
   display: flex;
   justify-content: center;
@@ -317,18 +281,21 @@ section {
   flex-wrap: wrap;
   margin-top: 40px;
 }
-
 #nossos_objetivos .quadro {
   text-align: center;
   max-width: 300px;
+  background: var(--cor-branca);
+  color: var(--cor-texto);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
-
 #nossos_objetivos img {
   max-width: 200px;
   margin: 20px auto;
 }
 
-/* adquira nosso produto */
+/* Adquira nosso produto */
 #adquira_nosso_produto {
   display: flex;
   flex-direction: column;
@@ -336,21 +303,24 @@ section {
   font-family: "Inter";
   font-size: 1.5rem;
   padding: 40px 20px;
+  background: var(--cor-branca);
 }
-
+#adquira_nosso_produto .centraliza_titulo h2 {
+  color: #2727a3;
+}
 #adquira_nosso_produto .separacao {
   display: flex;
   flex-direction: row;
   gap: 40px;
   align-items: center;
+  width: 100%;
+  justify-content: center;
 }
-
 #adquira_nosso_produto img {
   width: 80%;
   border-radius: 12px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
 }
-
 #adquira_nosso_produto .clique_aqui {
   width: 50%;
   display: flex;
@@ -358,11 +328,10 @@ section {
   align-items: center;
   gap: 20px;
 }
-
-#adquira_nosso_produto .clique_aqui h3{
+#adquira_nosso_produto .clique_aqui h3 {
   font-family: "Inter";
+  color: black;
 }
-
 #adquira_nosso_produto button {
   width: 60%;
   height: 4rem;
@@ -374,7 +343,7 @@ section {
   cursor: pointer;
 }
 
-/* footer */
+/* Footer */
 footer {
   display: flex;
   flex-direction: column;
@@ -385,83 +354,114 @@ footer {
   gap: 20px;
   font-family: "Inter";
 }
-
 #titulo-footer {
   display: flex;
   align-items: center;
   gap: 15px;
 }
-
 #titulo-footer img {
   height: 90px;
 }
-
 #titulo-footer h3 {
   font-size: 1.5rem;
   letter-spacing: 7px;
+  color: var(--branco);
 }
-
 footer .alinhar {
   display: flex;
   gap: 150px;
   flex-wrap: wrap;
   justify-content: center;
 }
-
 footer a {
   text-decoration: none;
   color: var(--branco);
 }
-
 footer .alinha_footer {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* responsividade */
+/* Responsividade */
 @media (max-width: 1024px) {
-  #nosso_produto {
-    height: auto;
-  }
-  #nosso_produto .quadros {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  #nosso_produto .quadros,
   #nossos_objetivos .quadros {
     flex-direction: column;
     align-items: center;
-  }
-}
-
-@media (max-width: 900px) {
-    .row {
-        flex-direction: column;
-        align-items: center;
-    }
-    .container {
-        width: 90vw;
-        max-width: 300px;
-        height: 230px;
-    }
-}
-
-@media (max-width: 768px) {
-  header {
-    flex-direction: row;
-    justify-content: space-between;
-    height: 70px;
-    gap: 10px;
-  }
-  .header_nav ul {
-    flex-direction: row;
-    gap: 15px;
-  }
-  #separa_texto {
-    flex-direction: column;
+    gap: 20px;
   }
   #adquira_nosso_produto .separacao {
     flex-direction: column;
+    gap: 20px;
+  }
+}
+@media (max-width: 900px) {
+  .row {
+    flex-direction: column;
+    align-items: center;
+  }
+  .container {
+    width: 90vw;
+    max-width: 300px;
+    height: 230px;
+  }
+  #separa_texto {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+@media (max-width: 768px) {
+  
+  .banner_inicio img {
+    max-width: 100vw;
+  }
+  
+  #adquira_nosso_produto .separacao {
+    flex-direction: column;
+    gap: 20px;
+  }
+  #adquira_nosso_produto img {
+    width: 100%;
+  }
+  #adquira_nosso_produto .clique_aqui {
+    width: 100%;
+  }
+}
+@media (max-width: 600px) {
+
+  header {
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 8px;
+  }
+  .container,
+  .container-login {
+    margin-top: 18px;
+    border-radius: 8px;
+    box-shadow: none;
+  }
+  .form-section,
+  .login-section,
+  .info-section {
+    padding: 18px 8px;
+  }
+  .info-text {
+    font-size: 1.05rem;
+  }
+  #titulo-footer h3 {
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+  }
+}
+
+@media (max-width: 768px) {
+  .centraliza_titulo h2,
+  #adquira_nosso_produto .centraliza_titulo h2,
+  #nossos_objetivos .centraliza_titulo h2 {
+    font-size: 2rem;
+  }
+  #sobre_nos .centraliza_titulo h2 {
+    font-size: 2rem;
   }
 }
