@@ -1,5 +1,4 @@
 var usuarioModel = require("../models/usuarioModel");
-var aquarioModel = require("../models/aquarioModel");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
@@ -17,25 +16,10 @@ function autenticar(req, res) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
                     console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
 
-                    if (resultadoAutenticar.length == 1) {
-                        console.log(resultadoAutenticar);
-
-                        aquarioModel.buscarAquariosPorEmpresa(resultadoAutenticar[0].empresaId)
-                            .then((resultadoAquarios) => {
-                                if (resultadoAquarios.length > 0) {
-                                    res.json({
-                                        id: resultadoAutenticar[0].id,
-                                        email: resultadoAutenticar[0].email,
-                                        nome: resultadoAutenticar[0].nome,
-                                        senha: resultadoAutenticar[0].senha,
-                                        aquarios: resultadoAquarios
-                                    });
-                                } else {
-                                    res.status(204).json({ aquarios: [] });
-                                }
-                            })
-                    } else if (resultadoAutenticar.length == 0) {
+                 if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
+                    } else if (resultadoAutenticar.length == 1) {
+                        res.json(resultadoAutenticar[0]);
                     } else {
                         res.status(403).send("Mais de um usuário com o mesmo login e senha!");
                     }
@@ -56,6 +40,7 @@ function cadastrar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
     var fkEmpresa = req.body.idEmpresaVincularServer;
+    var adm = req.body.admServer; // opcional: 1 ou 0
 
     if (nome == undefined) {
         res.status(400).send("Seu nome está undefined!");
@@ -67,11 +52,15 @@ function cadastrar(req, res) {
         res.status(400).send("Sua empresa a vincular está undefined!");
     } else {
 
-    
-        usuarioModel.cadastrar(nome, email, senha, fkEmpresa)
+        // garantir valor padrão
+        if (adm !== 1 && adm !== 0) {
+            adm = 0;
+        }
+
+        usuarioModel.cadastrar(nome, email, senha, fkEmpresa, adm)
             .then(
                 function (resultado) {
-                    res.json(resultado);
+                    res.status(201).json(resultado);
                 }
             ).catch(
                 function (erro) {

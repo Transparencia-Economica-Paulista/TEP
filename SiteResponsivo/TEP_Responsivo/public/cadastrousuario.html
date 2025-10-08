@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TEP - Cadastro de Usuário</title>
+  <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/cadastro.css" />
+</head>
+<body onload="carregarEmpresas()">
+  <header>
+    <img src="assets/Logo/LogoCompleta.png" alt="TEP Logo">
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="login.html">Login</a>
+      <button class="button-login" onclick="window.location='cadastro.html'">Cadastrar</button>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="form-section">
+      <h2>Cadastro de Funcionário</h2>
+      <p>Complete o cadastro criando o primeiro usuário da empresa</p>
+      <form id="formUsuario" onsubmit="return cadastrarUsuario()">
+        <label for="nome_usuario_input">Nome</label>
+        <input type="text" id="nome_usuario_input" required>
+
+        <label for="email_usuario_input">Email</label>
+        <input type="email" id="email_usuario_input" required>
+
+        <label for="senha_usuario_input">Senha</label>
+        <input type="password" id="senha_usuario_input" required>
+
+        <label for="confirmar_senha_usuario_input">Confirmar Senha</label>
+        <input type="password" id="confirmar_senha_usuario_input" required>
+
+        <label for="empresa_select">Empresa</label>
+        <select id="empresa_select" required></select>
+
+        <div class="checkbox-container">
+          <label>
+            <input type="checkbox" id="adm_checkbox" checked>
+            Tornar este usuário administrador
+          </label>
+        </div>
+
+        <button type="submit">Cadastrar Funcionário</button>
+        <div id="mensagem_usuario" class="mensagem"></div>
+      </form>
+    </div>
+
+    <div class="info-section">
+      <div class="info-text">
+        Agora crie o primeiro usuário para acessar o sistema e começar a gerenciar sua empresa.
+      </div>
+      <img src="assets/institucional/imagemCadastro.png" alt="Cadastro de Usuário" class="imagem-lateral">
+    </div>
+  </div>
+
+  <script>
+  async function carregarEmpresas() {
+    const resposta = await fetch("/empresas/listar");
+    const empresas = await resposta.json();
+    const select = document.getElementById("empresa_select");
+    select.innerHTML = "";
+
+    empresas.forEach(e => {
+      const opt = document.createElement("option");
+      opt.value = e.id;
+      opt.text = e.razao_social;
+      select.appendChild(opt);
+    });
+
+    // Pré-seleciona a empresa recém-cadastrada
+    const idNova = sessionStorage.ID_EMPRESA_CRIADA;
+    if (idNova) select.value = idNova;
+  }
+
+  async function cadastrarUsuario() {
+    const nome = nome_usuario_input.value.trim();
+    const email = email_usuario_input.value.trim();
+    const senha = senha_usuario_input.value;
+    const confirmar = confirmar_senha_usuario_input.value;
+    const fkEmpresa = empresa_select.value;
+    const adm = adm_checkbox.checked ? 1 : 0;
+
+    const msg = document.getElementById("mensagem_usuario");
+
+    if (senha !== confirmar) {
+      msg.className = "mensagem erro";
+      msg.style.display = "block";
+      msg.innerText = "As senhas não coincidem!";
+      return false;
+    }
+
+    msg.className = "mensagem";
+    msg.style.display = "block";
+    msg.style.color = "black";
+    msg.innerText = "Enviando...";
+
+    const res = await fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nomeServer: nome,
+        emailServer: email,
+        senhaServer: senha,
+        idEmpresaVincularServer: fkEmpresa,
+        admServer: adm
+      })
+    });
+
+    if (res.ok) {
+      msg.className = "mensagem sucesso";
+      msg.innerText = "Usuário cadastrado com sucesso!";
+      setTimeout(() => window.location = "login.html", 1500);
+    } else {
+      const txt = await res.text();
+      msg.className = "mensagem erro";
+      msg.innerText = "Erro: " + txt;
+    }
+
+    return false;
+  }
+  </script>
+</body>
+</html>

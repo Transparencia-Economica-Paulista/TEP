@@ -75,6 +75,7 @@ nav a:hover {
 }
 .button-login:hover {
   background: var(--cor-primaria-hover);
+  color: #f9f9f9;
 }
 
 /* Banner */
@@ -211,7 +212,7 @@ section {
 }
 .container {
   width: 250px;
-  height: 280px;
+  height: 280px; /* Altura fixa mantida */
   border-radius: 15px;
   perspective: 1000px;
   margin-bottom: 20px;
@@ -240,8 +241,11 @@ section {
 .frente {
   background-color: rgb(0, 34, 255);
   background-size: cover;
-  background-position: center;
+  background-position: center; /* Centraliza a imagem horizontalmente e verticalmente */
   background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .verso {
   background-color: #E9501B;
@@ -267,11 +271,13 @@ section {
 
 /* Nossos Objetivos */
 #nossos_objetivos {
+   margin-top: 8vw;
   font-family: "Inter";
   font-size: 1.2rem;
   background: var(--cor-branca);
 }
 #nossos_objetivos h2 {
+  
   margin-top: 40px;
 }
 #nossos_objetivos .quadros {
@@ -288,7 +294,7 @@ section {
   color: var(--cor-texto);
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.20);
 }
 #nossos_objetivos img {
   max-width: 200px;
@@ -297,6 +303,7 @@ section {
 
 /* Adquira nosso produto */
 #adquira_nosso_produto {
+ 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -306,6 +313,7 @@ section {
   background: var(--cor-branca);
 }
 #adquira_nosso_produto .centraliza_titulo h2 {
+   margin-top: 10vw;
   color: #2727a3;
 }
 #adquira_nosso_produto .separacao {
@@ -341,6 +349,19 @@ section {
   color: var(--branco);
   font-size: 1.2rem;
   cursor: pointer;
+}
+
+#adquira_nosso_produto button:hover{
+  background: var(--cor-primaria-hover);
+  color: #f9f9f9;
+}
+
+
+
+#adquira_nosso_produto button a{
+  color: #f4f4f4;
+  font-family: "Inter";
+  text-decoration: none;
 }
 
 /* Footer */
@@ -404,7 +425,7 @@ footer .alinha_footer {
   .container {
     width: 90vw;
     max-width: 300px;
-    height: 230px;
+    height: 280px; /* Altura fixa mantida mesmo no responsivo */
   }
   #separa_texto {
     flex-direction: column;
@@ -429,7 +450,10 @@ footer .alinha_footer {
   }
 }
 @media (max-width: 600px) {
-
+  .container {
+    height: 280px; /* Altura fixa mantida também em telas pequenas */
+    max-width: 280px;
+  }
   header {
     flex-direction: column;
     gap: 10px;
