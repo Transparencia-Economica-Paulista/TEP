@@ -1,51 +1,82 @@
 package school.sptech;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.Bucket;
+import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
+import software.amazon.awssdk.services.s3.model.S3Exception;
+import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // Precisar passar as dependências no arquivo pom.xml. No caso desde arquivo passei as dependências do mysql, jdbc e do Apache POI
+        // Precisar passar as dependências no arquivo pom.xml. No caso desde arquivo passei as dependências do mysql, jdbc, Aws e do Apache POI.
 
         // Fazemos uma instância para a conexão.
         Conexao conexao = new Conexao();
         JdbcTemplate template = new JdbcTemplate(conexao.getConexao());
 
+
         // Fazemos uma instância para o log.
         Log log = new Log();
 
-        // Fazemos uma variável que vai ter o nome do arquivo que vai ser lido
-        String nomeDoArquivo = "pib-municipios-2021_site.xlsx";
+        log.logTEP();
 
-        // Fazemos uma instância para o Leitor (Classe responsável por ler a planilha usando Apache POI).
-        Leitor leitor1 = new Leitor();
 
-        // Declaramos uma variável que será uma Lista de municipios (Classe criada que represetará os municípios capturados na planilha)
-        // Ela vai receber o resultado do metodo "extrairMunicios", que tem no leitor. E passará como parâmetro a variável declarada que passará o nome do arquivo.
-        List<Municipio> municipios = leitor1.extrairMunicipios(nomeDoArquivo);
+        //Fazendo a Instãncia para pegar o cliente do S3.
+        S3Client s3conec = new S3Conexao().getS3Client();
+        //Declaro o nome do Bucket
+        String bucketName = "3uclides";
 
-        // Chama o metodo "logMensagem" e passa um LocalDateTime que tem o metodo "now" que passa a hora e data atual , tipo do log e a mensagem
-        log.logMensagem( LocalDateTime.now(), "Debug" , "Iniciando Lançamento de dados para o banco");
+        //Declaro uma Variável que vai ser responsável por ler e mandar dados que não se repetem.
+        Integer tentativa = 0;
 
-        // Nesse bloco confere se a tabela já existe no banco e exclui ela. E então cria a uma tabela municipio
-        template.execute("drop table if exists municipios");
-        template.execute("Create Table municipios(id int primary key auto_increment, nome Varchar(45),sigla Varchar(45) ,regiao Varchar(45), agro DECIMAL(15,4),industria DECIMAL(15,3),admPublica DECIMAL(15,3) ,totalAdmPublica DECIMAL(15,3),totalGeral DECIMAL(15,3) ,impostos DECIMAL(15,3),pib DECIMAL(15,3) ,pibPerCapita DECIMAL(15,3) )");
 
-        // Percorre a Lista "municipios"
-        for (Municipio municipio : municipios) {
 
-            // Chama o metodo "logMensagem"
-            log.logMensagem( LocalDateTime.now(), "Debug" , ("Lançando informaçoes sobre " + municipio.getNome()));
+            log.logMensagem(LocalDateTime.now(), "Debug", "Iniciando Conexão com o Bucket com o nome: " + bucketName);
+            //Abro o Try
+            try {
+                //Criando a requisição para pedir uma lista objetos
+                ListObjectsRequest requisicao = ListObjectsRequest.builder().bucket(bucketName).build();
+                //Com base na conexão pego a requisição e mando e crio uma lista de objetos.
+                List<S3Object> objetos = s3conec.listObjects(requisicao).contents();
 
-            // Faz o INSERT no banco de dados chamando o metodo GET de cada atributo de Municipio
-            template.update("Insert Into municipios values (Default, ? , ? , ?, ?, ?, ? ,? , ?, ?, ?, ?)", municipio.getNome(), municipio.getSigla(),
-                    municipio.getRegiao(), municipio.getAgro(), municipio.getIndustria(), municipio.getAdmPublica(), municipio.getTotalAdmPublica(),
-                    municipio.getTotalGeral(), municipio.getImpostos(), municipio.getPib() , municipio.getPibPerCapita());
+                log.logMensagem(LocalDateTime.now(), "Debug", "Objetos achados com sucesso!");
 
+
+                log.logMensagem(LocalDateTime.now(), "Debug", "Percorrendo objetos");
+                //percorrendo a  lista
+                for (S3Object objeto : objetos) {
+
+                    //pegando a chave do objeto que é o caminho do objeto
+                    String caminhoDoArquivo = objeto.key();
+
+                    //condição para conferir se é uma planilha
+                    if (caminhoDoArquivo.endsWith(".xlsx")) {
+                        log.logMensagem(LocalDateTime.now(), "Debug", "Achado a  planilha: " + caminhoDoArquivo);
+
+                        // criei essa variavel só pra usar no bloco de pegar o ano da planilha
+                        String nomeArquivo = objeto.key();
+                        //Faço a tratativa para pegar apenas o Ano que tem escrito na planilha
+                        Integer inicioAno = nomeArquivo.lastIndexOf('-') + 1;
+                        Integer fimAno = nomeArquivo.lastIndexOf('.');
+                        String ano = nomeArquivo.substring(inicioAno, fimAno);
+                        Integer anoDaplanilha = Integer.parseInt(ano);
+
+
+                        // Fazemos uma instância para o Leitor (Classe responsável por ler a planilha usando Apache POI).
+                        Leitor leitor1 = new Leitor();
+
+
+                        leitor1.extrairMunicipios(s3conec, bucketName, caminhoDoArquivo, tentativa, anoDaplanilha);
+                        //Mudo o valor para que depois que passar no metodo de extrair só faça algumas ações já antes falada
+                        tentativa = 1;
+                    }
+                }
+            } catch (S3Exception e) {
+                log.logMensagem(LocalDateTime.now(), "Debug", "Falha ao conectar bucket");
+            }
         }
-        // Chama o metodo "logMensagem"
-        log.logMensagem( LocalDateTime.now(), "Debug" , "Lançamento completo");
     }
-}
