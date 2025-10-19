@@ -1,2 +1,158 @@
-<h1>DASHBOARDEEEEEEEEEEE
-</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEP - Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
+</head>
+<body>
+   <!-- header -->
+ <header>
+    <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
+    <nav>
+      <a href="index.html#inicio">Início</a>
+      <a href="index.html#sobre_nos">Sobre nós</a>
+    <a href="#" class="active">Dashboard</a>
+      <a href="#" class="logout">Sair</a>
+    </nav>
+  </header>
+
+
+  <main class="container">
+    <h1>Dashboard Municipal</h1>
+    <div class="filters">
+      <label for="ano">Ano de Referência</label>
+      <select id="ano">
+        <option>2025</option>
+        <option>2024</option>
+        <option>2023</option>
+      </select>
+    </div>
+
+    <section class="cards">
+      <div class="card destaque">
+        <h3>SP</h3>
+        <p>São Bernardo do Campo</p>
+      </div>
+      <div class="card">
+        <h3>PIB per Capita</h3>
+        <p>R$ 58.200,00</p>
+      </div>
+      <div class="card">
+        <h3>Setor em destaque</h3>
+        <p>Serviços</p>
+      </div>
+      <div class="card">
+        <h3>Participação no PIB</h3>
+        <p>R$ 185.000.000</p>
+      </div>
+    </section>
+
+    <section class="dashboard">
+      <div class="grafico">
+        <h2>Histórico de Desenvolvimento Anual</h2>
+        <div id="graficoDesenvolvimento"></div>
+      </div>
+
+      <aside class="painel-lateral">
+        <div class="box arrecadacao">
+          <h3>Arrecadação por Setor</h3>
+          <ul>
+            <li>Serviços <span>R$ 90.000,00</span></li>
+            <li>Indústria <span>R$ 60.000,00</span></li>
+            <li>Agropecuária <span>R$ 35.000,00</span></li>
+          </ul>
+        </div>
+
+        <div class="box crescimento">
+          <h3>Crescimento Mensal</h3>
+          <ul>
+            <li>Janeiro <span class="positivo">▲ 4%</span></li>
+            <li>Fevereiro <span class="positivo">▲ 4%</span></li>
+            <li>Março <span class="negativo">▼ 4%</span></li>
+            <li>Abril <span class="positivo">▲ 9%</span></li>
+            <li>Maio <span class="positivo">▲ 4%</span></li>
+            <li>Junho <span class="positivo">▲ 4%</span></li>
+            <li>Julho <span class="negativo">▼ 4%</span></li>
+            <li>Agosto <span class="positivo">▲ 4%</span></li>
+            <li>Setembro <span class="positivo">▲ 4%</span></li>
+            <li>Outubro <span class="positivo">▲ 4%</span></li>
+            <li>Novembro <span class="negativo">▼ 4%</span></li>
+            <li>Dezembro <span class="positivo">▲ 4%</span></li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Mitep - Todos os direitos reservados</p>
+  </footer>
+
+  <script>
+    // ======== CONFIGURAÇÃO DO GRÁFICO APEXCHARTS =========
+    const options = {
+      chart: {
+        type: 'line',
+        height: 350,
+        stacked: false,
+        toolbar: { show: false }
+      },
+      stroke: {
+        width: [0, 3, 3, 3],
+        curve: 'smooth'
+      },
+      title: {
+        text: ''
+      },
+      colors: ['#1e90ff', '#ff4c4c', '#f5c542', '#4caf50'],
+      series: [
+        {
+          name: 'Valor do PIB per capita',
+          type: 'column',
+          data: [5200, 6800, 7500, 8200, 5800, 6400, 6700, 7200, 6900, 7400, 8000, 7600]
+        },
+        {
+          name: 'Serviços',
+          type: 'line',
+          data: [4000, 4200, 4500, 4800, 5000, 5300, 5500, 5800, 6000, 6200, 6500, 6700]
+        },
+        {
+          name: 'Indústria',
+          type: 'line',
+          data: [3000, 3200, 3300, 3400, 3500, 3700, 3800, 3900, 4000, 4100, 4300, 4400]
+        },
+        {
+          name: 'Agropecuária',
+          type: 'line',
+          data: [1800, 2000, 2200, 2400, 2600, 2500, 2700, 2900, 2800, 3000, 3100, 3300]
+        }
+      ],
+      xaxis: {
+        categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+      },
+      yaxis: {
+        title: { text: 'R$' },
+        labels: {
+          formatter: val => "R$" + val.toLocaleString('pt-BR')
+        }
+      },
+      tooltip: {
+        y: {
+          formatter: val => "R$" + val.toLocaleString('pt-BR')
+        }
+      },
+      legend: {
+        position: 'bottom'
+      }
+    };
+
+    const chart = new ApexCharts(document.querySelector("#graficoDesenvolvimento"), options);
+    chart.render();
+  </script>
+</body>
+</html>
