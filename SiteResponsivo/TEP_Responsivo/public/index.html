@@ -12,13 +12,13 @@
 <body>
 
   <!-- header -->
- <header>
+  <header>
     <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
-    <nav>
+    <nav id="main-nav">
       <a href="index.html#inicio">Início</a>
       <a href="index.html#sobre_nos">Sobre nós</a>
       <a href="cadastro.html">Cadastro</a>
-      <a class="button-login" href="login.html">Login</a>
+      <a class="button-login" id="nav-login" href="login.html">Login</a>
     </nav>
   </header>
 
@@ -230,5 +230,24 @@
       </div>
     </div>
   </footer>
+  <script>
+  
+    (function(){
+      const nav = document.getElementById('main-nav');
+      const loginLink = document.getElementById('nav-login');
+      const usuario = sessionStorage.EMAIL_USUARIO;
+      if (usuario) {
+      
+        loginLink.textContent = 'Minha Conta';
+        loginLink.href = 'dashboard.html';
+
+        const btn = document.createElement('a');
+        btn.href = 'cadastrousuario.html';
+        btn.textContent = 'Cadastrar Usuário';
+        btn.style.marginLeft = '12px';
+        nav.appendChild(btn);
+      }
+    })();
+  </script>
 </body>
 </html>

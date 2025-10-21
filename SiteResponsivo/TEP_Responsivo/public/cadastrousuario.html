@@ -112,8 +112,27 @@
 
     if (res.ok) {
       msg.className = "mensagem sucesso";
-      msg.innerText = "Usuário cadastrado com sucesso!";
-      setTimeout(() => window.location = "login.html", 1500);
+      msg.innerText = "Usuário cadastrado com sucesso! Entrando...";
+
+      // Autenticar automaticamente e redirecionar para a versão logada do site
+      const authRes = await fetch('/usuarios/autenticar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ emailServer: email, senhaServer: senha })
+      });
+
+      if (authRes.ok) {
+        const usuario = await authRes.json();
+        sessionStorage.EMAIL_USUARIO = usuario.email;
+        sessionStorage.NOME_USUARIO = usuario.nome;
+        sessionStorage.ID_USUARIO = usuario.id;
+        sessionStorage.FK_EMPRESA = usuario.fkEmpresa;
+
+        setTimeout(() => window.location = 'index.html', 800);
+      } else {
+        // Se autenticação automática falhar, ir para login
+        setTimeout(() => window.location = 'login.html', 800);
+      }
     } else {
       const txt = await res.text();
       msg.className = "mensagem erro";

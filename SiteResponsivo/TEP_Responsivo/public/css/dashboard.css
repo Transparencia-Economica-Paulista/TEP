@@ -78,7 +78,6 @@ nav a:hover {
   font-weight: bold;
 }
 
-/* ===== Conteúdo ===== */
 .container {
   max-width: 1200px;
   margin: 30px auto;
@@ -215,11 +214,42 @@ select {
 .crescimento .negativo {
   color: #ff4c4c;
 }
-
-/* ===== Rodapé ===== */
+/* Footer */
 footer {
-  text-align: center;
-  margin: 30px 0;
-  font-size: 0.9em;
-  color: #666;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+  padding: 40px 20px;
+  gap: 20px;
+  font-family: "Inter";
+}
+#titulo-footer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+#titulo-footer img {
+  height: 90px;
+}
+#titulo-footer h3 {
+  font-size: 1.5rem;
+  letter-spacing: 7px;
+  color: var(--branco);
+}
+footer .alinhar {
+  display: flex;
+  gap: 150px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+footer a {
+  text-decoration: none;
+  color: var(--branco);
+}
+footer .alinha_footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

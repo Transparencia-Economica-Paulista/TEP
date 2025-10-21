@@ -4,6 +4,8 @@ function autenticar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
 
+    console.log('Tentativa de login:', { email, senhaLength: senha ? senha.length : 0 });
+
     if (email == undefined) {
         res.status(400).send("Seu email está undefined!");
     } else if (senha == undefined) {
@@ -41,6 +43,8 @@ function cadastrar(req, res) {
     var senha = req.body.senhaServer;
     var fkEmpresa = req.body.idEmpresaVincularServer;
     var adm = req.body.admServer; // opcional: 1 ou 0
+
+    console.log('Cadastro de usuário:', { nome, email, fkEmpresa, adm, senhaLength: senha ? senha.length : 0 });
 
     if (nome == undefined) {
         res.status(400).send("Seu nome está undefined!");

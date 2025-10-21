@@ -91,6 +91,8 @@
     msg.style.color = "black";
     msg.innerText = "Enviando...";
 
+    console.log('Enviando dados:', { nome: razaoSocial, email, cnpj, municipio });
+    
     const res = await fetch("/empresas/cadastrar", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -101,17 +103,52 @@
         cnpj, 
         municipio })
     });
+    
+    console.log('Resposta recebida:', res.status, res.statusText);
 
     if (res.ok) {
       const data = await res.json();
       msg.className = "mensagem sucesso";
-      msg.innerText = "Empresa cadastrada com sucesso!";
+      msg.innerText = "Empresa cadastrada com sucesso! Redirecionando...";
       sessionStorage.ID_EMPRESA_CRIADA = data.insertId;
-      setTimeout(() => window.location = "cadastrousuario.html", 1500);
+      
+      console.log('Empresa cadastrada, ID:', data.insertId);
+      console.log('Redirecionando para cadastrousuario.html em 1.5s');
+      
+      setTimeout(() => {
+        try {
+          console.log('Executando redirecionamento...');
+          window.location.href = "cadastrousuario.html";
+        } catch (error) {
+          console.error('Erro no redirecionamento:', error);
+          window.location = "cadastrousuario.html";
+        }
+      }, 1500);
+      
+      setTimeout(() => {
+        const btnContinuar = document.createElement('button');
+        btnContinuar.textContent = 'Continuar para Cadastro de Usuário';
+        btnContinuar.style.cssText = 'background: #28a745; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; width: 100%;';
+        btnContinuar.onclick = () => window.location.href = "cadastrousuario.html";
+        msg.appendChild(btnContinuar);
+      }, 3000);
+      
+      return false; // Impedir submit do form
     } else {
       const txt = await res.text();
       msg.className = "mensagem erro";
-      msg.innerText = "Erro: " + txt;
+      
+      
+      if (res.status === 409) {
+        msg.innerText = txt; // CNPJ já existe
+      } else if (res.status === 400) {
+        msg.innerText = "Dados inválidos: " + txt;
+      } else if (res.status === 500) {
+        msg.innerText = "Erro no servidor. Tente novamente.";
+        console.error("Erro 500:", txt);
+      } else {
+        msg.innerText = `Erro ${res.status}: ${txt}`;
+      }
     }
 
     return false;
