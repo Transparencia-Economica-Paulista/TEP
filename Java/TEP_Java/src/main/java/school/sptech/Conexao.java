@@ -17,9 +17,9 @@ public class Conexao{
         DriverManagerDataSource driver = new DriverManagerDataSource();
 
         // Informamos o "jdbc:mysql", que é padrão. Depois o Hostname, porta e nome da Database
-        driver.setUrl("jdbc:mysql://localhost:3306/Laboratorio");
+        driver.setUrl("jdbc:mysql:54.175.109.229:3306/TEP");
         // Nome do usuário, EX: root
-        driver.setUsername("EuTeste");
+        driver.setUsername("root");
         // Por fim, informamos a senha.
         driver.setPassword("urubu100");
 
