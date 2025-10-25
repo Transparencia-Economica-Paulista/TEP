@@ -7,7 +7,7 @@
   <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/cadastro.css" />
 </head>
-<body onload="carregarMunicipios()">
+<body onload="inicializarPagina()">
   <header>
     <img src="assets/Logo/LogoCompleta.png" alt="TEP Logo">
     <nav>
@@ -30,12 +30,15 @@
 
         <label for="senha_empresa_input">Senha</label>
         <input type="password" id="senha_empresa_input" required>
+        <small style="color: #666; font-size: 0.85rem; margin-top: 4px; display: block;">
+          A senha deve conter pelo menos 8 caracteres, incluindo: 1 letra maiúscula, 1 minúscula, 1 número e 1 caractere especial (@$!%*?&)
+        </small>
 
         <label for="confirmar_senha_empresa_input">Confirmar Senha</label>
         <input type="password" id="confirmar_senha_empresa_input" required>
 
         <label for="cnpj_empresa_input">CNPJ</label>
-        <input type="text" id="cnpj_empresa_input" required>
+        <input type="text" id="cnpj_empresa_input" placeholder="00.000.000/0000-00" maxlength="18" required>
 
         <label for="municipio_select">Município</label>
         <select id="municipio_select" required>
@@ -56,103 +59,316 @@
   </div>
 
   <script>
-  async function carregarMunicipios() {
-    const resposta = await fetch("/empresas/municipios");
-    const municipios = await resposta.json();
-    const select = document.getElementById("municipio_select");
-    select.innerHTML = "";
-    municipios.forEach(m => {
-      const opt = document.createElement("option");
-      opt.value = m.id;
-      opt.text = m.nome_municipio + " (" + m.nome_regiao + ")";
-      select.appendChild(opt);
+  
+  function verificarSenhaSegura(senha) {
+   
+    if (senha.length < 8) {
+      return false;
+    }
+    
+    var temMinuscula = false;
+    for (var i = 0; i < senha.length; i++) {
+      if (senha[i] >= 'a' && senha[i] <= 'z') {
+        temMinuscula = true;
+        break;
+      }
+    }
+    if (!temMinuscula) {
+      return false;
+    }
+    
+
+    var temMaiuscula = false;
+    for (var i = 0; i < senha.length; i++) {
+      if (senha[i] >= 'A' && senha[i] <= 'Z') {
+        temMaiuscula = true;
+        break;
+      }
+    }
+    if (!temMaiuscula) {
+      return false;
+    }
+    
+  
+    var temNumero = false;
+    for (var i = 0; i < senha.length; i++) {
+      if (senha[i] >= '0' && senha[i] <= '9') {
+        temNumero = true;
+        break;
+      }
+    }
+    if (!temNumero) {
+      return false;
+    }
+    
+  
+    var caracteresEspeciais = '@$!%*?&';
+    var temEspecial = false;
+    for (var i = 0; i < senha.length; i++) {
+      for (var j = 0; j < caracteresEspeciais.length; j++) {
+        if (senha[i] === caracteresEspeciais[j]) {
+          temEspecial = true;
+          break;
+        }
+      }
+      if (temEspecial) {
+        break;
+      }
+    }
+    
+    return temEspecial;
+  }
+
+  
+  function validarCNPJSimples(cnpj) {
+    
+    var cnpjLimpo = '';
+    for (var i = 0; i < cnpj.length; i++) {
+      var char = cnpj[i];
+      if (char >= '0' && char <= '9') {
+        cnpjLimpo += char;
+      }
+    }
+    
+    
+    if (cnpjLimpo.length !== 14) {
+      return false;
+    }
+    
+   
+    var todosIguais = true;
+    for (var i = 1; i < cnpjLimpo.length; i++) {
+      if (cnpjLimpo[i] !== cnpjLimpo[0]) {
+        todosIguais = false;
+        break;
+      }
+    }
+    
+    return !todosIguais;
+  }
+
+ 
+  function formatarCNPJ(cnpj) {
+   
+    var numeros = '';
+    for (var i = 0; i < cnpj.length; i++) {
+      var char = cnpj[i];
+      if (char >= '0' && char <= '9') {
+        numeros += char;
+      }
+    }
+    
+   
+    var formatado = '';
+    for (var i = 0; i < numeros.length && i < 14; i++) {
+      if (i === 2 || i === 5) {
+        formatado += '.';
+      } else if (i === 8) {
+        formatado += '/';
+      } else if (i === 12) {
+        formatado += '-';
+      }
+      formatado += numeros[i];
+    }
+    
+    return formatado;
+  }
+
+ 
+  function inicializarPagina() {
+    carregarMunicipios();
+    configurarValidacoes();
+  }
+
+
+  function configurarValidacoes() {
+    var senhaInput = document.getElementById('senha_empresa_input');
+    var confirmarSenhaInput = document.getElementById('confirmar_senha_empresa_input');
+    var cnpjInput = document.getElementById('cnpj_empresa_input');
+    
+  
+    senhaInput.addEventListener('input', function() {
+      var senha = senhaInput.value;
+      var mensagemElement = senhaInput.nextElementSibling;
+      
+      if (senha.length === 0) {
+        mensagemElement.style.color = '#666';
+        mensagemElement.textContent = 'A senha deve conter pelo menos 8 caracteres, incluindo: 1 letra maiúscula, 1 minúscula, 1 número e 1 caractere especial (@$!%*?&)';
+      } else if (verificarSenhaSegura(senha)) {
+        mensagemElement.style.color = 'green';
+        mensagemElement.textContent = '✓ Senha válida!';
+      } else {
+        mensagemElement.style.color = 'red';
+        mensagemElement.textContent = '✗ Senha deve ter pelo menos 8 caracteres, 1 maiúscula, 1 minúscula, 1 número e 1 caractere especial';
+      }
+    });
+    
+    
+    confirmarSenhaInput.addEventListener('input', function() {
+      var senha = senhaInput.value;
+      var confirmacao = confirmarSenhaInput.value;
+      
+      if (confirmacao.length === 0) {
+        confirmarSenhaInput.style.borderColor = '';
+        return;
+      }
+      
+      if (senha === confirmacao) {
+        confirmarSenhaInput.style.borderColor = 'green';
+      } else {
+        confirmarSenhaInput.style.borderColor = 'red';
+      }
+    });
+    
+   
+    cnpjInput.addEventListener('input', function() {
+      var valorFormatado = formatarCNPJ(cnpjInput.value);
+      cnpjInput.value = valorFormatado;
     });
   }
 
-  async function cadastrarEmpresa() {
-    const razaoSocial = razao_social_input.value.trim();
-    const email = email_empresa_input.value.trim();
-    const senha = senha_empresa_input.value;
-    const confirmar = confirmar_senha_empresa_input.value;
-    const cnpj = cnpj_empresa_input.value.trim();
-    const municipio = municipio_select.value;
+  function carregarMunicipios() {
+    fetch("/empresas/municipios")
+      .then(function(resposta) {
+        return resposta.json();
+      })
+      .then(function(municipios) {
+        var select = document.getElementById("municipio_select");
+        select.innerHTML = "";
+        
+        for (var i = 0; i < municipios.length; i++) {
+          var municipio = municipios[i];
+          var opcao = document.createElement("option");
+          opcao.value = municipio.id;
+          opcao.text = municipio.nome_municipio + " (" + municipio.nome_regiao + ")";
+          select.appendChild(opcao);
+        }
+      })
+      .catch(function(erro) {
+        console.log('Erro ao carregar municípios:', erro);
+        var select = document.getElementById("municipio_select");
+        select.innerHTML = '<option value="">Erro ao carregar municípios</option>';
+      });
+  }
 
-    const msg = document.getElementById("mensagem_empresa");
+ 
+  function mostrarMensagem(tipo, texto) {
+    var mensagemDiv = document.getElementById("mensagem_empresa");
+    mensagemDiv.className = "mensagem " + tipo;
+    mensagemDiv.style.display = "block";
+    mensagemDiv.innerText = texto;
+    
+    if (tipo === "erro") {
+      mensagemDiv.style.color = "red";
+    } else if (tipo === "sucesso") {
+      mensagemDiv.style.color = "green";
+    } else {
+      mensagemDiv.style.color = "black";
+    }
+  }
 
-    if (senha !== confirmar) {
-      msg.className = "mensagem erro";
-      msg.style.display = "block";
-      msg.innerText = "As senhas não coincidem!";
+ 
+  function cadastrarEmpresa() {
+   
+    var razaoSocial = document.getElementById('razao_social_input').value.trim();
+    var email = document.getElementById('email_empresa_input').value.trim();
+    var senha = document.getElementById('senha_empresa_input').value;
+    var confirmacao = document.getElementById('confirmar_senha_empresa_input').value;
+    var cnpj = document.getElementById('cnpj_empresa_input').value.trim();
+    var municipio = document.getElementById('municipio_select').value;
+
+   
+    if (razaoSocial === '') {
+      mostrarMensagem('erro', 'Razão Social é obrigatória!');
       return false;
     }
 
-    msg.className = "mensagem";
-    msg.style.display = "block";
-    msg.style.color = "black";
-    msg.innerText = "Enviando...";
-
-    console.log('Enviando dados:', { nome: razaoSocial, email, cnpj, municipio });
-    
-    const res = await fetch("/empresas/cadastrar", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        nome: razaoSocial, 
-        email, 
-        senha, 
-        cnpj, 
-        municipio })
-    });
-    
-    console.log('Resposta recebida:', res.status, res.statusText);
-
-    if (res.ok) {
-      const data = await res.json();
-      msg.className = "mensagem sucesso";
-      msg.innerText = "Empresa cadastrada com sucesso! Redirecionando...";
-      sessionStorage.ID_EMPRESA_CRIADA = data.insertId;
-      
-      console.log('Empresa cadastrada, ID:', data.insertId);
-      console.log('Redirecionando para cadastrousuario.html em 1.5s');
-      
-      setTimeout(() => {
-        try {
-          console.log('Executando redirecionamento...');
-          window.location.href = "cadastrousuario.html";
-        } catch (error) {
-          console.error('Erro no redirecionamento:', error);
-          window.location = "cadastrousuario.html";
-        }
-      }, 1500);
-      
-      setTimeout(() => {
-        const btnContinuar = document.createElement('button');
-        btnContinuar.textContent = 'Continuar para Cadastro de Usuário';
-        btnContinuar.style.cssText = 'background: #28a745; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; width: 100%;';
-        btnContinuar.onclick = () => window.location.href = "cadastrousuario.html";
-        msg.appendChild(btnContinuar);
-      }, 3000);
-      
-      return false; // Impedir submit do form
-    } else {
-      const txt = await res.text();
-      msg.className = "mensagem erro";
-      
-      
-      if (res.status === 409) {
-        msg.innerText = txt; // CNPJ já existe
-      } else if (res.status === 400) {
-        msg.innerText = "Dados inválidos: " + txt;
-      } else if (res.status === 500) {
-        msg.innerText = "Erro no servidor. Tente novamente.";
-        console.error("Erro 500:", txt);
-      } else {
-        msg.innerText = `Erro ${res.status}: ${txt}`;
-      }
+    if (email === '') {
+      mostrarMensagem('erro', 'Email é obrigatório!');
+      return false;
     }
+
+    if (cnpj === '') {
+      mostrarMensagem('erro', 'CNPJ é obrigatório!');
+      return false;
+    }
+
+    if (!validarCNPJSimples(cnpj)) {
+      mostrarMensagem('erro', 'CNPJ inválido! Verifique o formato.');
+      return false;
+    }
+
+    if (municipio === '') {
+      mostrarMensagem('erro', 'Selecione um município!');
+      return false;
+    }
+
+    if (senha.length < 8) {
+      mostrarMensagem('erro', 'A senha deve ter pelo menos 8 caracteres!');
+      return false;
+    }
+
+    if (!verificarSenhaSegura(senha)) {
+      mostrarMensagem('erro', 'A senha deve conter pelo menos: 8 caracteres, 1 letra maiúscula, 1 minúscula, 1 número e 1 caractere especial (@$!%*?&)!');
+      return false;
+    }
+
+    if (senha !== confirmacao) {
+      mostrarMensagem('erro', 'As senhas não coincidem!');
+      return false;
+    }
+
+  
+    mostrarMensagem('', 'Enviando...');
+
+  
+    var dados = {
+      nome: razaoSocial,
+      email: email,
+      senha: senha,
+      cnpj: cnpj,
+      municipio: municipio
+    };
+
+    console.log('Enviando dados:', dados);
+
+  
+    fetch("/empresas/cadastrar", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json" 
+      },
+      body: JSON.stringify(dados)
+    })
+    .then(function(resposta) {
+      console.log('Resposta recebida:', resposta.status, resposta.statusText);
+      
+      if (resposta.ok) {
+        return resposta.json();
+      } else {
+        return resposta.json().then(function(erro) {
+          throw new Error(erro.message || 'Erro ao cadastrar empresa');
+        });
+      }
+    })
+    .then(function(resultado) {
+      mostrarMensagem('sucesso', 'Empresa cadastrada com sucesso! Redirecionando...');
+      
+  
+      setTimeout(function() {
+        window.location.href = "cadastrousuario.html";
+      }, 2000);
+    })
+    .catch(function(erro) {
+      console.error('Erro na requisição:', erro);
+      mostrarMensagem('erro', erro.message || 'Erro de conexão. Tente novamente.');
+    });
 
     return false;
   }
+
+
+  window.onload = inicializarPagina;
   </script>
 </body>
 </html>

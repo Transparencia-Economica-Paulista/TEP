@@ -10,8 +10,9 @@
   <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="js/sessao.js"></script>
+  <script src="js/dashboard.js"></script>
 </head>
-<body onload="carregarDashboard()">
+<body onload="iniciarDashboard()">
   
  <header>
     <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
@@ -27,7 +28,7 @@
     <h1>Dashboard Municipal</h1>
     <div class="filters">
       <label for="ano">Ano de Referência</label>
-      <select id="ano" onchange="carregarIndicadoresPorAno()">
+      <select id="ano" onchange="carregarDadosDoAno()">
         <option value="2025">2025</option>
         <option value="2024">2024</option>
         <option value="2023">2023</option>
@@ -117,16 +118,16 @@
       try {
         console.log('Iniciando carregamento do dashboard...');
         
-        // Verificar se o usuário está logado
-       // if (!sessionStorage.FK_EMPRESA) {
-        //   console.log('Usuário não logado, redirecionando...');
-        //   window.location = "login.html";
-        //   return;
-        // }
+       
+       if (!sessionStorage.FK_EMPRESA) {
+          console.log('Usuário não logado, redirecionando...');
+          window.location = "login.html";
+          return;
+        }
 
-        // console.log('FK_EMPRESA:', sessionStorage.FK_EMPRESA);
+        console.log('FK_EMPRESA:', sessionStorage.FK_EMPRESA);
 
-        // Buscar informações da empresa para obter o município
+       
         const empresaRes = await fetch(`/empresas/buscar/${sessionStorage.FK_EMPRESA}`);
         if (!empresaRes.ok) throw new Error("Erro ao buscar empresa");
         
@@ -135,13 +136,13 @@
         
         console.log('Município ID:', municipioId);
 
-        // Carregar anos disponíveis primeiro
+    
         await carregarAnosDisponiveis();
         
-        // Carregar dados gerais do dashboard
+      
         await carregarDadosGerais();
         
-        // Carregar indicadores do primeiro ano disponível
+        
         await carregarIndicadoresPorAno();
         
       } catch (error) {
@@ -179,7 +180,7 @@
         
       } catch (error) {
         console.error("Erro ao carregar anos:", error);
-        // Se não conseguir carregar anos, usar o ano atual como fallback
+      
         const selectAno = document.getElementById("ano");
         selectAno.innerHTML = `<option value="${new Date().getFullYear()}">Sem dados</option>`;
       }
@@ -197,7 +198,7 @@
         if (dados.length > 0) {
           const info = dados[0];
           
-          // Atualizar elementos da interface
+        
           const siglaElement = document.getElementById("sigla-regiao");
           const nomeElement = document.getElementById("nome-municipio");
           const pibElement = document.getElementById("pib-per-capita");
@@ -224,14 +225,14 @@
     }
 
     function mostrarMensagemErro(mensagem) {
-      // Atualizar todos os campos com mensagem de erro
+      
       const elementos = ['sigla-regiao', 'nome-municipio', 'pib-per-capita', 'setor-destaque', 'participacao-pib'];
       elementos.forEach(id => {
         const element = document.getElementById(id);
         if (element) element.textContent = "Sem dados";
       });
       
-      // Mostrar alerta se necessário
+      
       console.warn(mensagem);
     }
 
@@ -252,7 +253,7 @@
         const indicadores = await response.json();
         console.log('Indicadores recebidos:', indicadores);
         
-        // Atualizar lista de arrecadação por setor
+        
         const arrecadacaoLista = document.getElementById("arrecadacao-lista");
         if (arrecadacaoLista) {
           if (indicadores.length > 0) {
@@ -268,7 +269,7 @@
           }
         }
 
-        // Atualizar gráfico com dados reais
+       
         await atualizarGrafico();
         
       } catch (error) {
@@ -284,7 +285,7 @@
       try {
         console.log('Atualizando gráfico com dados reais...');
         
-        // Buscar histórico completo do município
+        
         const response = await fetch(`/empresas/dashboard/${municipioId}/historico`);
         if (!response.ok) throw new Error("Erro ao buscar histórico");
         
@@ -296,7 +297,7 @@
           return;
         }
 
-        // Organizar dados por ano e setor
+        
         const dadosPorAno = {};
         const setoresUnicos = new Set();
         const anosUnicos = new Set();
@@ -324,10 +325,10 @@
         console.log('Anos encontrados:', anosOrdenados);
         console.log('Setores encontrados:', setoresArray);
 
-        // Preparar séries para o gráfico
+        
         const series = [];
         
-        // Adicionar PIB per capita como coluna
+        
         if (anosOrdenados.length > 0) {
           const dadosPib = anosOrdenados.map(ano => dadosPorAno[ano]?.pib_per_capita || 0);
           series.push({
@@ -337,11 +338,11 @@
           });
         }
         
-        // Adicionar cada setor como linha
+       
         setoresArray.forEach(setor => {
           const dadosSetor = anosOrdenados.map(ano => {
             const valor = dadosPorAno[ano]?.setores[setor] || 0;
-            return Math.round(valor / 1000000); // Converter para milhões
+            return Math.round(valor / 1000000); 
           });
           
           series.push({

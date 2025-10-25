@@ -5,7 +5,7 @@ body {
   color: #222;
 }
 
-/* ===== Header ===== */
+/* header  */
 :root {
   --cor-fundo: #f4f4f4;
   --cor-primaria: #e9501b;
@@ -26,8 +26,8 @@ body {
   src: url(../assets/fonts/Barlow-Regular.ttf);
 }
 @font-face {
-  font-family: "Dune";
-  src: url(../assets/fonts/Dune_Rise.ttf);
+  font-family: "judson";
+  src: url(../assets/fonts/judson_Rise.ttf);
 }
 * {
   margin: 0;
@@ -101,7 +101,7 @@ select {
   border: 1px solid #ccc;
 }
 
-/* ===== Cards ===== */
+/* cards */
 .cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -132,7 +132,7 @@ select {
   background-color: #d63d1a;
 }
 
-/* ===== Dashboard ===== */
+/* dash */
 .dashboard {
   display: flex;
   gap: 20px;

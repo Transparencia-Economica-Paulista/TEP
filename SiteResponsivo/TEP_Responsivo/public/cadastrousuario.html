@@ -7,7 +7,7 @@
   <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/cadastro.css" />
 </head>
-<body onload="carregarEmpresas()">
+<body onload="inicializarPagina()">
   <header>
     <img src="assets/Logo/LogoCompleta.png" alt="TEP Logo">
     <nav>
@@ -30,6 +30,9 @@
 
         <label for="senha_usuario_input">Senha</label>
         <input type="password" id="senha_usuario_input" required>
+        <small style="color: #666; font-size: 0.85rem; margin-top: 4px; display: block;">
+          A senha deve conter pelo menos 8 caracteres, incluindo: 1 letra maiúscula, 1 minúscula, 1 número e 1 caractere especial (@$!%*?&)
+        </small>
 
         <label for="confirmar_senha_usuario_input">Confirmar Senha</label>
         <input type="password" id="confirmar_senha_usuario_input" required>
@@ -58,86 +61,252 @@
   </div>
 
   <script>
-  async function carregarEmpresas() {
-    const resposta = await fetch("/empresas/listar");
-    const empresas = await resposta.json();
-    const select = document.getElementById("empresa_select");
-    select.innerHTML = "";
-
-    empresas.forEach(e => {
-      const opt = document.createElement("option");
-      opt.value = e.id;
-      opt.text = e.razao_social;
-      select.appendChild(opt);
-    });
-
+  // Função para verificar se a senha é segura
+  function verificarSenhaSegura(senha) {
+    // Verifica se tem pelo menos 8 caracteres
+    if (senha.length < 8) {
+      return false;
+    }
     
-    const idNova = sessionStorage.ID_EMPRESA_CRIADA;
-    if (idNova) select.value = idNova;
+    // Verifica se tem pelo menos uma letra minúscula
+    var temMinuscula = false;
+    for (var i = 0; i < senha.length; i++) {
+      if (senha[i] >= 'a' && senha[i] <= 'z') {
+        temMinuscula = true;
+        break;
+      }
+    }
+    if (!temMinuscula) {
+      return false;
+    }
+    
+    // Verifica se tem pelo menos uma letra maiúscula
+    var temMaiuscula = false;
+    for (var i = 0; i < senha.length; i++) {
+      if (senha[i] >= 'A' && senha[i] <= 'Z') {
+        temMaiuscula = true;
+        break;
+      }
+    }
+    if (!temMaiuscula) {
+      return false;
+    }
+    
+    // Verifica se tem pelo menos um número
+    var temNumero = false;
+    for (var i = 0; i < senha.length; i++) {
+      if (senha[i] >= '0' && senha[i] <= '9') {
+        temNumero = true;
+        break;
+      }
+    }
+    if (!temNumero) {
+      return false;
+    }
+    
+    // Verifica se tem pelo menos um caractere especial
+    var caracteresEspeciais = '@$!%*?&';
+    var temEspecial = false;
+    for (var i = 0; i < senha.length; i++) {
+      for (var j = 0; j < caracteresEspeciais.length; j++) {
+        if (senha[i] === caracteresEspeciais[j]) {
+          temEspecial = true;
+          break;
+        }
+      }
+      if (temEspecial) {
+        break;
+      }
+    }
+    
+    return temEspecial;
   }
 
-  async function cadastrarUsuario() {
-    const nome = nome_usuario_input.value.trim();
-    const email = email_usuario_input.value.trim();
-    const senha = senha_usuario_input.value;
-    const confirmar = confirmar_senha_usuario_input.value;
-    const fkEmpresa = empresa_select.value;
-    const adm = adm_checkbox.checked ? 1 : 0;
+  function inicializarPagina() {
+    console.log('Página de cadastro carregada');
+    carregarEmpresas();
+    configurarValidacoes();
+  }
 
-    const msg = document.getElementById("mensagem_usuario");
 
-    if (senha !== confirmar) {
-      msg.className = "mensagem erro";
-      msg.style.display = "block";
-      msg.innerText = "As senhas não coincidem!";
+  function configurarValidacoes() {
+    var senhaInput = document.getElementById('senha_usuario_input');
+    var confirmarSenhaInput = document.getElementById('confirmar_senha_usuario_input');
+    
+    
+    senhaInput.addEventListener('input', function() {
+      var senha = senhaInput.value;
+      var mensagemElement = senhaInput.nextElementSibling;
+      
+      if (senha.length === 0) {
+        mensagemElement.style.color = '#666';
+        mensagemElement.textContent = 'A senha deve conter pelo menos 8 caracteres, incluindo: 1 letra maiúscula, 1 minúscula, 1 número e 1 caractere especial (@$!%*?&)';
+      } else if (verificarSenhaSegura(senha)) {
+        mensagemElement.style.color = 'green';
+        mensagemElement.textContent = '✓ Senha válida!';
+      } else {
+        mensagemElement.style.color = 'red';
+        mensagemElement.textContent = '✗ Senha deve ter pelo menos 8 caracteres, 1 maiúscula, 1 minúscula, 1 número e 1 caractere especial';
+      }
+    });
+    
+   
+    confirmarSenhaInput.addEventListener('input', function() {
+      var senha = senhaInput.value;
+      var confirmacao = confirmarSenhaInput.value;
+      
+      if (confirmacao.length === 0) {
+        confirmarSenhaInput.style.borderColor = '';
+        return;
+      }
+      
+      if (senha === confirmacao) {
+        confirmarSenhaInput.style.borderColor = 'green';
+      } else {
+        confirmarSenhaInput.style.borderColor = 'red';
+      }
+      });
+  }
+
+  
+  function mostrarMensagem(tipo, texto) {
+    var mensagemDiv = document.getElementById("mensagem_usuario");
+    mensagemDiv.className = "mensagem " + tipo;
+    mensagemDiv.style.display = "block";
+    mensagemDiv.innerText = texto;
+    
+    if (tipo === "erro") {
+      mensagemDiv.style.color = "red";
+    } else if (tipo === "sucesso") {
+      mensagemDiv.style.color = "green";
+    } else {
+      mensagemDiv.style.color = "black";
+    }
+  }
+
+
+  function carregarEmpresas() {
+    console.log('Carregando lista de empresas...');
+    
+    fetch("/empresas/listar")
+      .then(function(resposta) {
+        return resposta.json();
+      })
+      .then(function(empresas) {
+        console.log('Empresas carregadas:', empresas.length);
+        
+        var selectEmpresa = document.getElementById("empresa_select");
+        selectEmpresa.innerHTML = "";
+
+      
+        for (var i = 0; i < empresas.length; i++) {
+          var empresa = empresas[i];
+          var opcao = document.createElement("option");
+          opcao.value = empresa.id;
+          opcao.text = empresa.razao_social;
+          selectEmpresa.appendChild(opcao);
+        }
+
+      
+        var empresaRecemCriada = sessionStorage.getItem("ID_EMPRESA_CRIADA");
+        if (empresaRecemCriada) {
+          selectEmpresa.value = empresaRecemCriada;
+        }
+      })
+      .catch(function(erro) {
+        console.log('Erro ao carregar empresas:', erro);
+        var mensagem = document.getElementById("mensagem_usuario");
+        mensagem.className = "mensagem erro";
+        mensagem.style.display = "block";
+        mensagem.innerText = "Erro ao carregar empresas";
+      });
+  }
+
+  
+  function cadastrarUsuario() {
+    console.log('Iniciando cadastro de usuário...');
+    
+  
+    var nome = document.getElementById("nome_usuario_input").value.trim();
+    var email = document.getElementById("email_usuario_input").value.trim();
+    var senha = document.getElementById("senha_usuario_input").value;
+    var confirmarSenha = document.getElementById("confirmar_senha_usuario_input").value;
+    var idEmpresa = document.getElementById("empresa_select").value;
+    var ehAdministrador = document.getElementById("adm_checkbox").checked ? 1 : 0;
+
+    
+    if (nome === '') {
+      mostrarMensagem('erro', 'Nome é obrigatório!');
       return false;
     }
 
-    msg.className = "mensagem";
-    msg.style.display = "block";
-    msg.style.color = "black";
-    msg.innerText = "Enviando...";
-
-    const res = await fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nomeServer: nome,
-        emailServer: email,
-        senhaServer: senha,
-        idEmpresaVincularServer: fkEmpresa,
-        admServer: adm
-      })
-    });
-
-    if (res.ok) {
-      msg.className = "mensagem sucesso";
-      msg.innerText = "Usuário cadastrado com sucesso! Entrando...";
-
-      // Autenticar automaticamente e redirecionar para a versão logada do site
-      const authRes = await fetch('/usuarios/autenticar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ emailServer: email, senhaServer: senha })
-      });
-
-      if (authRes.ok) {
-        const usuario = await authRes.json();
-        sessionStorage.EMAIL_USUARIO = usuario.email;
-        sessionStorage.NOME_USUARIO = usuario.nome;
-        sessionStorage.ID_USUARIO = usuario.id;
-        sessionStorage.FK_EMPRESA = usuario.fkEmpresa;
-
-        setTimeout(() => window.location = 'index.html', 800);
-      } else {
-        // Se autenticação automática falhar, ir para login
-        setTimeout(() => window.location = 'login.html', 800);
-      }
-    } else {
-      const txt = await res.text();
-      msg.className = "mensagem erro";
-      msg.innerText = "Erro: " + txt;
+    if (email === '') {
+      mostrarMensagem('erro', 'Email é obrigatório!');
+      return false;
     }
+
+    if (idEmpresa === '') {
+      mostrarMensagem('erro', 'Selecione uma empresa!');
+      return false;
+    }
+
+    if (senha.length < 8) {
+      mostrarMensagem('erro', 'A senha deve ter pelo menos 8 caracteres!');
+      return false;
+    }
+
+    if (!verificarSenhaSegura(senha)) {
+      mostrarMensagem('erro', 'A senha deve conter pelo menos: 8 caracteres, 1 letra maiúscula, 1 minúscula, 1 número e 1 caractere especial (@$!%*?&)!');
+      return false;
+    }
+
+    if (senha !== confirmarSenha) {
+      mostrarMensagem('erro', 'As senhas não coincidem!');
+      return false;
+    }
+
+    mostrarMensagem('', 'Cadastrando usuário...');
+
+    var dadosUsuario = {
+      nomeServer: nome,
+      emailServer: email,
+      senhaServer: senha,
+      idEmpresaVincularServer: idEmpresa,
+      admServer: ehAdministrador
+    };
+
+    console.log('Enviando dados:', { nome: nome, email: email, idEmpresa: idEmpresa, ehAdministrador: ehAdministrador });
+
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json" 
+      },
+      body: JSON.stringify(dadosUsuario)
+    })
+    .then(function(resposta) {
+      console.log('Resposta recebida:', resposta.status, resposta.statusText);
+      
+      if (resposta.ok) {
+        return resposta.json();
+      } else {
+        return resposta.json().then(function(erro) {
+          throw new Error(erro.message || 'Erro ao cadastrar usuário');
+        });
+      }
+    })
+    .then(function(resultado) {
+      mostrarMensagem('sucesso', 'Usuário cadastrado com sucesso! Redirecionando para o login...');
+      
+      setTimeout(function() {
+        console.log('Redirecionando para a página de login');
+        window.location.href = 'login.html';
+      }, 2000);
+    })
+    .catch(function(erro) {
+      console.error('Erro na requisição:', erro);
+      mostrarMensagem('erro', erro.message || 'Erro de conexão. Tente novamente.');
+    });
 
     return false;
   }

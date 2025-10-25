@@ -15,7 +15,6 @@ function listar() {
   return database.executar(instrucaoSql);
 }
 
-
 function listarMunicipios() {
   var instrucaoSql = `
     SELECT m.idMunicipios as id, m.nome_municipio, r.nome_regiao 
@@ -40,6 +39,7 @@ function cadastrar(razaoSocial, cnpj, email, senha, municipioId) {
   `;
   
   console.log("SQL para cadastro de empresa:", instrucaoSql);
+  
   return database.executar(instrucaoSql);
 }
 

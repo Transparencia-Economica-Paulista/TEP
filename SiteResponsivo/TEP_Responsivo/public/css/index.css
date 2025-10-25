@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap');
+
 :root {
   --cor-fundo: #f4f4f4;
   --cor-primaria: #e9501b;
@@ -14,13 +16,17 @@
 }
 
 @font-face {
+  font-family: "judson";
+  src: url(../assets/fonts/BodoniModa_9pt-Regular.ttf);
+}
+@font-face {
   font-family: "Inter";
   src: url(../assets/fonts/Barlow-Regular.ttf);
 }
-@font-face {
-  font-family: "Dune";
-  src: url(../assets/fonts/Dune_Rise.ttf);
-}
+/* @font-face {
+  font-family: "judson";
+  src: url(../assets/fonts/judson_Rise.ttf);
+} */
 * {
   margin: 0;
   padding: 0;
@@ -32,6 +38,7 @@ body {
  background: var(--cor-branca);
   color: var(--cor-texto);
 }
+
 
 header {
   background: var(--cor-branca);
@@ -99,17 +106,17 @@ nav a:hover {
 .centraliza_titulo h2,
 #adquira_nosso_produto .centraliza_titulo h2,
 #nossos_objetivos .centraliza_titulo h2 {
-  font-family: 'Dune', Arial, sans-serif;
-  color: #2727a3;
-  font-size: 2.5rem;
+  font-family: 'judson', Arial, sans-serif;
+  color: #030327;
+  font-size: 3.5rem;
   text-align: center;
   font-weight: bold;
-  letter-spacing: 2px;
+  letter-spacing: 15px;
   margin: 30px 0 20px 0;
 }
 /* Título da seção SOBRE NÓS */
 #sobre_nos .centraliza_titulo h2 {
-  font-family: 'Dune', Arial, sans-serif;
+  font-family: 'judson', Arial, sans-serif;
   color: #fff;
   font-size: 2.5rem;
   text-align: center;
@@ -173,7 +180,7 @@ section {
 }
 #sobre_nos h2 {
   color: var(--branco);
-  font-family: "Dune";
+  font-family: "judson";
 }
 #separa_texto {
   display: flex;
@@ -212,7 +219,7 @@ section {
 }
 .container {
   width: 250px;
-  height: 280px; /* Altura fixa mantida */
+  height: 280px; 
   border-radius: 15px;
   perspective: 1000px;
   margin-bottom: 20px;
@@ -241,7 +248,7 @@ section {
 .frente {
   background-color: rgb(0, 34, 255);
   background-size: cover;
-  background-position: center; /* Centraliza a imagem horizontalmente e verticalmente */
+  background-position: center; 
   background-repeat: no-repeat;
   display: flex;
   align-items: center;
@@ -424,7 +431,7 @@ footer .alinha_footer {
   .container {
     width: 90vw;
     max-width: 300px;
-    height: 280px; /* Altura fixa mantida mesmo no responsivo */
+    height: 280px;
   }
   #separa_texto {
     flex-direction: column;
@@ -450,7 +457,7 @@ footer .alinha_footer {
 }
 @media (max-width: 600px) {
   .container {
-    height: 280px; /* Altura fixa mantida também em telas pequenas */
+    height: 280px; 
     max-width: 280px;
   }
   header {
