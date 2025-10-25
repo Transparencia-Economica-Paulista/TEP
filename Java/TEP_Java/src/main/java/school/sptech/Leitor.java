@@ -213,7 +213,7 @@ public class Leitor {
         for (MetricasDoPib metrica : metricas) {
 
             //Faz o INSERT no banco de dados chamando o metodo GET de cada atributo de Municipio
-            template.update("Insert Into Metricas_do_Pib values (Default, ? , ? , ? ,?,?)", metrica.getImpostos(),metrica.getPib(),metrica.getPib_per_capita(), metrica.getAno(), metrica.getMunicipIsIdMunicipios());
+            template.update("Insert Into Metricas_do_pib values (Default, ? , ? , ? ,?,?)", metrica.getImpostos(),metrica.getPib(),metrica.getPib_per_capita(), metrica.getAno(), metrica.getMunicipIsIdMunicipios());
 
         }
         log.logMensagem(LocalDateTime.now(), "Debug", "Terminou o envio das metricas do PIB");
