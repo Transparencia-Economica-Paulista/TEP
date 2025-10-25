@@ -175,7 +175,7 @@ public class Leitor {
         for (Municipio municipio : municipios) {
 
             //Faz o INSERT no banco de dados chamando o metodo GET de cada atributo de Municipio
-            template.update("Insert Into municipios values (Default, ? , ? )", municipio.getNomeMunicipio(), municipio.getRegioesIdRegioes());
+            template.update("Insert Into Municipios values (Default, ? , ? )", municipio.getNomeMunicipio(), municipio.getRegioesIdRegioes());
 
         }
         log.logMensagem(LocalDateTime.now(), "Debug", "Terminou o envio dos municipios");
