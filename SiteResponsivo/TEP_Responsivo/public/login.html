@@ -70,7 +70,7 @@ function entrar() {
             sessionStorage.NOME_USUARIO = usuario.nome;
             sessionStorage.ID_USUARIO = usuario.id;
             sessionStorage.FK_EMPRESA = usuario.fkEmpresa;
-            window.location = "./dashboard.html";
+            window.location = "./painel.html";
         } else {
             const texto = await resposta.text();
             exibirErro(texto || "Email ou senha incorretos!");
