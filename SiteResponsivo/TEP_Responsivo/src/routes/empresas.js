@@ -24,20 +24,4 @@ router.get("/municipios", function (req, res) {
   empresaController.listarMunicipios(req, res);
 });
 
-router.get("/dashboard/:municipioId", function (req, res) {
-  empresaController.buscarDadosDashboard(req, res);
-});
-
-router.get("/dashboard/:municipioId/indicadores/:ano", function (req, res) {
-  empresaController.buscarIndicadoresPorAno(req, res);
-});
-
-router.get("/dashboard/:municipioId/anos", function (req, res) {
-  empresaController.buscarAnosDisponiveis(req, res);
-});
-
-router.get("/dashboard/:municipioId/historico", function (req, res) {
-  empresaController.buscarHistoricoCompleto(req, res);
-});
-
 module.exports = router;

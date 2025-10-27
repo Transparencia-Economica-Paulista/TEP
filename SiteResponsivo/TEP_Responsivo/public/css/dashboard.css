@@ -85,6 +85,8 @@ nav a:hover {
 }
 
 h1 {
+  font-family: "judson";
+  letter-spacing: 10px;
   text-align: center;
   color: #e44c1b;
   margin-bottom: 20px;
@@ -166,11 +168,6 @@ select {
   margin-right: 6px;
   border-radius: 3px;
 }
-
-.azul { background: #1e90ff; }
-.vermelho { background: #ff4c4c; }
-.amarelo { background: #f5c542; }
-.verde { background: #4caf50; }
 
 .painel-lateral {
   flex: 1;
