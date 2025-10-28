@@ -32,7 +32,7 @@
     </div>
 
     <section class="cards">
-      <div class="card destaque">
+      <div class="card">
         <h3 id="sigla-regiao">SP</h3>
         <p id="nome-municipio">Carregando...</p>
       </div>
@@ -103,13 +103,13 @@
         console.log('Iniciando dashboard...');
         
         // Verificar se usuário está logado
-        // if (!sessionStorage.FK_EMPRESA) {
-        //   console.log('Usuário não logado, redirecionando...');
-        //   window.location = "login.html";
-        //   return;
-        // }
+        if (!sessionStorage.FK_EMPRESA) {
+          console.log('Usuário não logado, redirecionando...');
+          window.location = "login.html";
+          return;
+        }
 
-        // console.log('FK_EMPRESA:', sessionStorage.FK_EMPRESA);
+        console.log('FK_EMPRESA:', sessionStorage.FK_EMPRESA);
 
         // Buscar empresa e obter município
         console.log('Buscando dados da empresa...');
@@ -140,19 +140,7 @@
         
         console.log('Município ID processado:', municipioId);
 
-        // Teste de conectividade
-        console.log('=== TESTANDO CONECTIVIDADE ===');
-        const testUrl = `/dashboard/test/${municipioId}`;
-        console.log('URL de teste:', testUrl);
-        
-        try {
-          const testResponse = await fetch(testUrl);
-          const testResult = await testResponse.json();
-          console.log('Resultado do teste:', testResult);
-        } catch (testError) {
-          console.error('Erro no teste:', testError);
-        }
-
+      
         // Carregar anos disponíveis
         console.log('Carregando anos disponíveis...');
         await carregarAnosDisponiveis();
@@ -309,8 +297,8 @@
           }
           
           if (participacaoElement) {
-            participacaoElement.textContent = info.valor_setor_destaque ? 
-              `R$ ${Number(info.valor_setor_destaque).toLocaleString('pt-BR')}` : 
+            participacaoElement.textContent = info.pib_total ? 
+              `R$ ${Number(info.pib_total).toLocaleString('pt-BR')}` : 
               "Sem dados";
           }
         }

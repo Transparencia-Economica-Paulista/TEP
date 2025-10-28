@@ -66,8 +66,29 @@ nav a {
   padding: 4px 0;
   transition: color 0.2s;
 }
+
+nav {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+nav a {
+  text-decoration: none;
+  color: #222;
+  font-weight: bold;
+  font-size: 1.08rem;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+
 nav a:hover {
   color: var(--cor-primaria);
+}
+
+nav a.active {
+  color: var(--cor-primaria);
+  border-bottom: 2px solid var(--cor-primaria);
 }
 
 .logout {
@@ -77,6 +98,16 @@ nav a:hover {
   border-radius: 6px;
   font-weight: bold;
 }
+
+.logout:hover {
+  background-color: var(--cor-primaria-hover);
+  color: #fff !important;
+}
+
+nav a:hover {
+  color: var(--cor-primaria);
+}
+
 
 .container {
   max-width: 1200px;
@@ -130,9 +161,6 @@ select {
   font-size: 1.1em;
 }
 
-.destaque {
-  background-color: #d63d1a;
-}
 
 /* dash */
 .dashboard {
@@ -177,7 +205,7 @@ select {
 }
 
 .box {
-  background: #1b1b1b;
+  background: #030028;
   color: white;
   border-radius: 8px;
   padding: 15px;
