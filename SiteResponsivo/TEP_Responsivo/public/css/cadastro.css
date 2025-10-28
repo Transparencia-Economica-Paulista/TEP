@@ -11,7 +11,6 @@
   --fonte-padrao: 'Inter', Arial, sans-serif;
 }
 
-/* Fontes customizadas */
 @font-face {
   font-family: "Inter";
   src: url(../assets/fonts/Barlow-Regular.ttf);
@@ -75,7 +74,7 @@ nav a:hover {
   color: #f9f9f9;
 }
 
-/* Container principal (Cadastro) */
+
 .container {
   display: flex;
   width: 92vw;
@@ -88,7 +87,7 @@ nav a:hover {
   overflow: hidden;
 }
 
-/* Container principal (Login) */
+/* Container principal */
 .container-login {
   display: flex;
   width: 92vw;
@@ -101,7 +100,7 @@ nav a:hover {
   overflow: hidden;
 }
 
-/* Formulário (Cadastro) */
+/* Formulário */
 .form-section {
   flex: 1.1;
   padding: 40px 32px 40px 40px;
@@ -161,7 +160,7 @@ form button:hover {
   background: var(--cor-primaria-hover);
 }
 
-/* Formulário (Login) */
+/* Formulário  */
 .login-section {
   flex: 1.1;
   padding: 40px 32px 40px 40px;
@@ -236,7 +235,7 @@ form button:hover {
 }
 .info-section .info-text {
   z-index: 2;
-  margin-bottom: 30px;
+  margin-top: 30px;
   font-size: 1.35rem;
   line-height: 1.5;
   color: var(--cor-texto);
