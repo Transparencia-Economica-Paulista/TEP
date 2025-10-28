@@ -7,14 +7,14 @@ public class Indicadores {
     private Integer ano;
     private Double valor_adicionado;
     private Integer SetoresIdSetores;
-    private Integer MunicipiosIdMunicipios;
+    private String MunicipiosNome;
 
-    public Indicadores(Integer ano, Double valor_adicionado, Integer setoresIdSetores, Integer municipiosIdMunicipios) {
+    public Indicadores(Integer ano, Double valor_adicionado, Integer setoresIdSetores, String MunicipiosNome) {
 
         this.ano = ano;
         this.valor_adicionado = valor_adicionado;
         SetoresIdSetores = setoresIdSetores;
-        MunicipiosIdMunicipios = municipiosIdMunicipios;
+        this.MunicipiosNome = MunicipiosNome;
     }
 
     public Integer getIdIndicadores() {
@@ -49,12 +49,12 @@ public class Indicadores {
         SetoresIdSetores = setoresIdSetores;
     }
 
-    public Integer getMunicipiosIdMunicipios() {
-        return MunicipiosIdMunicipios;
+    public String getMunicipiosNome() {
+        return MunicipiosNome;
     }
 
-    public void setMunicipiosIdMunicipios(Integer municipiosIdMunicipios) {
-        MunicipiosIdMunicipios = municipiosIdMunicipios;
+    public void setMunicipiosNome(String municipiosIdMunicipios) {
+        MunicipiosNome = municipiosIdMunicipios;
     }
 
 
@@ -66,12 +66,12 @@ public class Indicadores {
         DecimalFormat df = new DecimalFormat("#,##0.00");
 
         return String.format(
-                "Indicadores{idIndicadores=%s, ano=%s, valor_adicionado=%s, SetoresIdSetores=%s, MunicipiosIdMunicipios=%s}",
+                "Indicadores{idIndicadores=%s, ano=%s, valor_adicionado=%s, SetoresIdSetores=%s, MunicipiosNome=%s}",
                 idIndicadores,
                 ano,
                 df.format(valor_adicionado),
                 SetoresIdSetores,
-                MunicipiosIdMunicipios
+                MunicipiosNome
         );
     }
 }

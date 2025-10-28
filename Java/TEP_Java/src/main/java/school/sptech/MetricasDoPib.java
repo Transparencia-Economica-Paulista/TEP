@@ -8,15 +8,15 @@ public class MetricasDoPib {
     private Double pib;
     private Double pibPerCapita;
     private Integer ano;
-    private Integer  MunicipiosIdMunicipios;
+    private String  MunicipiosNome;
 
-    public MetricasDoPib( Double impostos, Double pib, Double pibPerCapita, Integer ano, Integer municipiosIdMunicipios) {
+    public MetricasDoPib( Double impostos, Double pib, Double pibPerCapita, Integer ano, String municipiosNome) {
 
         this.impostos = impostos;
         this.pib = pib;
         this.pibPerCapita = pibPerCapita;
         this.ano = ano;
-        MunicipiosIdMunicipios = municipiosIdMunicipios;
+        MunicipiosNome = municipiosNome;
     }
 
     public Integer getIdMetricas_do_pib() {
@@ -59,12 +59,12 @@ public class MetricasDoPib {
         this.ano = ano;
     }
 
-    public Integer getMunicipIsIdMunicipios() {
-        return MunicipiosIdMunicipios;
+    public String getMunicipIsNome() {
+        return MunicipiosNome;
     }
 
-    public void setMunicipIsIdMunicipios(Integer municipiosIdMunicipios) {
-        MunicipiosIdMunicipios = municipiosIdMunicipios;
+    public void setMunicipIsNome(String municipiosNome) {
+        MunicipiosNome = municipiosNome;
     }
 
 
@@ -76,13 +76,13 @@ public class MetricasDoPib {
         DecimalFormat df = new DecimalFormat("#,##0.00");
 
         return String.format(
-                "MetricasDoPib{idMetricasDoPib=%s, impostos=%s, pib=%s, pibPerCapita=%s, ano=%s, MunicipiosIdMunicipios=%s}",
+                "MetricasDoPib{idMetricasDoPib=%s, impostos=%s, pib=%s, pibPerCapita=%s, ano=%s, MunicipiosNome=%s}",
                 idMetricasDoPib,
                 df.format(impostos),
                 df.format(pib),
                 df.format(pibPerCapita),
                 ano,
-                MunicipiosIdMunicipios
+                MunicipiosNome
         );
     }
 }

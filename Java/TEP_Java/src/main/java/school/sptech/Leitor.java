@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import software.amazon.awssdk.core.sync.ResponseTransformer;
@@ -27,8 +28,6 @@ public class Leitor {
         JdbcTemplate template = new JdbcTemplate(conexao.getConexao());
 
         //Criando variaveis de lista para mandar dados para o banco.
-        //E variavel para contar o municipios segundo a regra e usando para usar em id e fks
-        Integer contadorMuni = 0;
         List<Municipio> municipios = new ArrayList<>();
         List<Indicadores> indicadores = new ArrayList<>();
         List<MetricasDoPib> metricasDoPibs = new ArrayList<>();
@@ -59,17 +58,16 @@ public class Leitor {
                     if (row.getCell(1).getStringCellValue().equals("RMC") ||
                             row.getCell(1).getStringCellValue().equals("RMSP")) {
                         //Mudando o valor da variavel que conta os municipios
-                        contadorMuni++;
 
 
                         log.logMensagem(LocalDateTime.now(), "Debug", ("Lendo celulas da linha com a regra de negócio aplicada: " + row.getRowNum()));
-
+                        String nomeMunicipio = row.getCell(0).getStringCellValue().replace("-", " ");
 
                         //Condiçao para ver se é a primeira planilha que vai ser lida para fazer ações especificas
                         if (contador == 0) {
 
                             //Pegando nome, sigla e região da linha atual sendo lida
-                            String nomeMunicipio = row.getCell(0).getStringCellValue();
+
                             String sigla = row.getCell(1).getStringCellValue();
                             String regiao = row.getCell(2).getStringCellValue();
 
@@ -95,50 +93,70 @@ public class Leitor {
                                 template.update("insert into Regioes values(Default, ?, ?)", regiao, sigla);
                             }
 
+                            Integer idMunicipio = null;
+                            try {
+
+                                 idMunicipio = template.queryForObject(
+                                        "select idMunicipios from Municipios where nome_municipio = ?",
+                                        Integer.class,
+                                        nomeMunicipio
+                                );
+
+                            }catch (EmptyResultDataAccessException e){
+                                idMunicipio = null;
+                            }
+
+                            if(idMunicipio == null){
+                            Integer id = 0;
+
+
                             //Se sigla da vez é igual RMC  entra nessa condição
                             if (row.getCell(1).getStringCellValue().equals("RMC")) {
+                                 id = template.queryForObject(
+                                        "select idRegioes from Regioes where sigla_regiao = ?",
+                                        Integer.class,
+                                        "RMC"
+                                );
 
-                                //Constroi um municipio que vai ter o Id, Nome e o Fk da região e manda para uma lista de municipios (Se for RMC a FK é 1)
-                                Municipio municipio = new Municipio(contadorMuni, nomeMunicipio, 1);
-                                municipios.add(municipio);
                             } else {
                                 // Se for outra sigla primero pega com um select o id da região e sigla que foi mandada no banco de dados
-                                Integer id = template.queryForObject(
+                                id = template.queryForObject(
                                         "select idRegioes from Regioes where nome_regiao = ? and sigla_regiao = ?",
                                         Integer.class,
                                         regiao, sigla
                                 );
-                                //Constroi um municipio que vai ter o Id, Nome e o Fk da região e manda para uma lista de municipios
-                                Municipio municipio = new Municipio(contadorMuni, nomeMunicipio, id);
-                                municipios.add(municipio);
+
+                            }
+                            //Constroi um municipio que vai ter o Id, Nome e o Fk da região e manda para uma lista de municipios
+                            Municipio municipio = new Municipio(nomeMunicipio, id);
+                            municipios.add(municipio);
                             }
                         }
 
 
                         //Pega valores dos indicadores
                         Double agro = row.getCell(3).getNumericCellValue();
-                        Indicadores indicador1 = new Indicadores(ano, agro, 1 , contadorMuni);
+                        Indicadores indicador1 = new Indicadores(ano, agro, 1 , nomeMunicipio );
                         Double industria = row.getCell(4).getNumericCellValue();
-                        Indicadores indicador2 = new Indicadores(ano, industria, 2 , contadorMuni);
+                        Indicadores indicador2 = new Indicadores(ano, industria, 2 , nomeMunicipio );
                         Double admPublica = row.getCell(5).getNumericCellValue();
-                        Indicadores indicador3 = new Indicadores(ano, admPublica, 3 , contadorMuni);
+                        Indicadores indicador3 = new Indicadores(ano, admPublica, 3 , nomeMunicipio );
                         Double totalAdmPublica = row.getCell(6).getNumericCellValue();
-                        Indicadores indicador4 = new Indicadores(ano, totalAdmPublica, 4 , contadorMuni);
-                        Double totalGeral = row.getCell(7).getNumericCellValue();
-                        Indicadores indicador5 = new Indicadores(ano, totalGeral, 5 , contadorMuni);
+                        Indicadores indicador4 = new Indicadores(ano, totalAdmPublica, 4 , nomeMunicipio );
+
 
                         //manda para uma lista de indicadores
                         indicadores.add(indicador1);
                         indicadores.add(indicador2);
                         indicadores.add(indicador3);
                         indicadores.add(indicador4);
-                        indicadores.add(indicador5);
+
 
                         //Pega dados das metricas do Pib e manda para uma lista de metricas do PIB
                         Double impostos = row.getCell(8).getNumericCellValue();
                         Double pib = row.getCell(9).getNumericCellValue();
                         Double pibPerCapita = row.getCell(10).getNumericCellValue();
-                        MetricasDoPib metricaPib = new MetricasDoPib(impostos,pib,pibPerCapita, ano, contadorMuni);
+                        MetricasDoPib metricaPib = new MetricasDoPib(impostos,pib,pibPerCapita, ano, nomeMunicipio);
                         metricasDoPibs.add(metricaPib);
                     }
                 }
@@ -157,7 +175,7 @@ public class Leitor {
 
 
         } catch (IOException e) {
-            log.logMensagem(LocalDateTime.now(), "ERRO", "Erro a ler Planilha");
+            log.logMensagem(LocalDateTime.now(), "ERRO", "Erro ao ler Planilha");
         }
     }
 
@@ -169,7 +187,7 @@ public class Leitor {
         JdbcTemplate template = new JdbcTemplate(conexao.getConexao());
         Log log = new Log();
 
-        log.logMensagem(LocalDateTime.now(), "Debug", "Mandando para o banco de dados os municipios");
+        log.logMensagem(LocalDateTime.now(), "Debug", "Mandando para o banco de dados os Municípios");
 
         //percorrendo municipios
         for (Municipio municipio : municipios) {
@@ -178,7 +196,7 @@ public class Leitor {
             template.update("Insert Into Municipios values (Default, ? , ? )", municipio.getNomeMunicipio(), municipio.getRegioesIdRegioes());
 
         }
-        log.logMensagem(LocalDateTime.now(), "Debug", "Terminou o envio dos municipios");
+        log.logMensagem(LocalDateTime.now(), "Debug", "Terminou o envio dos Municípios");
      }
 
 
@@ -193,8 +211,14 @@ public class Leitor {
         log.logMensagem(LocalDateTime.now(), "Debug", "Mandando para o banco de dados os Indicadores");
         for (Indicadores indicador : indicadores) {
 
+            Integer idMunicipio = template.queryForObject(
+                    "select idMunicipios from Municipios where nome_municipio = ?",
+                    Integer.class,
+                    indicador.getMunicipiosNome()
+            );
+
             //Faz o INSERT no banco de dados chamando o metodo GET de cada atributo do Indicador
-            template.update("Insert Into Indicadores values (Default, ? , ? , ? ,?)", indicador.getAno(),indicador.getValor_adicionado(),indicador.getSetoresIdSetores(), indicador.getMunicipiosIdMunicipios());
+            template.update("Insert Into Indicadores values (Default, ? , ? , ? ,?)", indicador.getAno(),indicador.getValor_adicionado(),indicador.getSetoresIdSetores(), idMunicipio);
 
         }
         log.logMensagem(LocalDateTime.now(), "Debug", "Terminou o envio dos Indicadores");
@@ -209,14 +233,21 @@ public class Leitor {
         JdbcTemplate template = new JdbcTemplate(conexao.getConexao());
         Log log = new Log();
 
-        log.logMensagem(LocalDateTime.now(), "Debug", "Mandando para o banco de dados os Indicadores");
+        log.logMensagem(LocalDateTime.now(), "Debug", "Mandando para o banco de dados as Métricas do PIB");
         for (MetricasDoPib metrica : metricas) {
 
+
+            Integer idMunicipio = template.queryForObject(
+                    "select idMunicipios from Municipios where nome_municipio = ?",
+                    Integer.class,
+                    metrica.getMunicipIsNome()
+            );
+
             //Faz o INSERT no banco de dados chamando o metodo GET de cada atributo de Municipio
-            template.update("Insert Into Metricas_do_pib values (Default, ? , ? , ? ,?,?)", metrica.getImpostos(),metrica.getPib(),metrica.getPib_per_capita(), metrica.getAno(), metrica.getMunicipIsIdMunicipios());
+            template.update("Insert Into Metricas_do_pib values (Default, ? , ? , ? ,?,?)", metrica.getImpostos(),metrica.getPib(),metrica.getPib_per_capita(), metrica.getAno(), idMunicipio);
 
         }
-        log.logMensagem(LocalDateTime.now(), "Debug", "Terminou o envio das metricas do PIB");
+        log.logMensagem(LocalDateTime.now(), "Debug", "Terminou o envio das Métricas do PIB");
     }
 
     //Metodo para mandar dados para o banco de dados
@@ -230,14 +261,13 @@ public class Leitor {
 
         Setores setor1 = new Setores(1, "Agropecuária");
         setores.add(setor1);
-        Setores setor2 = new Setores(2, "Indúastria");
+        Setores setor2 = new Setores(2, "Indústria");
         setores.add(setor2);
-        Setores setor3  = new Setores(3, "AdministracaoPública");
+        Setores setor3  = new Setores(3, "Administração Pública");
         setores.add(setor3);
-        Setores setor4 = new Setores(4, "TotalInclusiveADMP");
+        Setores setor4 = new Setores(4, "Outros Serviços");
         setores.add(setor4);
-        Setores setor5= new Setores(5, "Total");
-        setores.add(setor5);
+
 
         log.logMensagem(LocalDateTime.now(), "Debug", "Mandando para o banco de dados os Setores ");
         for (Setores setor : setores) {
@@ -246,7 +276,7 @@ public class Leitor {
             template.update("Insert Into Setores values ( ? , ? )", setor.getIdSetores(),setor.getNomeSetor());
 
         }
-        log.logMensagem(LocalDateTime.now(), "Debug", "Terminou o envio das metricas do PIB");
+        log.logMensagem(LocalDateTime.now(), "Debug", "Terminou o envio dos Setores");
     }
 
     // fim do leitor

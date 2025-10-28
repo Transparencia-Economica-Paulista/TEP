@@ -13,8 +13,7 @@ public class Municipio {
     private Integer RegioesIdRegioes;
 
     // Construtor
-    public Municipio(Integer idMunicipios, String nomeMunicipio, Integer regioesIdRegioes) {
-        this.idMunicipios = idMunicipios;
+    public Municipio( String nomeMunicipio, Integer regioesIdRegioes) {
         this.nomeMunicipio = nomeMunicipio;
         RegioesIdRegioes = regioesIdRegioes;
     }
