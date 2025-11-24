@@ -4,11 +4,11 @@
   --cor-fundo: #f4f4f4;
   --cor-primaria: #e9501b;
   --cor-primaria-hover: #c53d15;
-  --cor-secundaria: #030028;
+  --cor-secundaria: #120b5f;
   --cor-branca: #fff;
   --cor-cinza: #6d6d73;
   --cor-texto: #222;
-  --azul-escuro: #030028;
+  --azul-escuro: #030327;
   --branco: #fff;
   --laranja: #e9501b;
   --borda-radius: 10px;
@@ -23,10 +23,7 @@
   font-family: "Inter";
   src: url(../assets/fonts/Barlow-Regular.ttf);
 }
-/* @font-face {
-  font-family: "judson";
-  src: url(../assets/fonts/judson_Rise.ttf);
-} */
+
 * {
   margin: 0;
   padding: 0;
@@ -107,7 +104,7 @@ nav a:hover {
 #adquira_nosso_produto .centraliza_titulo h2,
 #nossos_objetivos .centraliza_titulo h2 {
   font-family: 'judson', Arial, sans-serif;
-  color: #030327;
+  color: var(--cor-secundaria);
   font-size: 3.5rem;
   text-align: center;
   font-weight: bold;
@@ -117,8 +114,8 @@ nav a:hover {
 /* Título da seção SOBRE NÓS */
 #sobre_nos .centraliza_titulo h2 {
   font-family: 'judson', Arial, sans-serif;
-  color: #fff;
-  font-size: 2.5rem;
+  color: var(--cor-secundaria);
+  font-size: 3.5rem;
   text-align: center;
   font-weight: bold;
   letter-spacing: 2px;
@@ -161,8 +158,9 @@ section {
 #nosso_produto .quadro img {
   width: 90%;
   height: auto;
-  max-height: 200px;
+  max-height: 230px;
   margin-bottom: 15px;
+  border-radius: 14px;
 }
 #nosso_produto .quadro .texto {
   font-size: large;
@@ -171,8 +169,8 @@ section {
 
 /* Sobre Nós */
 #sobre_nos {
-  background-color: var(--azul-escuro);
-  color: var(--branco);
+  background-color: var(--cor-branca);
+  color: var(--cor-secundaria);
   font-family: "Inter";
   padding: 40px 20px;
   margin-bottom: 0;
@@ -191,11 +189,11 @@ section {
   flex: 1;
   font-size: 1.2rem;
   line-height: 1.6;
-  color: var(--branco);
+  color: #000000
 }
 .linha {
   width: 2px;
-  background-color: var(--branco);
+  background-color: var(--azul-escuro);
 }
 
 /* Equipe */
@@ -215,14 +213,13 @@ section {
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 .container {
   width: 250px;
   height: 280px; 
   border-radius: 15px;
   perspective: 1000px;
-  margin-bottom: 20px;
   position: relative;
 }
 .rotate {
@@ -291,7 +288,7 @@ section {
   justify-content: center;
   gap: 40px;
   flex-wrap: wrap;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 #nossos_objetivos .quadro {
   text-align: center;
@@ -307,67 +304,79 @@ section {
   margin: 20px auto;
 }
 
-/* Adquira nosso produto */
-#adquira_nosso_produto {
- 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: "Inter";
-  font-size: 1.5rem;
-  padding: 40px 20px;
-  background: var(--cor-branca);
-}
 #adquira_nosso_produto .centraliza_titulo h2 {
-   margin-top: 10vw;
-  color: #2727a3;
-}
-#adquira_nosso_produto .separacao {
-  display: flex;
-  flex-direction: row;
-  gap: 40px;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
-}
-#adquira_nosso_produto img {
-  width: 80%;
-  border-radius: 12px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-}
-#adquira_nosso_produto .clique_aqui {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-#adquira_nosso_produto .clique_aqui h3 {
-  font-family: "Inter";
-  color: black;
-}
-#adquira_nosso_produto button {
-  width: 60%;
-  height: 4rem;
-  border-radius: 10px;
-  border: none;
-  background-color: var(--laranja);
-  color: var(--branco);
-  font-size: 1.2rem;
-  cursor: pointer;
+  margin-top: 60px;
+  margin-bottom: 0;
+  color: var(--azul-escuro);
 }
 
-#adquira_nosso_produto button:hover{
-  background: var(--cor-primaria-hover);
+#adquira_nosso_produto .fundo-azul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #07034D;
+  width: 100%;
+  padding: 80px 40px;
+  position: relative;
+  margin-top: 40px;
+  overflow: visible;
+  min-height: 450px;
+}
+
+#adquira_nosso_produto .texto-area {
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+  z-index: 1;
+  position: relative;
+  flex: 1;
+  line-height: 1.4;
+}
+
+#adquira_nosso_produto .texto-area p {
+  margin-bottom: 30px;
+  font-family: "Inter";
+  font-weight: 400;
+}
+
+#adquira_nosso_produto .texto-area .destaque {
+  color: #E9501B;
+  font-weight: bold;
+}
+
+#adquira_nosso_produto button {
+  margin-top: 20px;
+  width: auto;
+  padding: 15px 50px;
+  background-color: #E9501B;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family: "Inter";
+  font-weight: 600;
+  box-shadow: 0.01;
+}
+
+#adquira_nosso_produto button:hover {
+   background: var(--cor-primaria-hover);
   color: #f9f9f9;
 }
 
-
-
-#adquira_nosso_produto button a{
-  color: #f4f4f4;
-  font-family: "Inter";
+#adquira_nosso_produto button a {
+  color: white;
   text-decoration: none;
+}
+
+
+#adquira_nosso_produto .tepinho {
+  position: absolute;
+  right: 50px;
+  bottom: 125px;
+  height: 430px;
+  width: auto; 
+  z-index: 10;
 }
 
 /* Footer */
@@ -484,7 +493,29 @@ footer .alinha_footer {
     letter-spacing: 3px;
   }
 }
+@media (max-width: 750px) {
 
+  #adquira_nosso_produto .tepinho {
+    position: static;
+    display: block;
+    margin: 20px auto 0;
+    height: 250px;
+  }
+
+  #adquira_nosso_produto .fundo-azul {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  #adquira_nosso_produto .texto-area {
+    font-size: 1.4rem;
+  }
+
+  #adquira_nosso_produto button {
+    padding: 12px 35px;
+    font-size: 1.2rem;
+  }
+}
 @media (max-width: 768px) {
   .centraliza_titulo h2,
   #adquira_nosso_produto .centraliza_titulo h2,
