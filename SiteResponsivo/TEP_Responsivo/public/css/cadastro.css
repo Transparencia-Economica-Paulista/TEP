@@ -1,6 +1,8 @@
-/* Variáveis */
+/* VARIAVEIS E ESTILOS GLOBAIS */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap');
+
 :root {
-  --cor-fundo: #f4f4f4;
+  --cor-fundo: #07034D;
   --cor-primaria: #e9501b;
   --cor-primaria-hover: #c53d15;
   --cor-secundaria: #030028;
@@ -16,7 +18,6 @@
   src: url(../assets/fonts/Barlow-Regular.ttf);
 }
 
-/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -28,7 +29,7 @@ body {
   background: var(--cor-fundo);
 }
 
-/* Header */
+/* HEADER E NAVECACAO */
 header {
   background: var(--cor-branca);
   display: flex;
@@ -36,7 +37,7 @@ header {
   justify-content: space-between;
   padding: 16px 40px 16px 24px;
   border-bottom: 1px solid #eee;
- 
+  font-family: "Inter";
 }
 header img {
   height: 48px;
@@ -46,6 +47,7 @@ nav {
   gap: 32px;
   align-items: center;
 }
+
 nav a {
   font-weight: bold;
   text-decoration: none;
@@ -56,6 +58,7 @@ nav a {
 }
 nav a:hover {
   color: var(--cor-primaria);
+  text-decoration: none;
 }
 .button-login {
   background: var(--cor-primaria);
@@ -65,224 +68,80 @@ nav a:hover {
   padding: 8px 22px;
   font-weight: bold;
   font-size: 1rem;
+  font-family: "Inter";
   cursor: pointer;
   margin-left: 18px;
+ text-decoration: none;
   transition: background 0.2s;
+   z-index: 10;
 }
 .button-login:hover {
   background: var(--cor-primaria-hover);
   color: #f9f9f9;
+   text-decoration: none;
+   border-bottom: none;
 }
 
-
+/* CONTAINERS COMPARTILHADOS*/
 .container {
   display: flex;
   width: 92vw;
-  max-width: 1100px;
+  max-width: 550px;
   min-height: 520px;
   margin: 40px auto 0 auto;
   background: var(--cor-branca);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.08);
   overflow: hidden;
+  margin-bottom: 30px;
 }
 
-/* Container principal */
 .container-login {
   display: flex;
   width: 92vw;
-  max-width: 1100px;
-  min-height: 520px;
+  max-width: 500px;
+  min-height: 470px;
   margin: 40px auto 0 auto;
   background: var(--cor-branca);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.08);
   overflow: hidden;
+  margin-bottom: 30px;
 }
 
-/* Formulário */
-.form-section {
-  flex: 1.1;
-  padding: 40px 32px 40px 40px;
-  border-right: 2px solid #e5e5e5;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.form-section h2 {
-  color: var(--cor-primaria);
-  font-size: 1.35rem;
-  margin-bottom: 8px;
-  margin-top: 0;
-  font-weight: bold;
-}
-.form-section p {
-  margin-bottom: 22px;
-  font-size: 1rem;
-  color: var(--cor-texto);
-}
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-form label {
-  font-size: 0.98rem;
-  color: var(--cor-texto);
-  margin-bottom: 2px;
-  font-weight: 500;
-}
-form input {
-  padding: 10px 12px;
-  border: 1.5px solid #ccc;
-  border-radius: var(--borda-radius);
-  font-size: 1rem;
-  background: #fafafa;
-  transition: border 0.2s;
-}
-form input:focus {
-  border-color: var(--cor-primaria);
-  outline: none;
-}
-form button {
-  background: var(--cor-primaria);
-  color: var(--cor-branca);
-  padding: 12px 0;
-  border: none;
-  border-radius: var(--borda-radius);
-  font-size: 1.12rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.2s;
-}
-form button:hover {
-  background: var(--cor-primaria-hover);
-}
-
-/* Formulário  */
-.login-section {
-  flex: 1.1;
-  padding: 40px 32px 40px 40px;
-  border-right: 2px solid #e5e5e5;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.login-section h2 {
-  color: var(--cor-primaria);
-  font-size: 1.35rem;
-  margin-bottom: 8px;
-  margin-top: 0;
-  font-weight: bold;
-}
-.login-section p {
-  margin-bottom: 22px;
-  font-size: 1rem;
-  color: var(--cor-texto);
-}
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.login-form label {
-  font-size: 0.98rem;
-  color: var(--cor-texto);
-  margin-bottom: 2px;
-  font-weight: 500;
-}
-.login-form input {
-  padding: 10px 12px;
-  border: 1.5px solid #ccc;
-  border-radius: var(--borda-radius);
-  font-size: 1rem;
-  background: #fafafa;
-  transition: border 0.2s;
-}
-.login-form input:focus {
-  border-color: var(--cor-primaria);
-  outline: none;
-}
-.login-form button {
-  background: var(--cor-primaria);
-  color: var(--cor-branca);
-  padding: 12px 0;
-  border: none;
-  border-radius: var(--borda-radius);
-  font-size: 1.12rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.2s;
-}
-.login-form button:hover {
-  background: var(--cor-primaria-hover);
-}
-
-/* Informações */
-.info-section {
-  flex: 1;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 40px 40px 40px 32px;
-  min-height: 520px;
-  height: 100%;
-  overflow: hidden;
-}
-.info-section .info-text {
-  z-index: 2;
-  margin-top: 30px;
-  font-size: 1.35rem;
-  line-height: 1.5;
-  color: var(--cor-texto);
-  font-family: "Inter";
-  font-weight: normal;
-}
-.info-section .imagem-lateral {
+.container-login .tepinho{
   position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 55%;
-  max-width: 420px;
-  min-width: 260px;
-  z-index: 1;
-  pointer-events: none;
+  right: 0px;
+  top: 25px;
+  height: 430px;
+  width: auto; 
+  z-index: 9;
+}
+
+.container .tepinho {
+  position: absolute;
+  right: 0px;
+  top: 25px;
+  height: 430px;
+  width: auto; 
+  z-index: 9;
 }
 
 
-.container,
-.container-login {
-  display: flex;
-  width: 92vw;
-  max-width: 1100px;
-  min-height: 520px;
-  margin: 40px auto 0 auto;
-  background: var(--cor-branca);
-  border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-  overflow: hidden;
-}
-
-.form-section,
-.login-section {
-  flex: 1.1;
-  padding: 40px 32px 40px 40px;
-  border-right: 2px solid #e5e5e5;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-
+/* FORMULARIOS COMPARTILHADOS */
 form,
 .login-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+form label,
+.login-form label {
+  font-size: 1rem;
+  color: var(--cor-texto);
+  margin-bottom: 2px;
+  font-weight: 500;
 }
 
 form input,
@@ -315,105 +174,6 @@ form input:focus,
   outline: none;
 }
 
-.checkbox-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 8px 0;
-}
-
-.checkbox-container label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.95rem;
-  cursor: pointer;
-}
-
-.checkbox-container input[type="checkbox"] {
-  width: auto;
-  height: auto;
-  margin: 0;
-  transform: scale(1.2);
-  cursor: pointer;
-}
-
-.mensagem {
-  margin-top: 12px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.95rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  display: none;
-}
-
-.mensagem.sucesso {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
-
-.mensagem.erro {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
-
-/* Link dentro do login */
-a {
-  color: var(--cor-primaria);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-a:hover {
-  color: var(--cor-primaria-hover);
-  text-decoration: underline;
-}
-
-/* Melhorias para dispositivos móveis */
-@media (max-width: 480px) {
-  header {
-    padding: 8px;
-  }
-  
-  header img {
-    height: 36px;
-  }
-  
-  nav {
-    gap: 16px;
-  }
-  
-  nav a {
-    font-size: 0.9rem;
-  }
-  
-  .button-login {
-    padding: 6px 16px;
-    font-size: 0.9rem;
-  }
-  
-  .form-section h2,
-  .login-section h2 {
-    font-size: 1.2rem;
-  }
-  
-  .info-section .info-text {
-    font-size: 1.1rem;
-  }
-}
-
-form label,
-.login-form label {
-  font-size: 1rem;
-  color: #222;
-  margin-bottom: 2px;
-  font-weight: 500;
-}
-
 form button,
 .login-form button {
   background: var(--cor-primaria);
@@ -433,6 +193,29 @@ form button,
 form button:hover,
 .login-form button:hover {
   background: var(--cor-primaria-hover);
+}
+
+/* CADASTRO EMPRESA */
+.form-section {
+  flex: 1.1;
+  padding: 40px 32px 40px 40px;
+  border-right: 2px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-section h2 {
+  color: var(--cor-primaria);
+  font-size: 1.35rem;
+  margin-bottom: 8px;
+  margin-top: 0;
+  font-weight: bold;
+}
+.form-section p {
+  margin-bottom: 22px;
+  font-size: 1rem;
+  color: var(--cor-texto);
 }
 
 .info-section {
@@ -477,7 +260,88 @@ form button:hover,
   pointer-events: none;
 }
 
-/* Responsividade */
+/* LOGIN */
+.login-section {
+  flex: 1.1;
+  padding: 40px 32px 40px 40px;
+  border-right: 2px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.login-section h2 {
+  color: var(--cor-primaria);
+  font-size: 1.35rem;
+  margin-bottom: 8px;
+  margin-top: 0;
+  font-weight: bold;
+}
+.login-section p {
+  margin-bottom: 22px;
+  font-size: 1rem;
+  color: var(--cor-texto);
+}
+
+/* CADASTRO USUSARIO */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.checkbox-container label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: auto;
+  height: auto;
+  margin: 0;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* MENSAGENS */
+.mensagem {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: none;
+}
+
+.mensagem.sucesso {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.mensagem.erro {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+a {
+  color: var(--cor-primaria);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--cor-primaria-hover);
+  text-decoration: underline;
+}
+
+/* RESPONSIVIDADE */
 @media (max-width: 900px) {
   .container,
   .container-login {
@@ -486,6 +350,7 @@ form button:hover,
     width: 98vw;
     max-width: 98vw;
   }
+  
   .form-section,
   .login-section,
   .info-section {
@@ -493,6 +358,7 @@ form button:hover,
     padding: 32px 18px;
     min-height: 320px;
   }
+  
   form input,
   .login-form input,
   form button,
@@ -501,11 +367,13 @@ form button:hover,
     height: 44px;
     font-size: 1rem;
   }
+  
   .info-section {
     align-items: center;
     text-align: center;
     min-height: 300px;
   }
+  
   .info-section .imagem-lateral {
     position: static;
     width: 80%;
@@ -521,17 +389,20 @@ form button:hover,
     gap: 10px;
     padding: 12px 8px;
   }
+  
   .container,
   .container-login {
     margin-top: 18px;
     border-radius: 8px;
     box-shadow: none;
   }
+  
   .form-section,
   .login-section,
   .info-section {
     padding: 18px 8px;
   }
+  
   form input,
   .login-form input,
   form button,
@@ -539,9 +410,42 @@ form button:hover,
     height: 38px;
     font-size: 0.95rem;
   }
+  
   .info-section .imagem-lateral {
     width: 100%;
     max-width: 220px;
     margin: 20px auto 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 8px;
+  }
+  
+  header img {
+    height: 36px;
+  }
+  
+  nav {
+    gap: 16px;
+  }
+  
+  nav a {
+    font-size: 0.9rem;
+  }
+  
+  .button-login {
+    padding: 6px 16px;
+    font-size: 0.9rem;
+  }
+  
+  .form-section h2,
+  .login-section h2 {
+    font-size: 1.2rem;
+  }
+  
+  .info-section .info-text {
+    font-size: 1.1rem;
   }
 }

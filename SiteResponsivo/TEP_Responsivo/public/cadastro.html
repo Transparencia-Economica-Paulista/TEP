@@ -9,15 +9,15 @@
 </head>
 <body onload="inicializarPagina()">
   <header>
-    <img src="assets/Logo/LogoCompleta.png" alt="TEP Logo">
-    <nav>
-      <a href="index.html">Início</a>
-      <a href="login.html">Login</a>
-      <button class="button-login" onclick="window.location='cadastro.html'">Cadastrar</button>
+    <img src="assets/Logo/LogoCompleta.png" alt="Logo">
+    <nav id="main-nav">
+       <a href="index.html" style=" position: absolute; z-index: 10; right: 170px; ">Início</a>
+       <a class="button-login" id="nav-login" href="login.html">Login</a>
     </nav>
   </header>
 
-  <div class="container">
+  <div class="container"> 
+      <img src="assets/institucional/tepinho.png" class="tepinho" alt="tepinho">
     <div class="form-section">
       <h2>Cadastre sua Empresa</h2>
       <p>Se cadastre e tenha acesso a nossa plataforma</p>
@@ -50,12 +50,6 @@
       </form>
     </div>
 
-    <div class="info-section">
-      <div class="info-text">
-      Informações <p>confiáveis</p> e <p>dinâmicas</p> sobre seu munícipio <p>em um só lugar</p>
-      </div>
-      <!-- <img src="assets/institucional/imagemCadastro.png" alt="Cadastro de Empresa" class="imagem-lateral"> -->
-    </div>
   </div>
 
   <script>

@@ -11,15 +11,15 @@
   <header>
     <img src="assets/Logo/LogoCompleta.png" alt="TEP Logo">
     <nav>
-      <a href="index.html">Início</a>
-      <a href="login.html">Login</a>
-      <button class="button-login" onclick="window.location='cadastro.html'">Cadastrar</button>
+      <a href="index.html" style=" position: absolute; z-index: 10; right: 187px; ">Início</a>
+      <button class="button-login" onclick="window.location='cadastro.html'">Cadastrar</button> 
     </nav>
   </header>
 
   <div class="container-login">
+     <img src="assets/institucional/tepinho.png" class="tepinho" alt="tepinho">
     <div class="login-section">
-      <h2>Acesse sua conta</h2>
+      <h2>Conecte-se</h2>
       <p>Bem-vindo(a) de volta!</p>
       <form class="login-form" onsubmit="return entrar()">
         <label for="email_input">Email</label>
@@ -37,12 +37,7 @@
       </div>
     </div>
 
-    <div class="info-section">
-      <div class="info-text">
-        Informações <p>confiáveis</p> e <p>dinâmicas</p> sobre seu munícipio <p>em um só lugar</p>
-      </div>
-      <img src="assets/institucional/imagemCadastro.png" alt="Login TEP" class="imagem-lateral">
-    </div>
+
   </div>
 
 <script>
