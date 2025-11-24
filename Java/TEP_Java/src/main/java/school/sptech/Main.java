@@ -40,7 +40,7 @@ public class Main {
             //Fazendo a Instãncia para pegar o cliente do S3.
             S3Client s3conec = new S3Conexao().getS3Client();
             //Declaro o nome do Bucket
-            String bucketName = "3uclides";
+            String bucketName = "tep-base-dados-bucket";
 
             //Declaro uma Variável que vai ser responsável por ler e mandar dados que não se repetem.
             Integer tentativa = 0;
