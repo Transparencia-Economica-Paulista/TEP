@@ -10,6 +10,7 @@ import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import static school.sptech.Logs.Log.*;
@@ -17,6 +18,7 @@ import static school.sptech.Logs.Log.*;
 public class Main {
     public static void main(String[] args) {
         // Precisar passar as dependências no arquivo pom.xml. No caso desde arquivo passei as dependências do mysql, jdbc, Aws e do Apache POI.
+        ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
 
 
         //Sempre mudar a conexão!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -46,7 +48,7 @@ public class Main {
             Integer tentativa = 0;
 
 
-            logMensagem(LocalDateTime.now(), "Debug", "Iniciando Conexão com o Bucket com o nome: " + bucketName);
+            logMensagem(LocalDateTime.now(zoneId), "Debug", "Iniciando Conexão com o Bucket com o nome: " + bucketName);
             //Abro o Try
             try {
                 //Criando a requisição para pedir uma lista objetos
@@ -54,10 +56,10 @@ public class Main {
                 //Com base na conexão pego a requisição e mando e crio uma lista de objetos.
                 List<S3Object> objetos = s3conec.listObjects(requisicao).contents();
 
-                logMensagem(LocalDateTime.now(), "Debug", "Objetos achados com sucesso!");
+                logMensagem(LocalDateTime.now(zoneId), "Debug", "Objetos achados com sucesso!");
 
 
-                logMensagem(LocalDateTime.now(), "Debug", "Percorrendo objetos");
+                logMensagem(LocalDateTime.now(zoneId), "Debug", "Percorrendo objetos");
                 //percorrendo a  lista
                 for (S3Object objeto : objetos) {
 
@@ -66,7 +68,7 @@ public class Main {
 
                     //condição para conferir se é uma planilha
                     if (caminhoDoArquivo.endsWith(".xlsx")) {
-                        logMensagem(LocalDateTime.now(), "Debug", "Achado a  planilha: " + caminhoDoArquivo);
+                        logMensagem(LocalDateTime.now(zoneId), "Debug", "Achado a  planilha: " + caminhoDoArquivo);
 
                         // criei essa variavel só pra usar no bloco de pegar o ano da planilha
                         String nomeArquivo = objeto.key();
@@ -91,11 +93,11 @@ public class Main {
                 }
         slack.tratarMensagem("Boas notícias! O Jar rodou sem erro 😊");
             } catch (S3Exception e) {
-                logMensagem(LocalDateTime.now(), "Debug", "Falha ao conectar bucket");
+                logMensagem(LocalDateTime.now(zoneId), "Debug", "Falha ao conectar bucket");
 
                 slack.tratarMensagem("Ops! Parece que falhou em conectar o bucket 😢");
             }
-        logMensagem(LocalDateTime.now(), "Debug", "Terminou a aplicação");
+        logMensagem(LocalDateTime.now(zoneId), "Debug", "Terminou a aplicação");
 
         logEnvioEmLote();
 

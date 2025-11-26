@@ -18,6 +18,7 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import static school.sptech.Logs.Log.logMensagem;
 public class Leitor {
 
     public void extrairMunicipios(S3Client s3Client, String bucketname, String chave, Integer contador, Integer ano, JdbcTemplate template) {
+        ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
 
         //Criando variaveis de lista para mandar dados para o banco.
             List<Municipio> municipios = new ArrayList<>();
@@ -35,7 +37,7 @@ public class Leitor {
 
 
 
-        logMensagem(LocalDateTime.now(), "Debug", "Iniciando Leitura de Arquivo...");
+        logMensagem(LocalDateTime.now(zoneId), "Debug", "Iniciando Leitura de Arquivo...");
 
         //
         GetObjectRequest objetoPedido = GetObjectRequest.builder().bucket(bucketname).key(chave).build();
@@ -49,7 +51,7 @@ public class Leitor {
             Sheet sheet = workbook.getSheetAt(0);
 
 
-            logMensagem(LocalDateTime.now(), "Debug", "Percorrendo a planilha");
+            logMensagem(LocalDateTime.now(zoneId), "Debug", "Percorrendo a planilha");
             //Percorre a planilha e passa linha por linha
             for (Row row : sheet) {
 
@@ -67,7 +69,7 @@ public class Leitor {
                         Regioes regiao = new Regioes( CelulaRegiao, CelulaSigla);
 
 
-                        logMensagem(LocalDateTime.now(), "Debug", ("Lendo celulas da linha com a regra de negócio aplicada: " + row.getRowNum()));
+                        logMensagem(LocalDateTime.now(zoneId), "Debug", ("Lendo celulas da linha com a regra de negócio aplicada: " + row.getRowNum()));
 
                         String CelulaNomeMunicipio = row.getCell(0).getStringCellValue().replace("-", " ");
 
@@ -138,7 +140,7 @@ public class Leitor {
                     }
                 }
             }
-            logMensagem(LocalDateTime.now(), "Debug", "Leitura completa");
+            logMensagem(LocalDateTime.now(zoneId), "Debug", "Leitura completa");
 
 
             //Como foi a primeira vez vai mandar todos os municipios para o banco de dados
@@ -150,7 +152,7 @@ public class Leitor {
             separandoIndicadores(indicadores, template);
 
         } catch (IOException e) {
-            logMensagem(LocalDateTime.now(), "ERRO", "Erro ao ler Planilha");
+            logMensagem(LocalDateTime.now(zoneId), "ERRO", "Erro ao ler Planilha");
         }
     }
 

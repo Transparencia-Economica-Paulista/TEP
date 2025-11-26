@@ -9,12 +9,15 @@ import school.sptech.DadosDaPlanilha.Municipio;
 import school.sptech.DadosDaPlanilha.Setores;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 import static school.sptech.Logs.Log.logMensagem;
 
 public class  EnvioBanco {
+    static ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
+
 
     // Inicio dos metodos de Inserir no Banco De Dados
 
@@ -22,7 +25,7 @@ public class  EnvioBanco {
     public static void enviandoDBMuni (List<Municipio> municipios, JdbcTemplate template ) {
         //Instanciando as classes usadas
 
-        logMensagem(LocalDateTime.now(), "Debug", "Mandando para o banco de dados os Municípios");
+        logMensagem(LocalDateTime.now(zoneId), "Debug", "Mandando para o banco de dados os Municípios");
 
         //percorrendo municipios
         for (Municipio municipio : municipios) {
@@ -60,7 +63,7 @@ public class  EnvioBanco {
                 template.update("Insert Into Municipios values (Default, ? , ? )", municipio.getNomeMunicipio(), id);
             }
         }
-        logMensagem(LocalDateTime.now(), "Debug", "Terminou o envio dos Municípios");
+        logMensagem(LocalDateTime.now(zoneId), "Debug", "Terminou o envio dos Municípios");
     }
 
 
@@ -110,7 +113,7 @@ public class  EnvioBanco {
             ps.setInt(5, ind.getIdMunicipio());
         });
 
-        logMensagem(LocalDateTime.now(), "Debug", "enviou as Métricas do PIB");
+        logMensagem(LocalDateTime.now(zoneId), "Debug", "enviou as Métricas do PIB");
     }
     public static void enviandoDBIndiSetor(List<IndicadorPorSetor> indicadorPorSetors, JdbcTemplate template){
 
@@ -127,7 +130,7 @@ public class  EnvioBanco {
             ps.setDouble(4, setor.getIdMunicipio());
         });
 
-        logMensagem(LocalDateTime.now(), "Debug", "enviou os Indicadores por Setor");
+        logMensagem(LocalDateTime.now(zoneId), "Debug", "enviou os Indicadores por Setor");
 
     }
 
@@ -138,14 +141,14 @@ public class  EnvioBanco {
     public static void enviandoDBSetores (List<Setores> setores , JdbcTemplate template) {
 
 
-        logMensagem(LocalDateTime.now(), "Debug", "Mandando para o banco de dados os Setores ");
+        logMensagem(LocalDateTime.now(zoneId), "Debug", "Mandando para o banco de dados os Setores ");
         for (Setores setor : setores) {
 
             //Faz o INSERT no banco de dados chamando o metodo GET de cada atributo de Municipio
             template.update("Insert Into Setores values ( ? , ? )", setor.getIdSetores(),setor.getNomeSetor());
 
         }
-        logMensagem(LocalDateTime.now(), "Debug", "Terminou o envio dos Setores");
+        logMensagem(LocalDateTime.now(zoneId), "Debug", "Terminou o envio dos Setores");
     }
 
 }
