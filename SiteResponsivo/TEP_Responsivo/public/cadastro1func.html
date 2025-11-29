@@ -7,22 +7,20 @@
   <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/cadastro.css" />
 </head>
-<body onload="verificarAcessoAdmin(); inicializarPagina();">
-
-   <header>
-    <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
+<body onload=" inicializarPagina();">
+ <header>
+    <img src="assets/Logo/LogoCompleta.png" alt="TEP Logo">
     <nav>
-      <a href="painelAdm.html" class="active" style=" position: absolute; z-index: 10; right: 170px;">Painel Administrador</a>
-      <a class="button-login" id="nav-login" href="login.html">Login</a>
-    
+       <a href="index.html" style=" position: absolute; z-index: 10; right: 170px; ">Início</a>
+       <a class="button-login" id="nav-login" href="login.html">Login</a>
     </nav>
   </header>
 
- <div class="container">
+  <div class="container">
      <img src="assets/institucional/tepinho.png" class="tepinho" alt="tepinho">
     <div class="form-section">
       <h2>Cadastro de Funcionário</h2>
-      <p>Cadastre os funcionários da sua empresa</p>
+      <p>Complete o cadastro criando o primeiro usuário da empresa</p>
       <form id="formUsuario" onsubmit="return cadastrarUsuario()">
         <label for="nome_usuario_input">Nome</label>
         <input type="text" id="nome_usuario_input" required>
@@ -56,6 +54,7 @@
 
   
   </div>
+
 
   <script>
   // Função para verificar se a senha é segura
@@ -180,6 +179,7 @@
     }
   }
 
+
   function carregarEmpresas() {
     fetch("/empresas/listar")
       .then(function(resposta) {
@@ -280,22 +280,18 @@
       }
     })
     .then(function(resultado) {
-      mostrarMensagem('sucesso', 'Usuário cadastrado com sucesso!');
+      mostrarMensagem('sucesso', 'Usuário cadastrado com sucesso! Redirecionando para o login...');
       
-  
+      setTimeout(function() {
+        console.log('Redirecionando para a página de login');
+        window.location.href = 'login.html';
+      }, 2000);
     })
     .catch(function(erro) {
       mostrarMensagem('erro', erro.message || 'Erro de conexão. Tente novamente.');
     });
 
     return false;
-  }
-
-  function verificarAcessoAdmin() {
-    if (!sessionStorage.IS_ADMIN || sessionStorage.IS_ADMIN != 1) {
-      mostrarMensagem('Acesso negado! Apenas administradores podem cadastrar usuários.');
-      window.location = "painelFunc.html";
-    }
   }
   </script>
 </body>

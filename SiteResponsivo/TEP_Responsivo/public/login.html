@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/cadastro.css" />
 </head>
 <body>
-  <header>
+<header>
     <img src="assets/Logo/LogoCompleta.png" alt="TEP Logo">
     <nav>
       <a href="index.html" style=" position: absolute; z-index: 10; right: 187px; ">Início</a>
@@ -16,7 +16,7 @@
     </nav>
   </header>
 
-  <div class="container-login">
+ <div class="container-login">
      <img src="assets/institucional/tepinho.png" class="tepinho" alt="tepinho">
     <div class="login-section">
       <h2>Conecte-se</h2>
@@ -39,6 +39,7 @@
 
 
   </div>
+
 
 <script>
 function entrar() {
@@ -65,14 +66,19 @@ function entrar() {
             sessionStorage.NOME_USUARIO = usuario.nome;
             sessionStorage.ID_USUARIO = usuario.id;
             sessionStorage.FK_EMPRESA = usuario.fkEmpresa;
-            window.location = "./painel.html";
+            sessionStorage.IS_ADMIN = usuario.adm;
+            
+            if(usuario.adm == 1){
+                window.location = "./painelAdm.html";
+            } else {
+                window.location = "./painelFunc.html";
+            }
         } else {
             const texto = await resposta.text();
             exibirErro(texto || "Email ou senha incorretos!");
         }
     })
     .catch(erro => {
-        console.error(erro);
         exibirErro("Erro interno do servidor!");
     });
 

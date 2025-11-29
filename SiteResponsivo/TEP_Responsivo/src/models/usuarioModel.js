@@ -22,50 +22,43 @@ function protegerTexto(texto) {
 }
 
 function autenticar(email, senha) {
-    console.log("MODEL USUÁRIO - Verificando login para:", email);
-    
-  
     var emailSeguro = protegerTexto(email);
     var senhaSegura = protegerTexto(senha);
     
-
     var comandoSQL = "";
-    comandoSQL = comandoSQL + "SELECT u.idUser as id, u.nome, u.email, u.Empresas_idEmpresas as fkEmpresa, ";
-    comandoSQL = comandoSQL + "e.razao_social, e.cnpj ";
+    comandoSQL = comandoSQL + "SELECT u.idUser as id, u.nome, u.email, c.Empresas_idEmpresas as fkEmpresa, ";
+    comandoSQL = comandoSQL + "e.razao_social, e.cnpj, c.adm ";
     comandoSQL = comandoSQL + "FROM User u ";
-    comandoSQL = comandoSQL + "JOIN Empresas e ON u.Empresas_idEmpresas = e.idEmpresas ";
+    comandoSQL = comandoSQL + "JOIN Cargo c ON u.Cargo_idCargo = c.idCargo ";
+    comandoSQL = comandoSQL + "JOIN Empresas e ON c.Empresas_idEmpresas = e.idEmpresas ";
     comandoSQL = comandoSQL + "WHERE u.email = '" + emailSeguro + "' AND u.senha = SHA2('" + senhaSegura + "', 256)";
 
-    console.log("Executando comando SQL:");
-    console.log(comandoSQL);
-    
-  
     return database.executar(comandoSQL);
 }
 
 function cadastrar(nome, email, senha, idEmpresa, ehAdministrador) {
-
     if (ehAdministrador == undefined) {
         ehAdministrador = 0;
     }
-    
-    console.log("MODEL USUÁRIO - Cadastrando:", nome, email, idEmpresa, ehAdministrador);
 
-   
     var nomeSeguro = protegerTexto(nome);
     var emailSeguro = protegerTexto(email);
     var senhaSegura = protegerTexto(senha);
 
-    
-    var comandoSQL = "";
-    comandoSQL = comandoSQL + "INSERT INTO User (nome, email, senha, Empresas_idEmpresas, ADM) ";
-    comandoSQL = comandoSQL + "VALUES ('" + nomeSeguro + "', '" + emailSeguro + "', SHA2('" + senhaSegura + "', 256), " + idEmpresa + ", " + ehAdministrador + ")";
-
-    console.log("Executando comando SQL:");
-    console.log(comandoSQL);
-    
-   
-    return database.executar(comandoSQL);
+    var comandoSQLCargo = "INSERT INTO Cargo (adm, descricao, Empresas_idEmpresas) ";
+    if(ehAdministrador == 1){
+         comandoSQLCargo += "VALUES (" + ehAdministrador + ", 'Administrador', " + idEmpresa + ")";
+    }else{
+    comandoSQLCargo += "VALUES (" + ehAdministrador + ", 'Usuário do sistema', " + idEmpresa + ")";
+}
+    return database.executar(comandoSQLCargo).then(function(resultadoCargo) {
+        var idCargo = resultadoCargo.insertId;
+        
+        var comandoSQLUser = "INSERT INTO User (nome, email, senha, Cargo_idCargo) ";
+        comandoSQLUser += "VALUES ('" + nomeSeguro + "', '" + emailSeguro + "', SHA2('" + senhaSegura + "', 256), " + idCargo + ")";
+        
+        return database.executar(comandoSQLUser);
+    });
 }
 
 module.exports = {

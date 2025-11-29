@@ -10,14 +10,13 @@
   <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="js/sessao.js"></script>
-  <script src="js/dashboard.js"></script>
 </head>
 <body onload="iniciarDashboard()">
   
- <header>
+  <header>
     <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
     <nav>
-      <a href="painel.html">Painel Central</a>
+      <a href="#" onclick="irParaPainel()" id="linkPainel">Painel Central</a>
       <a href="#" class="active">Dashboard</a>
       <a href="#" class="logout" onclick="sair()">Sair</a>
     </nav>
@@ -80,7 +79,7 @@
     </div>
     <div class="alinhar">
       <div class="alinha_footer">
-        <span><a href="painel.html">Painel Central</a></span>
+        <span><a href="#" onclick="irParaPainel()">Painel Central</a></span>
         <span><a href="perfil.html">Perfil</a></span>
       </div>
       <div class="alinha_footer">
@@ -99,33 +98,26 @@
 
     async function iniciarDashboard() {
       try {
-        console.log('Iniciando dashboard...');
         
         // Verificar se usuário está logado
         if (!sessionStorage.FK_EMPRESA) {
-          console.log('Usuário não logado, redirecionando...');
           window.location = "login.html";
           return;
         }
 
-        console.log('FK_EMPRESA:', sessionStorage.FK_EMPRESA);
-
         // Buscar empresa e obter município
-        console.log('Buscando dados da empresa...');
         const empresaRes = await fetch(`/empresas/buscar/${sessionStorage.FK_EMPRESA}`);
         if (!empresaRes.ok) {
           throw new Error(`Erro ao buscar empresa: ${empresaRes.status} - ${empresaRes.statusText}`);
         }
         
         const empresa = await empresaRes.json();
-        console.log('Resposta da empresa:', empresa);
         
         if (!empresa || empresa.length === 0) {
           throw new Error("Empresa não encontrada");
         }
         
         municipioId = empresa[0].Municipios_idMunicipios;
-        console.log('Município ID bruto:', municipioId, 'Tipo:', typeof municipioId);
         
         if (!municipioId) {
           throw new Error("Município não associado à empresa");
@@ -137,25 +129,19 @@
           throw new Error("ID do município inválido: " + municipioId);
         }
         
-        console.log('Município ID processado:', municipioId);
 
       
         // Carregar anos disponíveis
-        console.log('Carregando anos disponíveis...');
         await carregarAnosDisponiveis();
         
         // Carregar dados gerais do município
-        console.log('Carregando dados gerais...');
         await carregarDadosGerais();
         
         // Carregar dados do ano atual selecionado
-        console.log('Carregando dados do ano...');
         await carregarDadosDoAno();
         
-        console.log('Dashboard carregado com sucesso!');
         
       } catch (error) {
-        console.error("Erro detalhado ao carregar dashboard:", error);
         mostrarMensagemErro("Erro ao carregar dados do dashboard: " + error.message);
         
         setTimeout(() => {
@@ -191,10 +177,7 @@
           selectAno.appendChild(option);
         }
         
-        console.log('Anos disponíveis:', anosDisponiveis);
-        
       } catch (error) {
-        console.error("Erro ao carregar anos:", error);
       
         const selectAno = document.getElementById("ano");
         selectAno.innerHTML = `<option value="${new Date().getFullYear()}">Sem dados</option>`;
@@ -203,12 +186,10 @@
 
     async function carregarDadosGerais() {
       try {
-        console.log('Carregando dados gerais...');
         const response = await fetch(`/dashboard/${municipioId}`);
         if (!response.ok) throw new Error("Erro ao buscar dados gerais");
         
         const dados = await response.json();
-        console.log('Dados gerais recebidos:', dados);
         
         if (dados.length > 0) {
           const info = dados[0];
@@ -224,7 +205,6 @@
           mostrarMensagemErro("Nenhum dado encontrado para este município");
         }
       } catch (error) {
-        console.error("Erro ao carregar dados gerais:", error);
         mostrarMensagemErro("Erro ao carregar informações básicas");
       }
     }
@@ -238,7 +218,6 @@
       });
       
       
-      console.warn(mensagem);
     }
 
     async function carregarDadosDoAno() {
@@ -247,11 +226,9 @@
         const ano = selectAno.value;
         
         if (!ano) {
-          console.log('Nenhum ano selecionado');
           return;
         }
         
-        console.log('Carregando dados para o ano:', ano);
         
         // Carregar dados consolidados do ano
         await carregarDadosConsolidados(ano);
@@ -266,7 +243,6 @@
         await atualizarGrafico();
         
       } catch (error) {
-        console.error("Erro ao carregar dados do ano:", error);
       }
     }
 
@@ -276,7 +252,6 @@
         if (!response.ok) throw new Error("Erro ao buscar dados consolidados");
         
         const dados = await response.json();
-        console.log('Dados consolidados:', dados);
         
         if (dados.length > 0) {
           const info = dados[0];
@@ -300,10 +275,8 @@
               `R$ ${Number(info.pib_total).toLocaleString('pt-BR')}` : 
               "Sem dados";
           }
-          // teste se veio aq
         }
       } catch (error) {
-        console.error("Erro ao carregar dados consolidados:", error);
       }
     }
 
@@ -313,7 +286,6 @@
         if (!response.ok) throw new Error("Erro ao buscar arrecadação por setor");
         
         const setores = await response.json();
-        console.log('Arrecadação por setor:', setores);
         
         const arrecadacaoLista = document.getElementById("arrecadacao-lista");
         if (arrecadacaoLista) {
@@ -329,7 +301,7 @@
           }
         }
       } catch (error) {
-        console.error("Erro ao carregar arrecadação por setor:", error);
+      
         const arrecadacaoLista = document.getElementById("arrecadacao-lista");
         if (arrecadacaoLista) {
           arrecadacaoLista.innerHTML = "<li>Erro ao carregar dados</li>";
@@ -339,27 +311,20 @@
 
     async function carregarCrescimentoAnual() {
       try {
-        console.log('Município ID para crescimento:', municipioId, 'Tipo:', typeof municipioId);
-        
         if (!municipioId || municipioId <= 0) {
           throw new Error('ID do município inválido para crescimento: ' + municipioId);
         }
         
         const url = `/dashboard/crescimento/${municipioId}`;
-        console.log('URL para crescimento:', url);
         
         const response = await fetch(url);
-        console.log('Response status crescimento:', response.status);
-        console.log('Response ok crescimento:', response.ok);
         
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('Erro response crescimento:', errorText);
           throw new Error(`Erro ${response.status}: ${errorText}`);
         }
         
         const crescimento = await response.json();
-        console.log('Crescimento anual recebido:', crescimento);
         
         const crescimentoLista = document.getElementById("crescimento-lista");
         if (crescimentoLista) {
@@ -372,29 +337,25 @@
               if (percentual !== null && !isNaN(percentual)) {
                 const classe = percentual >= 0 ? 'positivo' : 'negativo';
                 const simbolo = percentual >= 0 ? '▲' : '▼';
+                li.classList.add('item-crescimento');
+                if (percentual >= 0) {
+                  li.classList.add('bg-positivo');
+                } else {
+                  li.classList.add('bg-negativo');
+                }
                 li.innerHTML = `${item.ano} <span class="${classe}">${simbolo} ${Math.abs(percentual).toFixed(1)}%</span>`;
               } else {
-                li.innerHTML = `${item.ano} <span style="color: #666;">Primeiro ano ou sem dados</span>`;
+                li.classList.add('item-crescimento', 'bg-neutro');
+                li.innerHTML = `${item.ano} <span class="texto-neutro">Primeiro ano ou sem dados</span>`;
               }
               
               crescimentoLista.appendChild(li);
             });
-            
-            if (!document.querySelector('#crescimento-styles')) {
-              const style = document.createElement('style');
-              style.id = 'crescimento-styles';
-              style.textContent = `
-                .positivo { color: #4caf50; font-weight: bold; }
-                .negativo { color: #f44336; font-weight: bold; }
-              `;
-              document.head.appendChild(style);
-            }
           } else {
             crescimentoLista.innerHTML = "<li>Nenhum dado de crescimento disponível</li>";
           }
         }
       } catch (error) {
-        console.error("Erro ao carregar crescimento anual:", error);
         const crescimentoLista = document.getElementById("crescimento-lista");
         if (crescimentoLista) {
           crescimentoLista.innerHTML = "<li>Erro ao carregar dados - Verifique a conexão</li>";
@@ -404,28 +365,20 @@
 
     async function atualizarGrafico() {
       try {
-        console.log('=== INICIANDO ATUALIZAÇÃO DO GRÁFICO ===');
-        console.log('Município ID para gráfico:', municipioId, 'Tipo:', typeof municipioId);
-        
         if (!municipioId || municipioId <= 0) {
           throw new Error('ID do município inválido para gráfico: ' + municipioId);
         }
         
         const url = `/dashboard/grafico/${municipioId}`;
-        console.log('URL para gráfico:', url);
         
         const response = await fetch(url);
-        console.log('Response status gráfico:', response.status);
-        console.log('Response ok gráfico:', response.ok);
         
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('Erro response gráfico:', errorText);
           throw new Error(`Erro ${response.status}: ${errorText}`);
         }
         
         const historico = await response.json();
-        console.log('Histórico para gráfico:', historico);
         
         if (historico.length === 0) {
           mostrarGraficoVazio();
@@ -457,10 +410,6 @@
         const anosOrdenados = Array.from(anosUnicos).sort();
         const setoresArray = Array.from(setoresUnicos);
         
-        console.log('Anos encontrados:', anosOrdenados);
-        console.log('Setores encontrados:', setoresArray);
-
-       
         const series = [];
         
         
@@ -565,14 +514,11 @@
         chartInstance.render();
         
       } catch (error) {
-        console.error("Erro ao atualizar gráfico:", error);
         mostrarGraficoVazio();
       }
     }
 
     function mostrarGraficoVazio() {
-      console.log('Mostrando gráfico vazio - nenhum dado encontrado');
-      
       const options = {
         chart: {
           type: 'line',
@@ -634,7 +580,14 @@
       window.location = "login.html";
     }
 
-  
+    function irParaPainel() {
+      if (sessionStorage.IS_ADMIN == 1) {
+        window.location = "painelAdm.html";
+      } else {
+        window.location = "painelFunc.html";
+      }
+    }
+
     window.carregarDadosDoAno = carregarDadosDoAno;
   </script>
 </body>

@@ -31,14 +31,10 @@ function buscarPorCnpj(cnpj) {
 }
 
 function cadastrar(razaoSocial, cnpj, email, senha, municipioId) {
-  console.log("EMPRESA MODEL - CADASTRO:", razaoSocial, cnpj, email, municipioId);
-  
   var instrucaoSql = `
     INSERT INTO Empresas (razao_social, cnpj, email, senha, Municipios_idMunicipios)
     VALUES ('${razaoSocial}', '${cnpj}', '${email}', SHA2('${senha}', 256), ${municipioId})
   `;
-  
-  console.log("SQL para cadastro de empresa:", instrucaoSql);
   
   return database.executar(instrucaoSql);
 }

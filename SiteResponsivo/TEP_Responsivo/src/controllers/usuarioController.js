@@ -23,7 +23,6 @@ function protegerTexto(texto) {
 
 
 function emailEValido(email) {
-   
     if (!email) {
         return false;
     }
@@ -58,8 +57,6 @@ function emailEValido(email) {
 
 
 function senhaEValida(senha) {
-   
-    
     if (!senha || senha.length < 8) {
         return {
             valida: false,
@@ -149,9 +146,6 @@ function senhaEValida(senha) {
 
 
 function autenticar(req, res) {
-    console.log('Usuário tentando fazer login');
-    
-    
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
 
@@ -169,28 +163,18 @@ function autenticar(req, res) {
         });
     }
 
-    console.log('Dados recebidos:', { 
-        email: email, 
-        tamanhoSenha: senha.length 
-    });
-
-
     var emailSeguro = protegerTexto(email);
     var senhaSegura = protegerTexto(senha);
 
 
     usuarioModel.autenticar(emailSeguro, senhaSegura)
         .then(function (resultado) {
-            console.log('Usuários encontrados:', resultado.length);
-            
             if (resultado.length === 0) {
                
                 res.status(403).json({ 
                     message: 'Email ou senha incorretos' 
                 });
             } else if (resultado.length === 1) {
-                
-                console.log('Login realizado com sucesso');
                 res.json(resultado[0]);
             } else {
                 
@@ -200,7 +184,6 @@ function autenticar(req, res) {
             }
         })
         .catch(function (erro) {
-            console.log('Erro ao fazer login:', erro);
             res.status(500).json({ 
                 message: 'Erro interno do servidor', 
                 erro: erro.sqlMessage 
@@ -210,23 +193,11 @@ function autenticar(req, res) {
 
 
 function cadastrar(req, res) {
-    console.log('Tentativa de cadastro de usuário');
-    
-
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
     var idEmpresa = req.body.idEmpresaVincularServer;
     var ehAdministrador = req.body.admServer;
-
-    console.log('Dados recebidos:', { 
-        nome: nome, 
-        email: email, 
-        idEmpresa: idEmpresa, 
-        ehAdministrador: ehAdministrador,
-        tamanhoSenha: senha ? senha.length : 0 
-    });
-
 
     if (!nome || nome.trim() === '') {
         return res.status(400).json({ 
@@ -286,18 +257,14 @@ function cadastrar(req, res) {
         administrador = 1;
     }
 
-    console.log('Dados processados - Enviando para cadastro');
-
     usuarioModel.cadastrar(nomeSeguro, emailSeguro, senhaSegura, numeroEmpresa, administrador)
         .then(function (resultado) {
-            console.log('Usuário cadastrado com sucesso');
             res.status(201).json({ 
                 message: 'Usuário cadastrado com sucesso', 
                 id: resultado.insertId 
             });
         })
         .catch(function (erro) {
-            console.log('Erro ao cadastrar usuário:', erro);
             res.status(500).json({ 
                 message: 'Erro interno ao cadastrar usuário', 
                 erro: erro.sqlMessage 

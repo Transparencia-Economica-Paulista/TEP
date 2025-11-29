@@ -27,7 +27,6 @@ function buscarPorCnpj(req, res) {
   empresaModel.buscarPorCnpj(cnpjLimpo).then((resultado) => {
     res.status(200).json(resultado);
   }).catch((erro) => {
-    console.log("Erro ao buscar por CNPJ:", erro);
     res.status(500).json({ message: "Erro interno do servidor", erro: erro.sqlMessage });
   });
 }
@@ -36,7 +35,6 @@ function listar(req, res) {
   empresaModel.listar().then((resultado) => {
     res.status(200).json(resultado);
   }).catch((erro) => {
-    console.log("Erro ao listar empresas:", erro);
     res.status(500).json({ message: "Erro interno do servidor", erro: erro.sqlMessage });
   });
 }
@@ -45,7 +43,6 @@ function listarMunicipios(req, res) {
   empresaModel.listarMunicipios().then((resultado) => {
     res.status(200).json(resultado);
   }).catch((erro) => {
-    console.log("Erro ao listar municípios:", erro);
     res.status(500).json({ message: "Erro interno do servidor", erro: erro.sqlMessage });
   });
 }
@@ -67,10 +64,10 @@ function buscarPorId(req, res) {
     }
     res.status(200).json(resultado);
   }).catch((erro) => {
-    console.log("Erro ao buscar por id:", erro);
     res.status(500).json({ message: "Erro interno do servidor", erro: erro.sqlMessage });
   });
 }
+
 function validarCNPJ(cnpj) {
   var cnpjLimpo = '';
   for (var i = 0; i < cnpj.length; i++) {
@@ -186,8 +183,6 @@ function cadastrar(req, res) {
   var email = req.body.email;
   var senha = req.body.senha;
 
-  console.log('Dados recebidos para cadastro:', { nome, cnpj, municipioId, email });
-
   if (!nome || nome.trim() === '') {
     return res.status(400).json({ message: "Razão social é obrigatória" });
   }
@@ -249,14 +244,12 @@ function cadastrar(req, res) {
       // Cadastrar a empresa
       empresaModel.cadastrar(nomeLimpo, cnpjLimpo, emailLimpo, senha, municipioId)
         .then((resultado) => {
-          console.log('Empresa cadastrada com sucesso:', resultado.insertId);
           res.status(201).json({ 
             message: "Empresa cadastrada com sucesso!",
             id: resultado.insertId 
           });
         })
         .catch((erro) => {
-          console.log("Erro ao cadastrar empresa:", erro);
           res.status(500).json({ 
             message: "Erro interno do servidor ao cadastrar empresa",
             erro: erro.sqlMessage 
@@ -264,7 +257,6 @@ function cadastrar(req, res) {
         });
     }
   }).catch((erro) => {
-    console.log("Erro ao verificar CNPJ:", erro);
     res.status(500).json({ 
       message: "Erro interno do servidor ao verificar CNPJ",
       erro: erro.sqlMessage 

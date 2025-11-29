@@ -3,39 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TEP - Painel Central</title>
+  <title>TEP - Painel Administrador</title>
   <link rel="stylesheet" href="css/painel.css">
   <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
   <script src="js/sessao.js"></script>
 </head>
-<body>
+<body onload="verificarAcessoAdmin()">
   
   <header>
     <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
     <nav>
-      <a href="painel.html" class="active">Painel Central</a>
+      <a href="painelAdm.html" class="active">Painel Administrador</a>
       <a href="dashboard.html">Dashboard</a>
       <a href="#" class="logout" onclick="limparSessao()">Sair</a>
     </nav>
   </header>
 
   <main class="container">
-    <h1>PAINEL CENTRAL</h1>
+    <h1>PAINEL ADMINISTRADOR</h1>
     
     <div class="grid-cartoes">
       
       <a href="cadastrousuario.html" class="cartao">
         <div class="icone-cartao">
-          <img src="assets/painel/image 8.png" alt="Adicionar usuário">
+          <img src="assets/painel/adUser.png" alt="Adicionar funcionário">
         </div>
-        <h3>Adicionar usuário</h3>
+        <h3>Adicionar funcionário</h3>
       </a>
 
       <a href="perfil.html" class="cartao">
         <div class="icone-cartao">
-          <img src="assets/painel/image 9.png" alt="Visualizar usuário">
+          <img src="assets/painel/perfil.png" alt="Visualizar perfil">
         </div>
-        <h3>Visualizar usuário</h3>
+        <h3>Visualizar perfil</h3>
+      </a>
+
+       <a href="#" class="cartao">
+        <div class="icone-cartao">
+          <img src="assets/painel/lista.png" alt="Lista de Funcionários">
+        </div>
+        <h3>Lista de funcionários</h3>
       </a>
 
       <a href="dashboard.html" class="cartao">
@@ -47,23 +54,16 @@
 
       <a href="#" class="cartao">
         <div class="icone-cartao">
-          <img src="assets/painel/image 10.png" alt="LOGS">
+          <img src="assets/painel/log.png" alt="LOGS">
         </div>
         <h3>LOGS</h3>
       </a>
 
       <a href="#" class="cartao">
         <div class="icone-cartao">
-          <img src="assets/painel/image 11.png" alt="Sobre a TEP">
+          <img src="assets/painel/sobre.png" alt="Sobre a TEP">
         </div>
         <h3>Sobre a TEP</h3>
-      </a>
-
-      <a href="#" class="cartao">
-        <div class="icone-cartao">
-          <img src="assets/painel/image 12.png" alt="Dúvidas ou sugestões">
-        </div>
-        <h3>Dúvidas ou sugestões</h3>
       </a>
       
     </div>
@@ -76,7 +76,7 @@
     </div>
     <div class="alinhar">
       <div class="alinha_footer">
-        <span><a href="painel.html">Painel Central</a></span>
+        <span><a href="painelAdm.html">Painel Central</a></span>
         <span><a href="perfil.html">Perfil</a></span>
       </div>
       <div class="alinha_footer">
@@ -86,5 +86,13 @@
     </div>
   </footer>
 
+  <script>
+    function verificarAcessoAdmin() {
+      if (!sessionStorage.IS_ADMIN || sessionStorage.IS_ADMIN != 1) {
+        alert('Acesso negado! Apenas administradores podem acessar esta página.');
+        window.location = "painelFunc.html";
+      }
+    }
+  </script>
 </body>
 </html>

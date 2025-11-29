@@ -51,15 +51,12 @@
     </div>
 
   </div>
-
   <script>
-  
   function verificarSenhaSegura(senha) {
-   
     if (senha.length < 8) {
       return false;
     }
-    
+
     var temMinuscula = false;
     for (var i = 0; i < senha.length; i++) {
       if (senha[i] >= 'a' && senha[i] <= 'z') {
@@ -115,7 +112,6 @@
 
   
   function validarCNPJSimples(cnpj) {
-    
     var cnpjLimpo = '';
     for (var i = 0; i < cnpj.length; i++) {
       var char = cnpj[i];
@@ -141,9 +137,7 @@
     return !todosIguais;
   }
 
- 
   function formatarCNPJ(cnpj) {
-   
     var numeros = '';
     for (var i = 0; i < cnpj.length; i++) {
       var char = cnpj[i];
@@ -179,8 +173,7 @@
     var senhaInput = document.getElementById('senha_empresa_input');
     var confirmarSenhaInput = document.getElementById('confirmar_senha_empresa_input');
     var cnpjInput = document.getElementById('cnpj_empresa_input');
-    
-  
+
     senhaInput.addEventListener('input', function() {
       var senha = senhaInput.value;
       var mensagemElement = senhaInput.nextElementSibling;
@@ -239,7 +232,6 @@
         }
       })
       .catch(function(erro) {
-        console.log('Erro ao carregar municípios:', erro);
         var select = document.getElementById("municipio_select");
         select.innerHTML = '<option value="">Erro ao carregar municípios</option>';
       });
@@ -263,7 +255,6 @@
 
  
   function cadastrarEmpresa() {
-   
     var razaoSocial = document.getElementById('razao_social_input').value.trim();
     var email = document.getElementById('email_empresa_input').value.trim();
     var senha = document.getElementById('senha_empresa_input').value;
@@ -315,7 +306,6 @@
   
     mostrarMensagem('', 'Enviando...');
 
-  
     var dados = {
       nome: razaoSocial,
       email: email,
@@ -324,9 +314,6 @@
       municipio: municipio
     };
 
-    console.log('Enviando dados:', dados);
-
-  
     fetch("/empresas/cadastrar", {
       method: "POST",
       headers: { 
@@ -335,8 +322,6 @@
       body: JSON.stringify(dados)
     })
     .then(function(resposta) {
-      console.log('Resposta recebida:', resposta.status, resposta.statusText);
-      
       if (resposta.ok) {
         return resposta.json();
       } else {
@@ -347,14 +332,12 @@
     })
     .then(function(resultado) {
       mostrarMensagem('sucesso', 'Empresa cadastrada com sucesso! Redirecionando...');
-      
-  
+
       setTimeout(function() {
-        window.location.href = "cadastrousuario.html";
+        window.location.href = "cadastro1func.html";
       }, 2000);
     })
     .catch(function(erro) {
-      console.error('Erro na requisição:', erro);
       mostrarMensagem('erro', erro.message || 'Erro de conexão. Tente novamente.');
     });
 

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEP - Painel Central</title>
+  <link rel="stylesheet" href="css/painel.css">
+  <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
+  <script src="js/sessao.js"></script>
+</head>
+<body onload="verificarAcessoFuncionario()">
+  
+  <header>
+    <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
+    <nav>
+      <a href="painelFunc.html" class="active">Painel Funcionário</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="#" class="logout" onclick="limparSessao()">Sair</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>PAINEL FUNCIONÁRIO</h1>
+    
+    <div class="grid-cartoes">
+
+      <a href="perfil.html" class="cartao">
+        <div class="icone-cartao">
+          <img src="assets/painel/perfil.png" alt="Visualizar perfil">
+        </div>
+        <h3>Visualizar perfil</h3>
+      </a>
+
+      <a href="dashboard.html" class="cartao">
+        <div class="icone-cartao">
+          <img src="assets/painel/dashboard 1.png" alt="Dashboard">
+        </div>
+        <h3>Dashboard</h3>
+      </a>
+
+      <a href="#" class="cartao">
+        <div class="icone-cartao">
+          <img src="assets/painel/sobre.png" alt="Sobre a TEP">
+        </div>
+        <h3>Sobre a TEP</h3>
+      </a>
+
+      <a href="#" class="cartao">
+        <div class="icone-cartao">
+          <img src="assets/painel/duvidasEsug.png" alt="Dúvidas ou sugestões">
+        </div>
+        <h3>Dúvidas ou sugestões</h3>
+      </a>
+      
+    </div>
+  </main>
+
+  <footer>
+    <div id="titulo-footer">
+      <img src="assets/Logo/laranja.png" alt="Logo rodapé">
+      <h3>Transparência Econômica Paulista</h3>
+    </div>
+    <div class="alinhar">
+      <div class="alinha_footer">
+        <span><a href="painelFunc.html">Painel Central</a></span>
+        <span><a href="perfil.html">Perfil</a></span>
+      </div>
+      <div class="alinha_footer">
+        <span><a href="dashboard.html">Dashboard</a></span>
+        <span><a href="login.html">Sair</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function verificarAcessoFuncionario() {
+      if (sessionStorage.IS_ADMIN == 1) {
+        alert('Você é administrador. Redirecionando para o painel correto.');
+        window.location = "painelAdm.html";
+      }
+    }
+  </script>
+</body>
+</html>
