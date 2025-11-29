@@ -5,7 +5,7 @@ USE TEP;
 CREATE TABLE Regioes (
     idRegioes INT AUTO_INCREMENT PRIMARY KEY,
     nome_regiao VARCHAR(45) UNIQUE,
-    sigla_regiao CHAR(2) NOT NULL
+    sigla_regiao CHAR(4) NOT NULL
 );
 
 CREATE TABLE Municipios (
@@ -71,7 +71,7 @@ CREATE TABLE Metricas_do_pib (
     FOREIGN KEY (Municipios_idMunicipios) REFERENCES Municipios(idMunicipios)
 );
 
-CREATE TABLE LogBD (
+CREATE TABLE logBD (
     id INT AUTO_INCREMENT PRIMARY KEY,
     dataHora DATETIME NOT NULL,
     tipo VARCHAR(45) NOT NULL,
