@@ -2,7 +2,7 @@
     --cor-fundo: #f7f7f7;
     --cor-primaria: #e9501b;
     --cor-primaria-hover: #c53d15;
-    --cor-secundaria: #030028;
+    --cor-secundaria: #120b5f;
     --cor-branca: #fff;
     --cor-cinza: #6d6d73;
     --cor-texto: #222;
@@ -107,7 +107,7 @@ nav a.active {
     padding: 40px;
     max-width: 600px;
     margin: 0 auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 13px rgba(0, 0, 0, 0.3);
     text-align: center;
 }
 
