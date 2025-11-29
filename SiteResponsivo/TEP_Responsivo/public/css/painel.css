@@ -73,7 +73,6 @@ nav a:hover {
 
 nav a.active {
   color: var(--cor-primaria);
-  border-bottom: 2px solid var(--cor-primaria);
 }
 
 .logout {

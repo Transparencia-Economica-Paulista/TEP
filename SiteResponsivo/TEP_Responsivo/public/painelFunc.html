@@ -74,9 +74,13 @@
 
   <script>
     function verificarAcessoFuncionario() {
+      if (!sessionStorage.EMAIL_USUARIO) {
+        window.location = "login.html";
+        return;
+      }
       if (sessionStorage.IS_ADMIN == 1) {
         alert('Você é administrador. Redirecionando para o painel correto.');
-        window.location = "painelAdm.html";
+        window.location = "adm/painelAdm.html";
       }
     }
   </script>

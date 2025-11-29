@@ -4,17 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEP - Perfil</title>
-  <link rel="stylesheet" href="css/perfil.css">
-  <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
-  <script src="js/sessao.js"></script>
+  <link rel="stylesheet" href="../css/perfil.css">
+  <link rel="icon" href="../assets/icon/favicon.ico" type="image/x-icon">
+  <style>
+    .container {
+      min-height: calc(100vh - 300px);
+    }
+  </style>
+  <script src="../js/sessao.js"></script>
 </head>
 <body onload="verificarSessaoPerfil()">
   
   <header>
-    <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
+    <img src="../assets/Logo/LogoCompleta.png" alt="Logo" />
     <nav>
       <a href="#" onclick="voltarParaPainel()">Painel</a>
-      <a href="dashboard.html">Dashboard</a>
+      <a href="../dashboard.html">Dashboard</a>
       <a href="#" class="logout" onclick="limparSessao()">Sair</a>
     </nav>
   </header>
@@ -24,12 +29,12 @@
     
     <div class="perfil-card">
       <div class="perfil-foto">
-        <img src="./assets/painel/tepinhoPerfil.png" alt="Foto do usuário" id="foto-perfil">
+        <img src="../assets/painel/tepinhoPerfil.png" alt="Foto do usuário" id="foto-perfil">
       </div>
       
       <div class="perfil-info">
         <div class="info-item">
-          <label>Nome Completo:</label>
+          <label>Nome:</label>
           <p id="nome-usuario">Carregando...</p>
         </div>
         
@@ -58,7 +63,7 @@
 
   <footer>
     <div id="titulo-footer">
-      <img src="assets/Logo/laranja.png" alt="Logo rodapé">
+      <img src="../assets/Logo/laranja.png" alt="Logo rodapé">
       <h3>Transparência Econômica Paulista</h3>
     </div>
     <div class="alinhar">
@@ -67,8 +72,8 @@
         <span><a href="perfil.html">Perfil</a></span>
       </div>
       <div class="alinha_footer">
-        <span><a href="dashboard.html">Dashboard</a></span>
-        <span><a href="login.html">Sair</a></span>
+        <span><a href="../dashboard.html">Dashboard</a></span>
+        <span><a href="../login.html">Sair</a></span>
       </div>
     </div>
   </footer>
@@ -76,7 +81,7 @@
   <script>
     function verificarSessaoPerfil() {
       if (!sessionStorage.EMAIL_USUARIO) {
-        window.location = "login.html";
+        window.location = "../login.html";
         return;
       }
       carregarDadosPerfil();
@@ -84,9 +89,9 @@
 
     function voltarParaPainel() {
       if (sessionStorage.IS_ADMIN == 1) {
-        window.location = "adm/painelAdm.html";
+        window.location = "painelAdm.html";
       } else {
-        window.location = "painelFunc.html";
+        window.location = "../painelFunc.html";
       }
     }
 
