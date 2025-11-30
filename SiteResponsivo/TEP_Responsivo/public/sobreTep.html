@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEP - Perfil</title>
+  <link rel="stylesheet" href="css/perfil.css">
+  <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
+  <script src="js/sessao.js"></script>
+</head>
+<body>
+  
+  <header>
+    <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
+    <nav>
+      <a href="#" onclick="voltarParaPainel()">Painel</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="#" class="logout" onclick="limparSessao()">Sair</a>
+    </nav>
+  </header>
+
+  <h1>EM BREVE</h1>
+
+    <footer>
+    <div id="titulo-footer">
+      <img src="assets/Logo/laranja.png" alt="Logo rodapé">
+      <h3>Transparência Econômica Paulista</h3>
+    </div>
+    <div class="alinhar">
+      <div class="alinha_footer">
+        <span><a href="#" onclick="voltarParaPainel()">Painel</a></span>
+        <span><a href="perfil.html">Perfil</a></span>
+      </div>
+      <div class="alinha_footer">
+        <span><a href="dashboard.html">Dashboard</a></span>
+        <span><a href="login.html">Sair</a></span>
+      </div>
+    </div>
+  </footer>
+  </body>
+</html>
+
+<script>
+   
+
+    function voltarParaPainel() {
+      if (sessionStorage.IS_ADMIN == 1) {
+        window.location = "adm/painelAdm.html";
+      } else {
+        window.location = "painelFunc.html";
+      }
+    }
+
+
+</script>

@@ -12,7 +12,7 @@
    <header>
     <img src="../assets/Logo/LogoCompleta.png" alt="Logo" />
     <nav>
-      <a href="painelAdm.html" class="active" style=" position: absolute; z-index: 10; right: 170px;">Painel Administrador</a>
+      <a href="painelAdm.html" class="active" style=" position: absolute; z-index: 10; right: 170px;">Painel</a>
       <a class="button-login" id="nav-login" href="../login.html">Login</a>
     
     </nav>
@@ -40,7 +40,7 @@
         <input type="password" id="confirmar_senha_usuario_input" required>
 
         <label for="empresa_select">Empresa</label>
-        <select id="empresa_select" required></select>
+        <select id="empresa_select" required style="background-color: #f0f0f094;"></select>
 
         <div class="checkbox-container">
           <label>
@@ -181,7 +181,14 @@
   }
 
   function carregarEmpresas() {
-    fetch("/empresas/listar")
+    var fkEmpresa = sessionStorage.FK_EMPRESA;
+    
+    if (!fkEmpresa) {
+      mostrarMensagem('erro', 'Empresa do administrador não identificada');
+      return;
+    }
+
+    fetch(`/empresas/buscar/${fkEmpresa}`)
       .then(function(resposta) {
         return resposta.json();
       })
@@ -189,25 +196,23 @@
         var selectEmpresa = document.getElementById("empresa_select");
         selectEmpresa.innerHTML = "";
 
-      
-        for (var i = 0; i < empresas.length; i++) {
-          var empresa = empresas[i];
+        if (empresas && empresas.length > 0) {
+          var empresa = empresas[0];
           var opcao = document.createElement("option");
-          opcao.value = empresa.id;
+          opcao.value = empresa.idEmpresas;
           opcao.text = empresa.razao_social;
+          opcao.selected = true;
           selectEmpresa.appendChild(opcao);
-        }
-
-        var empresaRecemCriada = sessionStorage.getItem("ID_EMPRESA_CRIADA");
-        if (empresaRecemCriada) {
-          selectEmpresa.value = empresaRecemCriada;
+          
+          // Desabilitar o select já que só há uma empresa
+          selectEmpresa.disabled = true;
+        } else {
+          mostrarMensagem('erro', 'Empresa não encontrada');
         }
       })
       .catch(function(erro) {
-        var mensagem = document.getElementById("mensagem_usuario");
-        mensagem.className = "mensagem erro";
-        mensagem.style.display = "block";
-        mensagem.innerText = "Erro ao carregar empresas";
+        console.error('Erro ao carregar empresa:', erro);
+        mostrarMensagem('erro', 'Erro ao carregar empresa');
       });
   }
 

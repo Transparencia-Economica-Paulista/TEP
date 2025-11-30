@@ -61,7 +61,39 @@ function cadastrar(nome, email, senha, idEmpresa, ehAdministrador) {
     });
 }
 
+function listarPorEmpresa(idEmpresa) {
+    var comandoSQL = "";
+    comandoSQL = comandoSQL + "SELECT u.idUser as id, u.nome, u.email, c.adm, c.Empresas_idEmpresas as fkEmpresa ";
+    comandoSQL = comandoSQL + "FROM User u ";
+    comandoSQL = comandoSQL + "JOIN Cargo c ON u.Cargo_idCargo = c.idCargo ";
+    comandoSQL = comandoSQL + "WHERE c.Empresas_idEmpresas = " + idEmpresa;
+    comandoSQL = comandoSQL + " ORDER BY c.adm DESC, u.nome ASC";
+
+    return database.executar(comandoSQL);
+}
+
+function deletar(idUsuario) {
+    var comandoSQL = "";
+    comandoSQL = comandoSQL + "DELETE FROM User WHERE idUser = " + idUsuario;
+    
+    return database.executar(comandoSQL);
+}
+
+function atualizarCargo(idUsuario, ehAdministrador) {
+    var comandoSQL = "";
+    comandoSQL = comandoSQL + "UPDATE Cargo c ";
+    comandoSQL = comandoSQL + "JOIN User u ON u.Cargo_idCargo = c.idCargo ";
+    comandoSQL = comandoSQL + "SET c.adm = " + ehAdministrador + ", ";
+    comandoSQL = comandoSQL + "c.descricao = '" + (ehAdministrador == 1 ? "Administrador" : "Usuário do sistema") + "' ";
+    comandoSQL = comandoSQL + "WHERE u.idUser = " + idUsuario;
+    
+    return database.executar(comandoSQL);
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    listarPorEmpresa,
+    deletar,
+    atualizarCargo
 };

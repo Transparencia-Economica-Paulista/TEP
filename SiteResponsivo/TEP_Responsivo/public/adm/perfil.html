@@ -6,11 +6,6 @@
   <title>TEP - Perfil</title>
   <link rel="stylesheet" href="../css/perfil.css">
   <link rel="icon" href="../assets/icon/favicon.ico" type="image/x-icon">
-  <style>
-    .container {
-      min-height: calc(100vh - 300px);
-    }
-  </style>
   <script src="../js/sessao.js"></script>
 </head>
 <body onload="verificarSessaoPerfil()">
@@ -77,6 +72,8 @@
       </div>
     </div>
   </footer>
+</body>
+</html>
 
   <script>
     function verificarSessaoPerfil() {
@@ -142,5 +139,3 @@
       return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
     }
   </script>
-</body>
-</html>

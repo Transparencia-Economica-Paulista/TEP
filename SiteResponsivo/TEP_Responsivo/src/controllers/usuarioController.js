@@ -272,7 +272,122 @@ function cadastrar(req, res) {
         });
 }
 
+function listar(req, res) {
+    var idEmpresa = req.params.idEmpresa;
+
+    if (!idEmpresa || idEmpresa === '') {
+        return res.status(400).json({ 
+            message: 'ID da empresa é obrigatório' 
+        });
+    }
+
+    var numeroEmpresa = Number(idEmpresa);
+    if (!Number.isInteger(numeroEmpresa) || numeroEmpresa <= 0) {
+        return res.status(400).json({ 
+            message: 'ID da empresa deve ser um número válido' 
+        });
+    }
+
+    usuarioModel.listarPorEmpresa(numeroEmpresa)
+        .then(function (resultado) {
+            res.json(resultado);
+        })
+        .catch(function (erro) {
+            res.status(500).json({ 
+                message: 'Erro ao listar usuários', 
+                erro: erro.sqlMessage 
+            });
+        });
+}
+
+function deletar(req, res) {
+    var idUsuario = req.params.id;
+
+    if (!idUsuario || idUsuario === '') {
+        return res.status(400).json({ 
+            message: 'ID do usuário é obrigatório' 
+        });
+    }
+
+    var numeroUsuario = Number(idUsuario);
+    if (!Number.isInteger(numeroUsuario) || numeroUsuario <= 0) {
+        return res.status(400).json({ 
+            message: 'ID do usuário deve ser um número válido' 
+        });
+    }
+
+    usuarioModel.deletar(numeroUsuario)
+        .then(function (resultado) {
+            if (resultado.affectedRows === 0) {
+                res.status(404).json({ 
+                    message: 'Usuário não encontrado' 
+                });
+            } else {
+                res.json({ 
+                    message: 'Usuário deletado com sucesso' 
+                });
+            }
+        })
+        .catch(function (erro) {
+            res.status(500).json({ 
+                message: 'Erro ao deletar usuário', 
+                erro: erro.sqlMessage 
+            });
+        });
+}
+
+function atualizarCargo(req, res) {
+    var idUsuario = req.params.id;
+    var ehAdministrador = req.body.adm;
+
+    if (!idUsuario || idUsuario === '') {
+        return res.status(400).json({ 
+            message: 'ID do usuário é obrigatório' 
+        });
+    }
+
+    var numeroUsuario = Number(idUsuario);
+    if (!Number.isInteger(numeroUsuario) || numeroUsuario <= 0) {
+        return res.status(400).json({ 
+            message: 'ID do usuário deve ser um número válido' 
+        });
+    }
+
+    if (ehAdministrador === undefined) {
+        return res.status(400).json({ 
+            message: 'Cargo é obrigatório' 
+        });
+    }
+
+    var administrador = 0;
+    if (ehAdministrador === 1 || ehAdministrador === true || ehAdministrador === 'true') {
+        administrador = 1;
+    }
+
+    usuarioModel.atualizarCargo(numeroUsuario, administrador)
+        .then(function (resultado) {
+            if (resultado.affectedRows === 0) {
+                res.status(404).json({ 
+                    message: 'Usuário não encontrado' 
+                });
+            } else {
+                res.json({ 
+                    message: 'Cargo atualizado com sucesso' 
+                });
+            }
+        })
+        .catch(function (erro) {
+            res.status(500).json({ 
+                message: 'Erro ao atualizar cargo', 
+                erro: erro.sqlMessage 
+            });
+        });
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    listar,
+    deletar,
+    atualizarCargo
 }
