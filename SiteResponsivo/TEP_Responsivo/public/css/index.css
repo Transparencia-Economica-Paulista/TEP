@@ -463,6 +463,35 @@ footer .alinha_footer {
   #adquira_nosso_produto .clique_aqui {
     width: 100%;
   }
+   #adquira_nosso_produto .tepinho {
+    position: static;
+    display: block;
+    margin: 20px auto 0;
+    height: 250px;
+  }
+
+  #adquira_nosso_produto .fundo-azul {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  #adquira_nosso_produto .texto-area {
+    font-size: 1.4rem;
+  }
+
+  #adquira_nosso_produto button {
+    padding: 12px 35px;
+    font-size: 1.2rem;
+  }
+
+   .centraliza_titulo h2,
+  #adquira_nosso_produto .centraliza_titulo h2,
+  #nossos_objetivos .centraliza_titulo h2 {
+    font-size: 2rem;
+  }
+  #sobre_nos .centraliza_titulo h2 {
+    font-size: 2rem;
+  }
 }
 @media (max-width: 600px) {
   .container {
@@ -493,36 +522,4 @@ footer .alinha_footer {
     letter-spacing: 3px;
   }
 }
-@media (max-width: 750px) {
 
-  #adquira_nosso_produto .tepinho {
-    position: static;
-    display: block;
-    margin: 20px auto 0;
-    height: 250px;
-  }
-
-  #adquira_nosso_produto .fundo-azul {
-    flex-direction: column;
-    padding: 40px 20px;
-  }
-
-  #adquira_nosso_produto .texto-area {
-    font-size: 1.4rem;
-  }
-
-  #adquira_nosso_produto button {
-    padding: 12px 35px;
-    font-size: 1.2rem;
-  }
-}
-@media (max-width: 768px) {
-  .centraliza_titulo h2,
-  #adquira_nosso_produto .centraliza_titulo h2,
-  #nossos_objetivos .centraliza_titulo h2 {
-    font-size: 2rem;
-  }
-  #sobre_nos .centraliza_titulo h2 {
-    font-size: 2rem;
-  }
-}

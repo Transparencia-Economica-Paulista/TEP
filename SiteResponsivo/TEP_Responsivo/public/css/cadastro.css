@@ -29,7 +29,7 @@ body {
   background: var(--cor-fundo);
 }
 
-/* HEADER E NAVECACAO */
+/* header */
 header {
   background: var(--cor-branca);
   display: flex;
@@ -347,8 +347,8 @@ a:hover {
   .container-login {
     flex-direction: column;
     min-height: unset;
-    width: 98vw;
-    max-width: 98vw;
+    width: 95vw;
+    max-width: 95vw;
   }
   
   .form-section,
@@ -383,13 +383,33 @@ a:hover {
   }
 }
 
-@media (max-width: 600px) {
-  header {
-    flex-direction: column;
-    gap: 10px;
-    padding: 12px 8px;
+@media(max-width: 768px){
+    header {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 19px 10px;
   }
-  
+  nav {
+    gap: 30px;
+    align-items: center;
+  }
+  .tepinho{
+    display: none;
+  }
+
+  .container{
+    left: 10rem;
+    right: 10rem;
+  }
+
+  .footer{
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 600px) {
   .container,
   .container-login {
     margin-top: 18px;
@@ -418,34 +438,3 @@ a:hover {
   }
 }
 
-@media (max-width: 480px) {
-  header {
-    padding: 8px;
-  }
-  
-  header img {
-    height: 36px;
-  }
-  
-  nav {
-    gap: 16px;
-  }
-  
-  nav a {
-    font-size: 0.9rem;
-  }
-  
-  .button-login {
-    padding: 6px 16px;
-    font-size: 0.9rem;
-  }
-  
-  .form-section h2,
-  .login-section h2 {
-    font-size: 1.2rem;
-  }
-  
-  .info-section .info-text {
-    font-size: 1.1rem;
-  }
-}
