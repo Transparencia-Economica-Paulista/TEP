@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TEP - Perfil</title>
-  <link rel="stylesheet" href="css/perfil.css">
+  <title>TEP - Sobre a TEP</title>
+  <link rel="stylesheet" href="css/sobreTep.css">
   <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon">
   <script src="js/sessao.js"></script>
 </head>
+
 <body>
-  
+
   <header>
     <img src="assets/Logo/LogoCompleta.png" alt="Logo" />
     <nav>
@@ -19,37 +21,102 @@
     </nav>
   </header>
 
-  <h1>EM BREVE</h1>
+  <h1>Ampliando Nossa Visão: Tecnologia, Transparência e Desenvolvimento Sustentável</h1>
+
+  <span>Nossa iniciativa transcende a simples união de ferramentas; ela emerge de um propósito fundamental e
+    inegociável: alavancar o poder da tecnologia de ponta, a riqueza dos dados e a ética da transparência para catalisar
+    um impacto real, profundo e duradouro na sociedade e na economia.
+  </span>
+
+  <span>
+    Acreditamos firmemente que o cerne do desenvolvimento sustentável e da prosperidade reside na compreensão clara,
+    acessível e detalhada da complexa dinâmica da arrecadação tributária e de seus múltiplos e diretos efeitos sobre o
+    desempenho econômico e o bem-estar social em todos os níveis.
+  </span>
+
+  <h2>A Plataforma: Transformando Dados em Conhecimento Estratégico</h2>
+  <span>Para tornar essa visão uma realidade tangível, desenvolvemos e mantemos uma plataforma digital interativa e
+    robusta, intitulada "A Destinação dos Impostos". Esta ferramenta é um ecossistema inteligente, meticulosamente
+    arquitetado para:
+  </span>
+
+  <li>Organizar e dar sentido a um vasto volume de informações públicas, muitas vezes dispersas e de difícil acesso.
+  </li>
+
+  <li> Apresentar esses dados através de painéis (dashboards) intuitivos e visualmente envolventes, que desmistificam a
+    informação fiscal e econômica.
+  </li>
+
+  <li>Facilitar a análise comparativa regional e setorial, permitindo a identificação de benchmarks, disparidades e
+    oportunidades únicas de investimento.
+  </li>
+
+  <li> Gerar indicadores claros e objetivos, essenciais para uma avaliação precisa da relação entre a carga tributária e
+    o
+    retorno em termos de desenvolvimento.
+  </li>
+  <ul>
+    <h2>Nosso Compromisso e Impacto Social</h2>
+
+    <span>Somos uma empresa de vanguarda inteiramente dedicada a transformar dados públicos brutos em conhecimento
+      estratégico acionável. Nossa missão é aproximar, de forma inédita, a arrecadação tributária, o desempenho
+      econômico regional e a transparência fiscal, combatendo a opacidade e fomentando a confiança.
+    </span>
+
+    <span>Atuamos sob os pilares da inovação contínua, da ética inabalável e de um compromisso genuíno com o impacto
+      social positivo. Nossa plataforma não é apenas uma ferramenta de consulta, mas um apoio indispensável para:
+    </span>
+
+    <ul>
+      <li>Investidores: Fornecendo subsídios para a localização de capital e avaliação de risco em diferentes regiões.
+      </li>
+
+      <li>Gestores (públicos e privados): Oferecendo insights cruciais para a otimização de políticas, alocação de
+        recursos e estratégias de mercado.
+      </li>
+
+      <li>Cidadãos: Capacitando a sociedade para exercer a cidadania fiscal plena, monitorando a aplicação dos impostos
+        e
+        participando de um debate público mais qualificado.
+      </li>
+    </ul>
+
+    <span>
+      Com isso, buscamos garantir que cada decisão tomada, seja por um investidor global ou por um cidadão engajado,
+      seja mais consciente, informada e sustentável, contribuindo ativamente para a edificação de um futuro
+      economicamente próspero e socialmente justo.
+    </span>
 
     <footer>
-    <div id="titulo-footer">
-      <img src="assets/Logo/laranja.png" alt="Logo rodapé">
-      <h3>Transparência Econômica Paulista</h3>
-    </div>
-    <div class="alinhar">
-      <div class="alinha_footer">
-        <span><a href="#" onclick="voltarParaPainel()">Painel</a></span>
-        <span><a href="perfil.html">Perfil</a></span>
+      <div id="titulo-footer">
+        <img src="assets/Logo/laranja.png" alt="Logo rodapé">
+        <h3>Transparência Econômica Paulista</h3>
       </div>
-      <div class="alinha_footer">
-        <span><a href="dashboard.html">Dashboard</a></span>
-        <span><a href="login.html">Sair</a></span>
+      <div class="alinhar">
+        <div class="alinha_footer">
+          <span><a href="#" onclick="voltarParaPainel()">Painel</a></span>
+          <span><a href="perfil.html">Perfil</a></span>
+        </div>
+        <div class="alinha_footer">
+          <span><a href="dashboard.html">Dashboard</a></span>
+          <span><a href="login.html">Sair</a></span>
+        </div>
       </div>
-    </div>
-  </footer>
-  </body>
+    </footer>
+</body>
+
 </html>
 
 <script>
-   
 
-    function voltarParaPainel() {
-      if (sessionStorage.IS_ADMIN == 1) {
-        window.location = "adm/painelAdm.html";
-      } else {
-        window.location = "painelFunc.html";
-      }
+
+  function voltarParaPainel() {
+    if (sessionStorage.IS_ADMIN == 1) {
+      window.location = "adm/painelAdm.html";
+    } else {
+      window.location = "painelFunc.html";
     }
+  }
 
 
 </script>
