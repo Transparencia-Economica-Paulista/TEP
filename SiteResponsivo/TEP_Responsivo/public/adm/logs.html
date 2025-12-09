@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logs do Sistema</title>
     <link rel="stylesheet" href="../css/logs.css">
-  <link rel="icon" href="../assets/icon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../assets/icon/favicon.ico" type="image/x-icon">
 </head>
- <header>
+<header>
     <img src="../assets/Logo/LogoCompleta.png" alt="Logo" />
     <nav>
-      <a href="#" onclick="voltarParaPainel()">Painel</a>
-      <a href="../dashboard.html">Dashboard</a>
-      <a href="#" class="logout" onclick="limparSessao()">Sair</a>
+        <a href="#" onclick="voltarParaPainel()">Painel</a>
+        <a href="../dashboard.html">Dashboard</a>
+        <a href="#" class="logout" onclick="limparSessao()">Sair</a>
     </nav>
-  </header>
+</header>
+
 <body>
 
     <div class="container">
         <h1>LOGS DO SISTEMA</h1>
-        
+
         <button class="botao-atualizar" onclick="pegarLogsDoBanco()">Atualizar Logs</button>
 
         <div id="conteudo">
@@ -28,133 +30,134 @@
     </div>
 
     <footer>
-    <div id="titulo-footer">
-      <img src="../assets/Logo/laranja.png" alt="Logo rodapé">
-      <h3>Transparência Econômica Paulista</h3>
-    </div>
-    <div class="alinhar">
-      <div class="alinha_footer">
-        <span><a href="#" onclick="voltarParaPainel()">Painel</a></span>
-        <span><a href="perfil.html">Perfil</a></span>
-      </div>
-      <div class="alinha_footer">
-        <span><a href="../dashboard.html">Dashboard</a></span>
-        <span><a href="../login.html">Sair</a></span>
-      </div>
-    </div>
-  </footer>
+        <div id="titulo-footer">
+            <img src="../assets/Logo/laranja.png" alt="Logo rodapé">
+            <h3>Transparência Econômica Paulista</h3>
+        </div>
+        <div class="alinhar">
+            <div class="alinha_footer">
+                <span><a href="#" onclick="voltarParaPainel()">Painel</a></span>
+                <span><a href="perfil.html">Perfil</a></span>
+            </div>
+            <div class="alinha_footer">
+                <span><a href="../dashboard.html">Dashboard</a></span>
+                <span><a href="../login.html">Sair</a></span>
+            </div>
+        </div>
+    </footer>
 </body>
+
 </html>
 
-    <script>
-        // pega os logs do banco de dados
-        function pegarLogsDoBanco() {
-            var divConteudo = document.getElementById('conteudo');
-            divConteudo.innerHTML = '<div class="carregando">Carregando logs...</div>';
+<script>
+    // pega os logs do banco de dados
+    function pegarLogsDoBanco() {
+        var divConteudo = document.getElementById('conteudo');
+        divConteudo.innerHTML = '<div class="carregando">Carregando logs...</div>';
 
-            fetch('/logs/listar')
-            .then(function(resposta) {
+        fetch('/logs/listar')
+            .then(function (resposta) {
                 return resposta.json();
             })
-            .then(function(listaLogs) {
+            .then(function (listaLogs) {
                 exibirLogsNaTela(listaLogs);
             })
-            .catch(function(erro) {
+            .catch(function (erro) {
                 console.log('Erro:', erro);
                 divConteudo.innerHTML = '<div class="mensagem-vazio">Erro ao carregar logs</div>';
             });
+    }
+    function exibirLogsNaTela(listaLogs) {
+        var divConteudo = document.getElementById('conteudo');
+
+        if (listaLogs.length === 0) {
+            divConteudo.innerHTML = '<div class="mensagem-vazio">Nenhum log encontrado</div>';
+            return;
         }
-        function exibirLogsNaTela(listaLogs) {
-            var divConteudo = document.getElementById('conteudo');
 
-            if (listaLogs.length === 0) {
-                divConteudo.innerHTML = '<div class="mensagem-vazio">Nenhum log encontrado</div>';
-                return;
-            }
+        // criar tabela
+        var tabelaHTML = '<table>';
+        tabelaHTML += '<tr>';
+        tabelaHTML += '<th>ID</th>';
+        tabelaHTML += '<th>Data e Hora</th>';
+        tabelaHTML += '<th>Tipo</th>';
+        tabelaHTML += '<th>Mensagem</th>';
+        tabelaHTML += '</tr>';
 
-            // criar tabela
-            var tabelaHTML = '<table>';
+        // percorrer cada log
+        for (var i = 0; i < listaLogs.length; i++) {
+            var umLog = listaLogs[i];
+
+
+            var corDoTipo = pegarCorDoTipo(umLog.tipo);
+
+
+            var dataArrumada = arrumarData(umLog.dataHora);
+
             tabelaHTML += '<tr>';
-            tabelaHTML += '<th>ID</th>';
-            tabelaHTML += '<th>Data e Hora</th>';
-            tabelaHTML += '<th>Tipo</th>';
-            tabelaHTML += '<th>Mensagem</th>';
+            tabelaHTML += '<td>' + umLog.id + '</td>';
+            tabelaHTML += '<td>' + dataArrumada + '</td>';
+            tabelaHTML += '<td class="' + corDoTipo + '">' + umLog.tipo + '</td>';
+            tabelaHTML += '<td>' + umLog.mensagem + '</td>';
             tabelaHTML += '</tr>';
-
-            // percorrer cada log
-            for (var i = 0; i < listaLogs.length; i++) {
-                var umLog = listaLogs[i];
-                
-            
-                var corDoTipo = pegarCorDoTipo(umLog.tipo);
-                
-            
-                var dataArrumada = arrumarData(umLog.dataHora);
-
-                tabelaHTML += '<tr>';
-                tabelaHTML += '<td>' + umLog.id + '</td>';
-                tabelaHTML += '<td>' + dataArrumada + '</td>';
-                tabelaHTML += '<td class="' + corDoTipo + '">' + umLog.tipo + '</td>';
-                tabelaHTML += '<td>' + umLog.mensagem + '</td>';
-                tabelaHTML += '</tr>';
-            }
-
-            tabelaHTML += '</table>';
-            divConteudo.innerHTML = tabelaHTML;
         }
 
-        // escolher cor baseada no tipo
-        function pegarCorDoTipo(tipo) {
-            if (tipo === 'INSERT') {
-                return 'tipo-insert';
-            } else if (tipo === 'UPDATE') {
-                return 'tipo-update';
-            } else if (tipo === 'DELETE') {
-                return 'tipo-delete';
-            } else {
-                return '';
-            }
+        tabelaHTML += '</table>';
+        divConteudo.innerHTML = tabelaHTML;
+    }
+
+    // escolher cor baseada no tipo
+    function pegarCorDoTipo(tipo) {
+        if (tipo === 'INFO') {
+            return 'tipo-info';
+        } else if (tipo === 'WARN') {
+            return 'tipo-warn';
+        } else if (tipo === 'ERROR') {
+            return 'tipo-error';
+        } else {
+            return '';
         }
+    }
 
-        // arrumar a data para ficar bonita
-        function arrumarData(dataHora) {
-            var data = new Date(dataHora);
-            
-            var dia = data.getDate();
-            var mes = data.getMonth() + 1;
-            var ano = data.getFullYear();
-            var hora = data.getHours();
-            var minuto = data.getMinutes();
-            var segundo = data.getSeconds();
+    // arrumar a data para ficar bonita
+    function arrumarData(dataHora) {
+        var data = new Date(dataHora);
 
-            // colocar zero na frente se for menor que 10
-            dia = adicionarZero(dia);
-            mes = adicionarZero(mes);
-            hora = adicionarZero(hora);
-            minuto = adicionarZero(minuto);
-            segundo = adicionarZero(segundo);
+        var dia = data.getDate();
+        var mes = data.getMonth() + 1;
+        var ano = data.getFullYear();
+        var hora = data.getHours();
+        var minuto = data.getMinutes();
+        var segundo = data.getSeconds();
 
-            return dia + '/' + mes + '/' + ano + ' ' + hora + ':' + minuto + ':' + segundo;
+        // colocar zero na frente se for menor que 10
+        dia = adicionarZero(dia);
+        mes = adicionarZero(mes);
+        hora = adicionarZero(hora);
+        minuto = adicionarZero(minuto);
+        segundo = adicionarZero(segundo);
+
+        return dia + '/' + mes + '/' + ano + ' ' + hora + ':' + minuto + ':' + segundo;
+    }
+
+    // adicionar zero na frente de números menores que 10
+    function adicionarZero(numero) {
+        if (numero < 10) {
+            return '0' + numero;
         }
+        return numero;
+    }
 
-        // adicionar zero na frente de números menores que 10
-        function adicionarZero(numero) {
-            if (numero < 10) {
-                return '0' + numero;
-            }
-            return numero;
-        }
+    // quando a página carregar, pegar os logs
+    pegarLogsDoBanco();
 
-        // quando a página carregar, pegar os logs
-        pegarLogsDoBanco();
+    function voltarParaPainel() {
+        window.location.href = 'painelAdm.html';
+    }
 
-        function voltarParaPainel() {
-            window.location.href = 'painelAdm.html';
-        }
 
-    
-        function limparSessao() {
-            sessionStorage.clear();
-            window.location.href = '../login.html';
-        }
-    </script>
+    function limparSessao() {
+        sessionStorage.clear();
+        window.location.href = '../login.html';
+    }
+</script>

@@ -154,17 +154,17 @@ tr:hover {
 }
 
 /* Tipos de log */
-.tipo-insert {
+.tipo-info {
     color: green;
     font-weight: 600;
 }
 
-.tipo-update {
+.tipo-warn {
     color: orange;
     font-weight: 600;
 }
 
-.tipo-delete {
+.tipo-error {
     color: red;
     font-weight: 600;
 }
