@@ -116,10 +116,11 @@ nav a:hover {
 
 h1 {
   font-family: "judson";
-  letter-spacing: 10px;
+  /* letter-spacing: 10px; */
   text-align: center;
   color: #e44c1b;
   margin-bottom: 20px;
+  font-size: 45px;
 }
 
 .filters {
