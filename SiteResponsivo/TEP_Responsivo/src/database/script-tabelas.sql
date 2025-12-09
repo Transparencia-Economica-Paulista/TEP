@@ -71,7 +71,7 @@ CREATE TABLE Metricas_do_pib (
     FOREIGN KEY (Municipios_idMunicipios) REFERENCES Municipios(idMunicipios)
 );
 
-CREATE TABLE LogBD (
+CREATE TABLE logBD (
     id INT AUTO_INCREMENT PRIMARY KEY,
     dataHora DATETIME NOT NULL,
     tipo VARCHAR(45) NOT NULL,
